@@ -1,11 +1,13 @@
 import React from 'react'
-
+import Navbar from './Navbar'
+import Hero from './Hero'
 const App = () => {
   return (
-    <div className='bg-blue-300  flex items-center justify-center text-black-900 p-16'>
-      members welcome to final year journey
+    <div>
+      <Navbar/>
+      <Hero/>
     </div>
   )
 }
 
-export default App;
+export default App
