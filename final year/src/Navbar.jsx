@@ -15,9 +15,9 @@ const Navbar = () => {
         <div className=" flex items-center justify-center  space-x-12">
           {/* <a href="#home" className="hover:text-white  font-bold">Home</a> */}
           <Link to="/" className="hover:text-white font-bold">Home</Link>
-          <Link to="/Login" className="hover:text-white font-bold">Login</Link>
           <Link to="/About" className="hover:text-white font-bold">About</Link>
-          <Link to="/Contact" className="hover:text-white font-bold">Contact</Link>
+          <Link to="/Contact" className="hover:text-white font-bold">Contact</Link>   
+          <Link to="/Login" className="hover:text-white font-bold">Login</Link>
         </div>
 
         {/* Mobile Menu Icon */}
@@ -42,3 +42,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+

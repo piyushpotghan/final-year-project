@@ -6,13 +6,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from './components/Login'
 import About from './components/About'
 import Contact from './components/Contact'
+import Footer from './components/Footer'
 
 const App = () => {
   return (
     <div>
-      {/* <Navbar/>
-      <Hero/>
-      <WhyUs/> */}
+      
       <BrowserRouter>
        <Navbar/>
         <Routes>
@@ -21,7 +20,7 @@ const App = () => {
           <Route path='/About' element={<About/>}/>
           <Route path='/Contact' element={<Contact/>}/>
         </Routes>
-       {/* <WhyUs/> */}
+        <Footer/>
       </BrowserRouter>
     </div>
   )
