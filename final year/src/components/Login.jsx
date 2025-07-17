@@ -4,7 +4,7 @@ export default function Login() {
   return (
     <section className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-100 via-white to-blue-100 px-4">
       <div className="bg-white p-8 md:p-12 rounded-2xl shadow-2xl w-full max-w-md">
-        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Welcome Back</h2>
+        <h2 className="text-3xl font-bold text-center text-blue-600 mb-6">Welcome to Medicare</h2>
         
         <form className="space-y-5">
           {/* Email */}

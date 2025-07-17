@@ -2,18 +2,34 @@ import React from 'react';
 
 export default function About() {
   return (
-    <section className="min-h-screen pt-28 px-4 sm:px-6 pb-16 bg-white text-center">
-      <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-blue-700 mb-6">
-        About Our Clinic Connect
-      </h1>
+     <div className="relative bg-gray-100">
+    {/* Background image on right half */}
+    <div
+      className="absolute inset-y-0 right-0 w-1/2 bg-cover  bg-no-repeat z-0 bg-right"
+      style={{ backgroundImage: "url('https://www.quickobook.com/assets/img/about-4.jpg')" }}
+    />
 
-      <p className="max-w-3xl mx-auto text-gray-700 text-base sm:text-lg leading-relaxed">
-        Welcome to our Doctor Appointment System – a platform designed to simplify your healthcare experience.
-        <br className="hidden sm:block" /><br />
-        Our mission is to make it easy for patients to schedule appointments with qualified and experienced doctors. Whether you're looking for general consultation or specialized care, our system ensures fast, secure, and user-friendly access to medical professionals.
-        <br className="hidden sm:block" /><br />
-        We believe in bridging the gap between doctors and patients through digital innovation – putting your health just one click away.
+    {/* Optional translucent overlay to improve text contrast */}
+    <div className="absolute inset-y-0 right-0 w-1/2 bg-white/60 z-10" />
+
+    {/* Text content */}
+    <div className="relative z-20 container mx-auto p-20 text-center">
+      <h1 className="text-3xl font-bold text-blue-600 mb-4">About Us</h1>
+      <h2 className="text-4xl font-extrabold text-blue-800 mb-2">
+        Quality Healthcare Made Simple
+      </h2>
+      <h3 className="text-2xl font-semibold text-gray-700 mb-6">Our Mission</h3>
+      <p className="text-gray-800 text-lg max-w-3xl mx-auto leading-relaxed">
+        Medicare is on a mission to make quality healthcare affordable and accessible for over a billion+ Indians. We believe in empowering our users with the most accurate, comprehensive, and curated information and care, enabling them to make better healthcare decisions and book appointments.
       </p>
-    </section>
+    </div>
+
+    {/* Mobile fallback */}
+    <div className="block md:hidden h-64 bg-gray-200" />
+  </div>
   );
-}
+};
+    
+ 
+
+
