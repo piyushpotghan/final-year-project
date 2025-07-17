@@ -1,6 +1,9 @@
 import React from 'react'
+import WhyUs from './whyUs'
+
 export default function Hero() {
   return (
+    <>
     <section className="bg-gradient-to-r from-white via-blue-300 to-gray-200 pt-24 pb-12 px-6 md:px-20 overflow-x-hidden">
       <div className="grid md:grid-cols-2 gap-10 items-center">
         
@@ -9,6 +12,7 @@ export default function Hero() {
           <h1 className="text-4xl md:text-8xl font-bold text-gray-800 leading-tight">
             Your Health Our <span className="text-blue-600">Priority</span>
           </h1>
+
           <p className="text-gray-600 mt-4 text-lg">
             Trusted healthcare service at your fingertips. Find experienced doctors and get instant booking confirmation.
           </p>
@@ -28,5 +32,7 @@ export default function Hero() {
 
       </div>
     </section>
+    <WhyUs/>
+    </>
   );
 }

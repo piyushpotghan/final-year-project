@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from 'react-router-dom'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,10 +13,11 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className=" flex items-center justify-center  space-x-12">
-          <a href="#home" className="hover:text-white  font-bold">Home</a>
-          <a href="#doctors" className="hover:text-white font-bold">login</a>
-          <a href="#about" className="hover:text-white  font-bold">About</a>
-          <a href="#contact" className="hover:text-white font-bold">Contact</a>
+          {/* <a href="#home" className="hover:text-white  font-bold">Home</a> */}
+          <Link to="/" className="hover:text-white font-bold">Home</Link>
+          <Link to="/Login" className="hover:text-white font-bold">Login</Link>
+          <Link to="/About" className="hover:text-white font-bold">About</Link>
+          <Link to="/Contact" className="hover:text-white font-bold">Contact</Link>
         </div>
 
         {/* Mobile Menu Icon */}
