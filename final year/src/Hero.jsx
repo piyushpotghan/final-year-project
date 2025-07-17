@@ -1,7 +1,7 @@
 import React from 'react'
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-r from-white via-blue-300 to-gray-200 pt-24 pb-12 px-6 md:px-20">
+    <section className="bg-gradient-to-r from-white via-blue-300 to-gray-200 pt-24 pb-12 px-6 md:px-20 overflow-x-hidden">
       <div className="grid md:grid-cols-2 gap-10 items-center">
         
         {/* Left Content */}
