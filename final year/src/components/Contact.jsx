@@ -3,6 +3,7 @@ import React from 'react';
 export default function Contact() {
   return (
     <section className="min-h-screen px-6 py-16 bg-blue-50">
+      
       <h1 className="text-4xl md:text-5xl font-bold text-center text-blue-700 mb-6">Contact Us</h1>
       
       <form className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md space-y-5">
@@ -38,5 +39,13 @@ export default function Contact() {
         </button>
       </form>
     </section>
+
+     
+     
+      
+  
+
+
+
   );
 }
