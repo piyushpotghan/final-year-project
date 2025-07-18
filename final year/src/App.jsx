@@ -10,6 +10,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import HealthConcern from './Pages/healthConcerns'
 import WhyUs from './Pages/whyUs'
+import UserTestimonials from './Pages/testimonials';
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
                 <Hero />
                 <HealthConcern/> 
                 <WhyUs/>
+                <UserTestimonials/>
               </>
             }
           />
