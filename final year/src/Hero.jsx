@@ -1,5 +1,5 @@
 import React from 'react'
-import WhyUs from './whyUs'
+// import WhyUs from './Pages/whyUs'
 
 export default function Hero() {
   return (
@@ -38,7 +38,7 @@ export default function Hero() {
   </div>
     </section>
 
-    <WhyUs/>
+    {/* <WhyUs/> */}
     </>
   );
 }
