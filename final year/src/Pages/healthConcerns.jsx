@@ -89,11 +89,11 @@ export default function HealthConcernCards() {
       </h2>
 
       <div className="relative">
-        <Slider {...settings}>
+        <Slider {...settings} className="p-7">
           {healthConcerns.map((item, index) => (
             <div
               key={index}
-              className="bg-white mx-3 p-6 shadow-lg rounded-xl text-center"
+              className="bg-white mx-5 p-6 shadow-lg rounded-xl text-center"
             >
               <img
                 src={item.image}
