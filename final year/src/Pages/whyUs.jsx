@@ -8,7 +8,7 @@ const WhyUs = () => {
 
         <div className="max-w-6xl mx-auto text-center">
           <div className="fles items-center justify-center pt-5">
-            <h2 className="text-5xl font-bold text-gray-900 hover:text-black mb-19 ">Why Us</h2>
+            <h2 className="text-5xl font-bold text-gray-900 hover:text-black mb-19 ">Why Us?</h2>
           </div>
 
           <div className="flex flex-col md:flex-row justify-center items-center gap-8 flex-wrap">
@@ -47,7 +47,7 @@ const WhyUs = () => {
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">All Insurance & TPA Accepted</h3>
               <p className="text-gray-600 text-center">
-                we serve policyholders with all medical requirement on time
+                We serve policyholders with all medical requirement on time
               </p>
             </div>
 

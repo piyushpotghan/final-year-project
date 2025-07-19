@@ -34,7 +34,7 @@ export default function About() {
       <div className="py-7 px-4 rounded-t-3xl shadow-lg">
 
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl font-bold text-gray-900 hover:text-black mb-19 ">Why Us</h2>
+          <h2 className="text-5xl font-bold text-blue-900 hover:text-black mb-19 ">Why Us?</h2>
 
           <div className="flex flex-col md:flex-row justify-center items-center gap-8 flex-wrap">
             {/* Feature Card 1 */}
