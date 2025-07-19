@@ -11,6 +11,7 @@ import Footer from './components/Footer'
 import HealthConcern from './Pages/healthConcerns'
 import WhyUs from './Pages/whyUs'
 import UserTestimonials from './Pages/testimonials';
+import Map from './Pages/Map';
 
 
 const App = () => {
@@ -29,6 +30,7 @@ const App = () => {
                 <HealthConcern/> 
                 <WhyUs/>
                 <UserTestimonials/>
+                <Map/>
               </>
             }
           />
