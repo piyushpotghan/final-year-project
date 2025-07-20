@@ -4,63 +4,51 @@ import QuoteSection from './QuoteSection';
 const WhyUs = () => {
   return (
     <>
-      <QuoteSection />
+    {/* <QuoteSection/> */}
+     <section className="py-20 px-4 md:px-12 bg-white">
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold text-blue-900 mb-4">Why Choose Medicare?</h2>
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto mb-12">
+            We go beyond just bookings — our platform is built to deliver a safe, reliable, and patient-centric experience at every touchpoint.
+          </p>
 
-      <section className="relative z-10 -mt-10">
-        <div className="py-10 px-4 rounded-t-3xl shadow-lg bg-white/70 backdrop-blur">
-          <div className="max-w-6xl mx-auto text-center">
-            <div className="flex items-center justify-center pt-5">
-              <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-10">
-                Why Choose Us
-              </h2>
-            </div>
-
-            <div className="flex flex-col md:flex-row justify-center items-center gap-8 flex-wrap">
-
-              {/* Card 1 */}
-              <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-lg transition w-full max-w-sm">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">User-Friendly Experience</h3>
-                <p className="text-gray-600 text-center">
-                  Intuitive interface designed for effortless appointment booking and management.
-                </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Reusable Card Design */}
+            {[
+              {
+                title: "User-Centric Interface",
+                desc: "Clean, intuitive design built for easy navigation and stress-free appointment management."
+              },
+              {
+                title: "Real-Time Availability",
+                desc: "Doctors and patients stay updated with instant scheduling and availability checks."
+              },
+              {
+                title: "End-to-End Security",
+                desc: "Your data is protected with robust encryption and strict privacy protocols."
+              },
+              {
+                title: "Insurance & TPA Support",
+                desc: "Integrated support for all major insurance providers to ease your claim journey."
+              },
+              {
+                title: "24/7 Medical Support",
+                desc: "A dedicated team of doctors and support staff to assist anytime, anywhere."
+              },
+              {
+                title: "Trusted by Thousands",
+                desc: "Our platform is used by thousands of patients and doctors every day for seamless healthcare."
+              }
+            ].map((card, index) => (
+              <div key={index} className="bg-gray-100 rounded-2xl p-6 shadow hover:shadow-xl transition duration-300">
+                <h3 className="text-xl font-semibold text-blue-800 mb-2">{card.title}</h3>
+                <p className="text-gray-700">{card.desc}</p>
               </div>
-
-              {/* Card 2 */}
-              <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-lg transition w-full max-w-sm">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">Real-Time Scheduling</h3>
-                <p className="text-gray-600 text-center">
-                  Doctors and patients stay updated with live availability and instant booking.
-                </p>
-              </div>
-
-              {/* Card 3 */}
-              <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-lg transition w-full max-w-sm">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">Secure & Reliable</h3>
-                <p className="text-gray-600 text-center">
-                  End-to-end encryption and secure login ensure complete data privacy.
-                </p>
-              </div>
-
-              {/* Card 4 */}
-              <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-lg transition w-full max-w-sm">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">Insurance & TPA Support</h3>
-                <p className="text-gray-600 text-center">
-                  We partner with all major insurance providers to streamline your claims process.
-                </p>
-              </div>
-
-              {/* Card 5 */}
-              <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-lg transition w-full max-w-sm">
-                <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">Qualified Medical Experts</h3>
-                <p className="text-gray-600 text-center">
-                  A trusted team of certified doctors committed to delivering care 24/7.
-                </p>
-              </div>
-
-            </div>
+            ))}
           </div>
         </div>
       </section>
+          <QuoteSection/>
     </>
   );
 };
