@@ -22,6 +22,7 @@ const App = () => {
       <BrowserRouter>
        <Navbar/>
         <Routes>
+          
           {/* <Route path='/' element={<Hero/>}/> */}
           <Route
             path='/'
