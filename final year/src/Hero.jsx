@@ -16,11 +16,11 @@ export default function Hero() {
           <p className="text-gray-600 mt-4 text-lg">
             Trusted healthcare service at your fingertips. Find experienced doctors and get instant booking confirmation.
           </p>
-          <div className="mt-6 px-[200px] py-2">
+          {/* <div className="mt-6 px-[200px] py-2">
             <a href="#appointments" className="bg-blue-600 text-white px-6 py-3 rounded-full shadow hover:bg-blue-700 transition">   
               Apply Now
             </a>
-          </div>
+          </div> */}
         </div>
 
         {/* Right Image */}

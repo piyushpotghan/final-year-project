@@ -11,12 +11,15 @@ export default function QuoteSection() {
         </div>
 
         {/* Content */}
-        <p className="text-xl md:text-2xl font-semibold text-blue-900 leading-relaxed">
+        {/* <p className="text-xl md:text-2xl font-semibold text-blue-900 leading-relaxed">
         Our mission is to simplify healthcare access through intelligent technology—
         <br /><br />
         <span className="text-blue-900">
             connecting patients to trusted doctors anytime, anywhere, with just a click.
         </span>
+        </p> */}
+        <p className="text-xl md:text-2xl font-semibold text-blue-900 leading-relaxed">
+         Medicare is on a mission to make quality healthcare affordable and accessible for over a billion+ Indians. We believe in empowering our users with the most accurate, comprehensive, and curated information and care, enabling them to make better healthcare decisions and book appointments.
         </p>
 
         {/* Bottom Quote */}

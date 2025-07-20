@@ -12,6 +12,7 @@ import HealthConcern from './Pages/healthConcerns'
 import WhyUs from './Pages/whyUs'
 import UserTestimonials from './Pages/testimonials';
 import Map from './Pages/Map';
+import TrustedBy from './Pages/TrustedBy'
 
 
 const App = () => {
@@ -28,7 +29,11 @@ const App = () => {
               <>
                 <Hero />
                 <HealthConcern/> 
-                <WhyUs/>
+                {/* <TrustedBy/> */}
+                <div id="whyus">
+                <TrustedBy/>
+                   <WhyUs/>
+                </div>
                 <Map/>
                 <UserTestimonials/>
 

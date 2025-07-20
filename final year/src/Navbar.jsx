@@ -14,7 +14,17 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <div className=" flex items-center justify-center  space-x-12">
           <Link to="/" className="hover:text-white font-bold">Home</Link>
-          <Link to="/About" className="hover:text-white font-bold">About</Link>
+          {/* <Link to="/About" className="hover:text-white font-bold">About</Link> */}
+          {/*-----------------------------------------------------*/}
+          <Link to="/" className="hover:text-white font-bold" onClick={() => {
+            setTimeout(() => {
+              const el = document.getElementById("whyus");
+              el?.scrollIntoView({ behavior: "smooth" });
+            }, 100); // delay ensures Home page loads first
+          }}>
+            About
+          </Link>
+           {/*---------------------------------------------------------*/}
           <Link to="/Contact" className="hover:text-white font-bold">Contact</Link>   
           <Link to="/Login" className="hover:text-white font-bold">Login</Link>
         </div>
