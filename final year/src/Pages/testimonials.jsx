@@ -5,7 +5,7 @@ const testimonials = [
   {
     name: "Avinash Kumar",
     feedback:
-      "Very good app. Well thought out about booking/rescheduling/canceling an appointment. Also, Doctor's feedback mechanism is good and describes all the basics in a good way.",
+      "Very good app. Well thought out about booking an appointment. Also, Doctor's feedback mechanism is good and describes all the basics in a good way.",
   },
   {
     name: "Sneha Joshi",
@@ -41,7 +41,7 @@ export default function UserTestimonials() {
 
   return (
     <section className="bg-white py-20 px-4 text-center relative">
-      <h2 className="text-3xl font-bold text-gray-800 mb-10">
+      <h2 className="text-4xl font-bold text-gray-800 mb-10">
         What our users have to say?
       </h2>
 
@@ -62,7 +62,7 @@ export default function UserTestimonials() {
 
       {/* Testimonial */}
       <div className="max-w-3xl mx-auto">
-        <p className="text-lg text-gray-700 leading-relaxed italic mb-6 transition-all duration-500">
+        <p className="text-xl text-gray-700 leading-relaxed italic mb-6 transition-all duration-500">
           “{testimonials[index].feedback}”
         </p>
 
