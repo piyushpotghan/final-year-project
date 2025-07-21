@@ -10,7 +10,7 @@ const items = [
 export default function Sidebar() {
   return (
     <aside className="w-60 bg-white p-4">
-      <h2 className="text-xl font-bold mb-6">DocPlace</h2>
+      <h2 className="text-xl font-bold mb-6">Medicare</h2>
       <nav>
         {items.map(item => (
           <div key={item.name}
