@@ -19,6 +19,7 @@ const Map = () => {
   return (
     <div className="min-h-screen w-full bg-gray-50 py-10 px-4 md:px-10">
       {/* Header */}
+
       <div className="max-w-5xl mx-auto mb-8">
         <div className="grid grid-cols-2 bg-blue-100 rounded-xl overflow-hidden shadow">
           <div className="text-center py-4 px-6 text-blue-900 font-bold text-lg border-r border-blue-300 hover:bg-blue-200 transition">
@@ -32,6 +33,8 @@ const Map = () => {
 
       {/* Main Content */}
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6">
+      
+
         {/* Left: Image Slider */}
         <div className="relative rounded-xl overflow-hidden shadow-lg h-[300px] md:h-auto">
           <img
@@ -61,9 +64,9 @@ const Map = () => {
             allowFullScreen=""
             loading="lazy"
           ></iframe>
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 
