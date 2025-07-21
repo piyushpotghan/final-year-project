@@ -1,101 +1,32 @@
 import React from 'react';
 
-export default function About() {
+const About = () => {
   return (
-     <div className="relative bg-gray-200">
-    {/* Background image on right half */}
-    <div
-      className="absolute inset-y-0 right-0 w-1/2 bg-cover  bg-no-repeat z-0 bg-right"
-      style={{ backgroundImage: "url('https://www.quickobook.com/assets/img/about-4.jpg')" }}
-    />
-
-    {/* Optional translucent overlay to improve text contrast */}
-    <div className="absolute inset-y-0 right-0 w-1/2 bg-white/60 z-10" />
-
-    {/* Text content */}
-    <div className="relative z-20 container mx-auto p-20 text-center">
-      <h1 className="text-3xl font-bold text-blue-600 mb-4">About Us</h1>
-      <h2 className="text-4xl font-extrabold text-blue-800 mb-2">
-        Quality Healthcare Made Simple
-      </h2>
-      <h3 className="text-2xl font-semibold text-gray-700 mb-6">Our Mission</h3>
-      <p className="text-gray-800 text-lg max-w-3xl mx-auto leading-relaxed">
-        Medicare is on a mission to make quality healthcare affordable and accessible for over a billion+ Indians. We believe in empowering our users with the most accurate, comprehensive, and curated information and care, enabling them to make better healthcare decisions and book appointments.
-      </p>
-    </div>
-
-    {/* Mobile fallback */}
-    <div className="block md:hidden h-64 bg-gray-200" />
-
-
-
-    <section className="relative z-10 -mt-10">
-      {/* <div className="bg-gradient-to-r from-white via-blue-300 to-gray-200 py-5 px-4 rounded-t-3xl shadow-lg"> */}
-      <div className="py-7 px-4 rounded-t-3xl shadow-lg">
-
-        <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl font-bold text-blue-900 hover:text-black mb-19 ">Why Us?</h2>
-
-          <div className="flex flex-col md:flex-row justify-center items-center gap-8 flex-wrap">
-            {/* Feature Card 1 */}
-            <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-lg transition w-full max-w-sm">
-              <div className="text-indigo-600 mb-4 flex justify-center">
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">Patient-Friendly</h3>
-              <p className="text-gray-600 text-center">
-                Clean UI for easy booking and management.
-              </p>
-            </div>
-
-            {/* Feature Card 2 */}
-            <div className="bg-gray-100 rounded-2xl p-4 shadow-md hover:shadow-lg transition w-full max-w-sm">
-              <div className="text-indigo-600 mb-4 flex justify-center">
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">Real-time Scheduling</h3>
-              <p className="text-gray-600 text-center">
-                Manage doctor availability and appointments efficiently.
-              </p>
-            </div>
-
-            {/* Feature Card 3 */}
-            <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-lg transition w-full max-w-sm">
-              <div className="text-indigo-600 mb-4 flex justify-center">
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">Secure & Reliable</h3>
-              <p className="text-gray-600 text-center">
-                End-to-end encrypted data and secure login.
-              </p>
-            </div>
-
-            <div className="bg-gray-100 rounded-2xl p-4 shadow-md hover:shadow-lg transition w-full max-w-sm">
-              <div className="text-indigo-600 mb-4 flex justify-center">
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">All Insurance & TPA Accepted</h3>
-              <p className="text-gray-600 text-center">
-                we serve policyholders with all medical requirement on time
-              </p>
-            </div>
-
-            <div className="bg-gray-100 rounded-2xl p-6 shadow-md hover:shadow-lg transition w-full max-w-sm">
-              <div className="text-indigo-600 mb-4 flex justify-center">
-              </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2 text-center">Highly-Qualified Doctors</h3>
-              <p className="text-gray-600 text-center">
-                Excellent Team of general physicians providing utmost care 24/7
-              </p>
-            </div>
-
-          </div>
-
-
-          
-        </div>
+    <div className="min-h-screen pt-[30px] pb-32 bg-gray-100">
+      {/* Header Section */}
+      <div className="bg-gray-200 h-[300px] flex items-center justify-center">
+        <h1 className="text-5xl text-gray-700 font-semibold">About Us</h1>
       </div>
-    </section>
-  </div>
+
+      {/* Content Section */}
+      <div className="bg-white p-10 mx-auto mt-[-60px] max-w-5xl rounded-2xl shadow-xl">
+        <h2 className="text-3xl font-semibold mb-4 text-gray-800">Welcome to MediCare</h2>
+        <p className="text-gray-700 text-lg leading-relaxed">
+          At <strong>MediCare</strong>, we are dedicated to transforming how healthcare professionals engage with technology. Our mission is to simplify clinic operations through smart, customizable, and user-friendly digital solutions designed specifically for doctors and medical staff. <br /><br />
+          
+          MediCare began with a simple idea — empower doctors with tools that are efficient, reliable, and tailored to their real-world needs. Over time, we have evolved into a complete clinic management platform that provides everything from appointment scheduling and patient records to branded prescription systems and queue management tools. <br /><br />
+          
+          Unlike generic platforms, MediCare offers full white-label capabilities — allowing clinics to operate under their own identity, logo, and brand. We prioritize transparency, control, and customization, ensuring that each clinic gets a solution that feels uniquely theirs. <br /><br />
+          
+          Our philosophy is built on trust, ethical development, and meaningful innovation. We reject unnecessary complexity, hidden costs, and features that serve no purpose. Instead, MediCare delivers only what matters — clean design, seamless functionality, and dependable support. <br /><br />
+          
+          Whether you're a small private clinic or a large healthcare center, our goal remains the same: to support your growth with technology that adapts to your needs, not the other way around. <br /><br />
+          
+          <strong>MediCare</strong> — built for doctors, powered by vision, and driven by purpose.
+        </p>
+      </div>
+    </div>
   );
 };
-    
- 
 
-
+export default About;
