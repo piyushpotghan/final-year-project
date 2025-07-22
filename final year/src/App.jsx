@@ -13,6 +13,9 @@ import WhyUs from './Pages/whyUs'
 import UserTestimonials from './Pages/testimonials';
 import Map from './Pages/Map';
 import TrustedBy from './Pages/TrustedBy'
+import AdminDashboard from './Pages/AdminDashboard'
+import PatientDashboard from './Pages/PatientDashboard'
+
 
 
 const App = () => {
@@ -47,6 +50,9 @@ const App = () => {
           <Route path='/Login' element={<Login/>}/>
           <Route path='/About' element={<About/>}/>
           <Route path='/Contact' element={<Contact/>}/>
+
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+<Route path="/patient/dashboard" element={<PatientDashboard />} />
           
         </Routes>
        <Footer/>

@@ -1,9 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { login } from "../utils/Auth"; // Make sure this file exists and is imported
 
-export default function Login() {
+export default function LoginPage() {
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+
+    const user = login({ email, password });
+
+    if (user) {
+      localStorage.setItem("user", JSON.stringify(user));
+      if (user.role === "admin") {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/patient/dashboard");
+      }
+    } else {
+      setError("Invalid credentials");
+    }
+  };
+
   return (
     <section className="min-h-screen flex">
-      {/* Left: Large Image Section (70%) */}
+      {/* Left: Image Section */}
       <div className="w-[60%] hidden md:flex items-center justify-center bg-blue-100">
         <img
           src="loginpage.svg"
@@ -12,20 +37,26 @@ export default function Login() {
         />
       </div>
 
-      {/* Right: Small Login Panel (30%) */}
+      {/* Right: Login Form */}
       <div className="w-full md:w-[40%] flex items-center justify-center bg-white shadow-lg">
         <div className="w-full px-8">
           <h2 className="text-5xl font-bold text-center text-blue-600 mb-6">
             Login
           </h2>
 
-          <form className="space-y-4">
+          {error && (
+            <p className="text-red-500 text-center text-lg mb-4">{error}</p>
+          )}
+
+          <form className="space-y-4" onSubmit={handleLogin}>
             {/* Email */}
             <div>
               <label className="block mb-1 text-gray-700 text-2xl">Email</label>
               <input
                 type="email"
                 placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                 required
               />
@@ -37,6 +68,8 @@ export default function Login() {
               <input
                 type="password"
                 placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
                 required
               />
