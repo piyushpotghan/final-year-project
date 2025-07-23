@@ -27,7 +27,7 @@ const Navbar = () => {
            {/*---------------------------------------------------------*/}
           <Link to="/Contact" className="hover:text-white font-bold">Contact</Link>   
           <Link to="/Login" className="hover:text-white font-bold">Login</Link>
-          
+         <Link to="/SignUp" className="hover:text-white font-bold">Sign Up</Link>      
         </div>
 
         {/* Mobile Menu Icon */}

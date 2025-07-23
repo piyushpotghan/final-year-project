@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from './components/Login'
+import SignUp from './components/SignUp'
 import About from './components/About'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
@@ -50,6 +51,7 @@ const App = () => {
             }
           />
           <Route path='/Login' element={<Login/>}/>
+          <Route path='/SignUp' element={<SignUp/>}/>
           <Route path='/About' element={<About/>}/>
           <Route path='/Contact' element={<Contact/>}/>
 
