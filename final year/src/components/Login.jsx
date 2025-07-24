@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom'
 // import { login } from "../utils/Auth"; // Make sure this file exists and is imported
 
 
@@ -101,7 +102,7 @@ export default function LoginPage() {
             {/* Links */}
             <div className="flex justify-between mt-3 text-[15px] text-gray-600">
               <a href="#" className="hover:underline">Forgot?</a>
-              <a href="/register" className="hover:underline">Sign Up</a>
+              <Link to="/SignUp" className="hover:underline">Sign Up</Link>      
             </div>
           </form>
         </div>

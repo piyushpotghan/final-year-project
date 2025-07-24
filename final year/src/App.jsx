@@ -50,13 +50,14 @@ const App = () => {
               </>
             }
           />
+          
           <Route path='/Login' element={<Login/>}/>
           <Route path='/SignUp' element={<SignUp/>}/>
           <Route path='/About' element={<About/>}/>
           <Route path='/Contact' element={<Contact/>}/>
 
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
-<Route path="/patient/dashboard" element={<PatientDashboard />} />
+          <Route path="/patient/dashboard" element={<PatientDashboard />} />
           
         </Routes>
        <Footer/>
