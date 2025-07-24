@@ -18,10 +18,11 @@ export default function AdminDashboard() {
     if (!user || user.role !== 'admin') {
       navigate('/Login');
     }
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="p-6 text-center">
+      
       <h1 className="text-3xl font-bold">Admin Dashboard</h1>
       <p className="text-gray-500">Only visible to admin</p>
        <aside className="w-60 bg-white p-4">
