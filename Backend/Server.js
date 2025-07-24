@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const authRoutes = require("./routes/auth");
+const authRoutes = require("./routes/Auth");
 app.use("/api", authRoutes);
 
 // MongoDB connection

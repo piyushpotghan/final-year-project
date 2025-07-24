@@ -17,6 +17,10 @@ import TrustedBy from './Pages/TrustedBy'
 import AdminDashboard from './Pages/AdminDashboard'
 import PatientDashboard from './Pages/PatientDashboard'
 
+
+
+
+
 const App = () => {
 return (
 <div>
@@ -53,15 +57,14 @@ return (
       <Route path='/About' element={<About/>}/>  
       <Route path='/Contact' element={<Contact/>}/>  
 
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />  
-      <Route path="/patient/dashboard" element={<PatientDashboard />} />  
-        
-    </Routes>  
-   <Footer/>  
-  </BrowserRouter>  
-</div>
-
-)
+          <Route path="/admin/dashboard" element={<AdminDashboard />} />
+          <Route path="/patient/dashboard" element={<PatientDashboard />} />
+          
+        </Routes>
+       <Footer/>
+      </BrowserRouter>
+    </div>
+  )
 }
 
 export default App
