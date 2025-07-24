@@ -1,25 +1,25 @@
-const items = [
-  { name: 'Dashboard', icon: '🏠' },
-  { name: 'Patients', icon: '👤' },
-  { name: 'Appointments', icon: '📅' },
-  { name: 'Doctors', icon: '🩺' },
-  { name: 'Reports', icon: '📊' },
-  { name: 'Settings', icon: '⚙️' },
-];
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-export default function Sidebar() {
-  return (
-    <aside className="w-60 bg-white p-4">
-      <h2 className="text-xl font-bold mb-6">Medicare</h2>
-      <nav>
-        {items.map(item => (
-          <div key={item.name}
-            className="flex items-center p-2 mb-2 rounded hover:bg-gray-200 cursor-pointer">
-            <span className="mr-2">{item.icon}</span>
-            {item.name}
-          </div>
-        ))}
-      </nav>
-    </aside>
-  );
-}
+
+const Sidebar = () => (
+  <div className="w-64 bg-white shadow-md text-2xl font-bold" >
+    <div className="p-6 text-3xl font-bold text-blue-600 ">MediCare</div>
+    <nav className="flex flex-col gap-4 px-4 text-gray-700">
+      <NavLink to="#" className="hover:text-blue-600 flex gap-2 items-center">
+          Dashboard
+      </NavLink>
+      <NavLink to="/appointments" className="hover:text-blue-600 flex gap-2 items-center pt-2.5">
+         Appointments
+      </NavLink>
+      <NavLink to="/Doctors" className="hover:text-blue-600 flex gap-2 items-center pt-2.5">
+         Doctors
+      </NavLink>
+      <NavLink to="/patients" className="hover:text-blue-600 flex gap-2 items-center pt-2.5">
+        Patients
+      </NavLink>
+    </nav>
+  </div>
+);
+
+export default Sidebar;

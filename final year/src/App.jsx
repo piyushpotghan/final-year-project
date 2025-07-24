@@ -17,53 +17,52 @@ import TrustedBy from './Pages/TrustedBy'
 import AdminDashboard from './Pages/AdminDashboard'
 import PatientDashboard from './Pages/PatientDashboard'
 
-
-
-
-
 const App = () => {
-  return (
-    <div>
-      
-      <BrowserRouter>
-       <Navbar/>
-        <Routes>
-          
-          {/* <Route path='/' element={<Hero/>}/> */}
-          <Route
-            path='/'
-            element={
-              <>
-                <Hero />
-                <HealthConcern/> 
-                {/* <TrustedBy/> */}
-                <div id="whyus">
-                <TrustedBy/>
-                   <WhyUs/>
-                </div>
-                <Map/>
+return (
+<div>
 
-                <UserTestimonials/>
+<BrowserRouter>  
+   <Navbar/>  
+    <Routes>  
+        
+      {/* <Route path='/' element={<Hero/>}/> */}  
+      <Route  
+        path='/'  
+        element={  
+          <>  
+            <Hero />  
+            <HealthConcern/>   
+            {/* <TrustedBy/> */}  
+            <div id="whyus">  
+            <TrustedBy/>  
+               <WhyUs/>  
+            </div>  
+            <Map/> 
+            
 
-              
-              
-              </>
-            }
-          />
-          
-          <Route path='/Login' element={<Login/>}/>
-          <Route path='/SignUp' element={<SignUp/>}/>
-          <Route path='/About' element={<About/>}/>
-          <Route path='/Contact' element={<Contact/>}/>
+            <UserTestimonials/>  
 
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/patient/dashboard" element={<PatientDashboard />} />
-          
-        </Routes>
-       <Footer/>
-      </BrowserRouter>
-    </div>
-  )
+            
+            
+          </>  
+        }  
+      />  
+        
+      <Route path='/Login' element={<Login/>}/>  
+      <Route path='/SignUp' element={<SignUp/>}/>  
+      <Route path='/About' element={<About/>}/>  
+      <Route path='/Contact' element={<Contact/>}/>  
+
+      <Route path="/admin/dashboard" element={<AdminDashboard />} />  
+      <Route path="/patient/dashboard" element={<PatientDashboard />} />  
+        
+    </Routes>  
+   <Footer/>  
+  </BrowserRouter>  
+</div>
+
+)
 }
 
 export default App
+
