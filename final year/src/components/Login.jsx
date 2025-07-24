@@ -13,34 +13,37 @@ export default function LoginPage() {
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
-    e.preventDefault();
-    setError(""); // clear previous error
+  e.preventDefault();
+  setError(""); // clear previous error
 
-    try {
-      const res = await axios.post("http://localhost:5000/api/login", {
-        email,
-        password,
-      });
+  try {
+    const res = await axios.post("http://localhost:5000/api/login", {
+      email,
+      password,
+    });
 
-      const user = res.data.user;
-      const token = res.data.token;
+    const user = res.data.user;
+    const token = res.data.token;
 
-      // Save token and user to localStorage
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
+    // Save token and user to localStorage
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
 
-      // Navigate based on role
-      if (user.role === "admin") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/patient/dashboard");
-      }
-    } catch (err) {
-      const errorMsg =
-        err.response?.data?.msg || "Login failed. Please check your credentials.";
-      setError(errorMsg);
+    // Navigate based on role ✅✅✅
+    if (user.role === "admin") {
+      navigate("/admin/dashboard");
+    } else if (user.role === "doctor") {
+      navigate("/doctor/dashboard");
+    } else {
+      navigate("/patient/dashboard");
     }
-  };
+  } catch (err) {
+    const errorMsg =
+      err.response?.data?.msg || "Login failed. Please check your credentials.";
+    setError(errorMsg);
+  }
+};
+
 
   return (
     <section className="min-h-screen flex">

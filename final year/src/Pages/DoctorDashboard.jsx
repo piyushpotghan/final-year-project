@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function PatientDashboard() {
+export default function DoctorDashboard() {
   return (
     <div className="p-10">
-      <h1 className="text-4xl font-bold text-purple-700">Patient Dashboard</h1>
-      <p className="mt-4 text-lg">Welcome, Patient!</p>
+      <h1 className="text-4xl font-bold text-green-700">Doctor Dashboard</h1>
+      <p className="mt-4 text-lg">Welcome, Doctor!</p>
       <button
         onClick={() => {
           localStorage.clear();
