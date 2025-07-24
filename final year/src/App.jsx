@@ -16,6 +16,14 @@ import Map from './Pages/Map';
 import TrustedBy from './Pages/TrustedBy'
 import AdminDashboard from './Pages/AdminDashboard'
 import PatientDashboard from './Pages/PatientDashboard'
+<<<<<<< HEAD
+=======
+import DoctorDashboard from './Pages/DoctorDashboard';
+import ProtectedRoute from './components/ProtectedRoute';
+
+
+
+>>>>>>> c3c3a6b962cf7f264a786121c5d06f8c65dfaba6
 
 const App = () => {
 return (
@@ -42,6 +50,7 @@ return (
 
             <UserTestimonials/>  
 
+<<<<<<< HEAD
             
             
           </>  
@@ -62,6 +71,30 @@ return (
 </div>
 
 )
+=======
+          <Route path="/admin/dashboard" element={
+            <ProtectedRoute role="admin">
+              <AdminDashboard />
+            </ProtectedRoute>
+          } />         
+
+          <Route path="/doctor/dashboard" element={
+            <ProtectedRoute role="doctor">
+              <DoctorDashboard />
+            </ProtectedRoute>
+          } />         
+
+          <Route path="/patient/dashboard" element={
+            <ProtectedRoute role="patient">
+              <PatientDashboard />
+            </ProtectedRoute>
+          } />          
+        </Routes>
+       <Footer/>
+      </BrowserRouter>
+    </div>
+  )
+>>>>>>> c3c3a6b962cf7f264a786121c5d06f8c65dfaba6
 }
 
 export default App

@@ -1,16 +1,7 @@
 import React from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
- 
-const items = [
-  { name: 'Dashboard', icon: '🏠' },
-  { name: 'Patients', icon: '👤' },
-  { name: 'Appointments', icon: '📅' },
-  { name: 'Doctors', icon: '🩺' },
-  { name: 'Reports', icon: '📊' },
-  { name: 'Settings', icon: '⚙️' },
-];
+
 export default function AdminDashboard() {
+<<<<<<< HEAD
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -37,8 +28,12 @@ export default function AdminDashboard() {
         ))}
       </nav>
     </aside>
+=======
+  return (
+    <div className="p-10">
+      <h1 className="text-4xl font-bold text-blue-700">Admin Dashboard</h1>
+      <p className="mt-4 text-lg">Welcome, Admin!</p>
+>>>>>>> c3c3a6b962cf7f264a786121c5d06f8c65dfaba6
     </div>
   );
 }
-
-
