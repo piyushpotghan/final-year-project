@@ -1,3 +1,4 @@
+
 import React from 'react'
 import Navbar from './Navbar'
 import Hero from './Hero'
@@ -16,62 +17,47 @@ import Map from './Pages/Map';
 import TrustedBy from './Pages/TrustedBy'
 import AdminDashboard from './Pages/AdminDashboard'
 import PatientDashboard from './Pages/PatientDashboard'
-<<<<<<< HEAD
-=======
 import DoctorDashboard from './Pages/DoctorDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 
 
 
->>>>>>> c3c3a6b962cf7f264a786121c5d06f8c65dfaba6
 
 const App = () => {
-return (
-<div>
+  return (
+    <div>
+      
+      <BrowserRouter>
+       <Navbar/>
+        <Routes>
+          
+          {/* <Route path='/' element={<Hero/>}/> */}
+          <Route
+            path='/'
+            element={
+              <>
+                <Hero />
+                <HealthConcern/> 
+                {/* <TrustedBy/> */}
+                <div id="whyus">
+                <TrustedBy/>
+                   <WhyUs/>
+                </div>
+                <Map/>
 
-<BrowserRouter>  
-   <Navbar/>  
-    <Routes>  
-        
-      {/* <Route path='/' element={<Hero/>}/> */}  
-      <Route  
-        path='/'  
-        element={  
-          <>  
-            <Hero />  
-            <HealthConcern/>   
-            {/* <TrustedBy/> */}  
-            <div id="whyus">  
-            <TrustedBy/>  
-               <WhyUs/>  
-            </div>  
-            <Map/> 
-            
+                <UserTestimonials/>
 
-            <UserTestimonials/>  
+              
+              
+              </>
+            }
+          />
+          
+          <Route path='/Login' element={<Login/>}/>
+          <Route path='/SignUp' element={<SignUp/>}/>
+          <Route path='/About' element={<About/>}/>
+          <Route path='/Contact' element={<Contact/>}/>
 
-<<<<<<< HEAD
-            
-            
-          </>  
-        }  
-      />  
-        
-      <Route path='/Login' element={<Login/>}/>  
-      <Route path='/SignUp' element={<SignUp/>}/>  
-      <Route path='/About' element={<About/>}/>  
-      <Route path='/Contact' element={<Contact/>}/>  
-
-      <Route path="/admin/dashboard" element={<AdminDashboard />} />  
-      <Route path="/patient/dashboard" element={<PatientDashboard />} />  
-        
-    </Routes>  
-   <Footer/>  
-  </BrowserRouter>  
-</div>
-
-)
-=======
           <Route path="/admin/dashboard" element={
             <ProtectedRoute role="admin">
               <AdminDashboard />
@@ -94,8 +80,6 @@ return (
       </BrowserRouter>
     </div>
   )
->>>>>>> c3c3a6b962cf7f264a786121c5d06f8c65dfaba6
 }
 
 export default App
-
