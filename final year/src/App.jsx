@@ -1,5 +1,4 @@
-
-import React from 'react'
+import React from 'react';
 import Navbar from './Navbar'
 import Hero from './Hero'
 import "slick-carousel/slick/slick.css";
@@ -19,6 +18,7 @@ import AdminDashboard from './Pages/AdminDashboard'
 import PatientDashboard from './Pages/PatientDashboard'
 import DoctorDashboard from './Pages/DoctorDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import BookAppointment from './patientdash/BookAppoinment';
 
 
 
@@ -74,7 +74,12 @@ const App = () => {
             <ProtectedRoute role="patient">
               <PatientDashboard />
             </ProtectedRoute>
-          } />          
+          } />     
+
+          <Route path="/book-appointment" element={<BookAppointment/>}/>
+
+          
+
         </Routes>
        <Footer/>
       </BrowserRouter>
