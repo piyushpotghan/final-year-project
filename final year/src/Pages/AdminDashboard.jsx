@@ -1,5 +1,5 @@
 import React from 'react';
-import Sidebar from '../dashboard/sidebar';
+
 
 export default function AdminDashboard() {
   return (
@@ -7,7 +7,7 @@ export default function AdminDashboard() {
     <div className="p-10">
       <h1 className="text-4xl font-bold text-blue-700 pt-10">Admin Dashboard</h1>
       <p className="mt-4 text-lg">Welcome, Admin!</p>
-<Sidebar/>
+
        <button
         onClick={() => {
           localStorage.clear();

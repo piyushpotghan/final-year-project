@@ -6,7 +6,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<Dashboard />} />
-      <Route path="/Appointments" element={<Appointments />} />
+      <Route path="/Appointments " element={<Appointments />} />
       <Route path="/patients" element={<Patients />} />
       <Route path="/doctors" element={<Doctors />} />
     </Routes>

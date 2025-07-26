@@ -9,9 +9,13 @@ export default function Hero() {
         
         {/* Left Content */}
         <div>
-          <h1 className="text-4xl md:text-8xl font-bold text-gray-800 leading-tight">
-            Your Health Our <span className="text-blue-600">Priority</span>
-          </h1>
+     <h1 className="text-4xl md:text-8xl font-bold text-gray-800 leading-tight flex flex-col">
+  <span>Your</span>
+  <span className="text-blue-600 hover:text-blue-800 transition-colors duration-200">Health</span>
+  <span>Our</span>
+  <span className="text-blue-600 hover:text-blue-800 transition-colors duration-200">Commitment.</span>
+</h1>
+
 
           <p className="text-gray-600 mt-4 text-lg">
             Trusted healthcare service at your fingertips. Find experienced doctors and get instant booking confirmation.
