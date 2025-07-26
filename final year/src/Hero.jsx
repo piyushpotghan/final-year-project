@@ -9,9 +9,9 @@ export default function Hero() {
         
         {/* Left Content */}
         <div>
-     <h1 className="text-4xl md:text-8xl font-bold text-gray-800 leading-tight flex flex-col">
+     <h1 className="text-7xl pt-0 pl-4 md:text-7xl font-bold text-gray-800 leading-tight flex flex-col">
   <span>Your</span>
-  <span className="text-blue-600 hover:text-blue-800 transition-colors duration-200">Health</span>
+  <span className=" text-blue-600 hover:text-blue-800 transition-colors duration-200">Health</span>
   <span>Our</span>
   <span className="text-blue-600 hover:text-blue-800 transition-colors duration-200">Commitment.</span>
 </h1>
