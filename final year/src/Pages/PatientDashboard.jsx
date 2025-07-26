@@ -5,7 +5,7 @@ export default function PatientDashboard() {
     
     <div className="p-20">
       <h1 className="text-4xl font-bold text-purple-700">Patient Dashboard</h1>
-      <p className="mt-4 text-lg">Welcome, Patient!</p>
+      <p className="mt-4 text-lg">Welcome, Patient!</p>z
       <button
         onClick={() => {
           localStorage.clear();
