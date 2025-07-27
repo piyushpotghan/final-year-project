@@ -48,7 +48,7 @@ const doctorsData = [
     name: "Dr. Emily Carter",
     specialty: "Neurologist",
     experience: "10 years",
-    fee: "₹800 -₹1000",
+    fee: "$₹800 -₹1000",
     available: ["Neuro Clinic, Texas", "Online Zoom Sessions"],
     rating: 4.6,
     category: "Neurologist",
@@ -101,14 +101,18 @@ const doctorsData = [
     experience: 5,
     fee: "₹800 -₹1000 ",
     available: ["Online Consultation", "Office at Doctor Hospitals, California"],
-     rating: 4.9,
-     category: "General Physician",
-     education: "PhD in Clinical Psychology, UCLA",
+    rating: 4.9,
+    category: "General Physician",
+    reviews: [
+      { name: "Walia Tilda", rating: 4.9, comment: "Highly recommended!" },
+      { name: "Ethen Park", rating: 5.0, comment: "Truly transformative help." },
+      { name: "Sofia Arena", rating: 4.8, comment: "Empowering therapy." },
+    ],
+    education: "PhD in Clinical Psychology, UCLA",
     certificate: "Certified CBT Therapist, APA",
     availability: "Monday - Saturday, 10:00 - 12:00 & 14:00 - 20:00",
   },
-
-   {
+  {
     id: 7,
     name: "Dr.Vishal Naik",
     specialty: "Paediatrician",
@@ -238,26 +242,12 @@ const doctorsData = [
     certificate: "Certified Anesthesiologist  ",
     availability: "Monday - Saturday, 10:00 - 12:00 & 14:00 - 20:00",
   },
-  {
-    id: 14,
-    name: "Dr.Anant Gaikwad",
-    specialty: "Opthalmology",
-    experience: 18 ,
-    fee: " ₹1000 -₹1500 ",
-    available: ["Online Consultation", "Office at Doctor Hospitals, India , Pune "],
-    rating: 5,
-    category: "Opthalmology",
-    reviews: [
-      { name: "Satyendra lal", rating: 4.9, comment: "Highly recommended!" },
-      { name: "jai kumar ", rating: 5.0, comment: "Truly transformative help." },
-      { name: "Anant Kumar", rating: 4.8, comment: "Empowering therapy." },
-    ],
-    education: "MD in Opthalmology , AIIMS New Delhi ",
-    certificate: "Certified Opthalmology  ",
-    availability: "Monday - Saturday, 10:00 - 12:00 & 14:00 - 20:00",
-  }
 
-    
+
+
+
+
+
     
 
 ];

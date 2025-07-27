@@ -3,15 +3,15 @@ import React from "react";
 const categories = [
   "All",
   "Psychology",
-  "Pediatrician",
+  "Paediatrician",
   "Traumatology",
-  "Opthalmology",
+  "Radiologist",
   "Dermatologist",
   "Cardiologist",
   "Orthopedics",
   "General Physician",
   "Neurologist",
-  
+  "Anesthesiologist",
 ];
 
 const CategoryFilter = ({ category, setCategory }) => {
