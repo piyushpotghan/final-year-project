@@ -1,5 +1,5 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // ✅ useNavigate instead of Link
+import { useNavigate } from "react-router-dom"; //
 
 const DoctorDetail = ({ doctor }) => {
   const navigate = useNavigate();
@@ -8,7 +8,7 @@ const DoctorDetail = ({ doctor }) => {
     return <p className="text-center text-gray-500">No doctor selected.</p>;
 
   const handleBookAppointment = () => {
-    navigate("/book-appointment", { state: { doctor } }); // ✅ pass doctor via state
+    navigate("/book-appointment", { state: { doctor } }); //
   };
 
   return (
@@ -21,7 +21,7 @@ const DoctorDetail = ({ doctor }) => {
       <p className="text-sm">Certificate: {doctor.certificate}</p>
       <p className="text-sm">Available: {doctor.availability}</p>
 
-      {/* ✅ Book Appointment Button */}
+      {/*  Book Appointment Button */}
       <div className="mt-4">
         <button
           onClick={handleBookAppointment}
@@ -31,7 +31,7 @@ const DoctorDetail = ({ doctor }) => {
         </button>
       </div>
 
-      {/* ✅ Doctor Reviews Section */}
+      {/*  Doctor Reviews Section */}
       {doctor.reviews && doctor.reviews.length > 0 && (
         <div className="mt-6">
           <h3 className="text-lg font-semibold mb-3">Doctor's Reviews</h3>
