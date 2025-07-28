@@ -27,12 +27,12 @@ const LayoutWrapper = () => {
     "/admin/dashboard",
     "/doctor/dashboard",
     "/patient/dashboard",
-    "/components/Login",
-    "/components/SignUp",
+    '/Login',
+    '/SignUp',
   ];
 
   const shouldHideLayout = hideNavbarFooterRoutes.some(path =>
-  location.pathname.toLowerCase().startsWith(path)
+  location.pathname.toLowerCase().startsWith(path.toLowerCase())
   );
 
   return (
