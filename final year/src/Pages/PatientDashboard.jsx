@@ -5,7 +5,6 @@ import SearchBar from '../patientdash/SearchBar';
 import CategoryFilter from '../patientdash/CategoryFilter';
 import DoctorList from '../patientdash/DoctorList';
 import DoctorDetail from '../patientdash/DoctorDetail';
-import Footer from '../components/Footer';
 
 const doctorsData = [
   {
@@ -467,7 +466,6 @@ export default function PatientDashboard() {
           </div>
         </div>
 
-        <Footer />
       </div>
     </div>
   );

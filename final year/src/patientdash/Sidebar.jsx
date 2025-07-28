@@ -33,7 +33,7 @@ const Sidebar = () => {
         <div className="flex flex-col items-center space-y-6 mt-8 text-gray-500 text-xl">
           <FaHome
             className="hover:text-cyan-500 cursor-pointer"
-            onClick={() => navigate("/patient/dashboard")}
+            onClick={() => navigate("/")}
           />
           <FaCalendarCheck
             className="hover:text-cyan-500 cursor-pointer"
