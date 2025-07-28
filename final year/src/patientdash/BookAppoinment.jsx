@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { FaUser, FaEnvelope, FaCalendarAlt, FaClock, FaStickyNote } from "react-icons/fa";
 
 const BookAppointment = () => {
-  const location = useLocation();
+  const { state } = useLocation();
+  const doctor = state?.doctor;
   const navigate = useNavigate();
-  const doctor = location.state?.doctor;
 
   const [form, setForm] = useState({
     name: "",
@@ -14,93 +15,87 @@ const BookAppointment = () => {
     reason: "",
   });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
+  const handleChange = e => setForm({ ...form, [e.target.name]: e.target.value });
+  const handleSubmit = e => {
     e.preventDefault();
-    alert('Appointment booked with ${doctor?.name || "the doctor"}!'); // ✅ Fixed interpolation
+    alert(`Appointment booked with ${doctor?.name || "the doctor"}!`);
     console.log("Form Data:", form);
     navigate("/patient/dashboard");
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-md">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-white flex items-center justify-center p-12">
+      <div className="w-full max-w-2xl bg-white p-8 rounded-2xl shadow-xl space-y-6">
         {doctor ? (
           <div className="mb-6 border-b pb-4">
-            <h2 className="text-2xl font-bold text-gray-800 mb-1">
-              Booking with {doctor.name}
-            </h2>
-            <p className="text-sm text-gray-600">{doctor.specialty}</p>
-            <p className="text-sm text-gray-500 mt-1">
-              Available: {doctor.availability}
-            </p>
-            <p className="text-sm text-gray-500">Consultation Fee: {doctor.fee}</p>
+            <h2 className="text-3xl font-semibold text-blue-800">{doctor.name}</h2>
+            <p className="text-lg text-gray-600">{doctor.specialty}</p>
+            <p className="text-sm text-gray-500 mt-1">Available: {doctor.availability}</p>
+            <p className="text-sm text-gray-500">Fee: {doctor.fee}</p>
           </div>
         ) : (
-          <div className="mb-6">
-            <h2 className="text-xl font-semibold text-red-500">
-              No doctor selected!
-            </h2>
-            <p className="text-gray-600 mt-2">
-              Please go back to the dashboard and select a doctor to book.
-            </p>
+          <div className="mb-6 text-center">
+            <h2 className="text-xl font-semibold text-red-500">No doctor selected!</h2>
+            <p className="text-gray-600 mt-2">Please select a doctor first.</p>
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            className="w-full border p-2 rounded"
-            value={form.name}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            className="w-full border p-2 rounded"
-            value={form.email}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="date"
-            name="date"
-            className="w-full border p-2 rounded"
-            value={form.date}
-            onChange={handleChange}
-            required
-          />
-          <input
-            type="time"
-            name="time"
-            className="w-full border p-2 rounded"
-            value={form.time}
-            onChange={handleChange}
-            required
-          />
-          <textarea
-            name="reason"
-            placeholder="Reason for appointment"
-            className="w-full border p-2 rounded"
-            value={form.reason}
-            onChange={handleChange}
-            required
-          ></textarea>
-
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-            disabled={!doctor}
-          >
-            Confirm Appointment
-          </button>
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {/* Name */}
+          <div className="relative col-span-1 sm:col-span-2">
+            <FaUser className="absolute left-3 top-3 text-gray-400" />
+            <input
+              name="name" value={form.name} onChange={handleChange}
+              placeholder="Your Name" required
+              className="w-full pl-10 pr-4 py-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+            />
+          </div>
+          {/* Email */}
+          <div className="relative">
+            <FaEnvelope className="absolute left-3 top-3 text-gray-400" />
+            <input
+              type="email" name="email" value={form.email} onChange={handleChange}
+              placeholder="Your Email" required
+              className="w-full pl-10 pr-4 py-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+            />
+          </div>
+          {/* Date */}
+          <div className="relative">
+            <FaCalendarAlt className="absolute left-3 top-3 text-gray-400" />
+            <input
+              type="date" name="date" value={form.date} onChange={handleChange} required
+              className="w-full pl-10 pr-4 py-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+            />
+          </div>
+          {/* Time */}
+          <div className="relative">
+            <FaClock className="absolute left-3 top-3 text-gray-400" />
+            <input
+              type="time" name="time" value={form.time} onChange={handleChange} required
+              className="w-full pl-10 pr-4 py-3 border rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+            />
+          </div>
+          {/* Reason */}
+          <div className="relative sm:col-span-2">
+            <FaStickyNote className="absolute left-3 top-3 text-gray-400" />
+            <textarea
+              name="reason" value={form.reason} onChange={handleChange}
+              placeholder="Reason for appointment" required
+              className="w-full pl-10 pr-4 py-3 border rounded-lg h-28 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition"
+            />
+          </div>
+          {/* Submit */}
+          <div className="sm:col-span-2">
+            <button
+              type="submit"
+              disabled={!doctor}
+              className={`w-full py-3 text-white rounded-lg transition ${
+                doctor ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"
+              }`}
+            >
+              Confirm Appointment
+            </button>
+          </div>
         </form>
       </div>
     </div>
