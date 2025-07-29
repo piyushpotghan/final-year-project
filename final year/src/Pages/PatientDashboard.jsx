@@ -429,22 +429,19 @@ export default function PatientDashboard() {
   };
 
   return (
-    <div className="flex bg-gray-50 min-h-screen">
+    <div className="flex bg-blue-50 min-h-screen">
       {/* Sidebar */}
       <Sidebar />
 
       {/* Main Content */}
       <div className="flex flex-col flex-1 min-h-screen pl-20">
         {/* Top Header + Logout */}
+        
         <div className="p-6 pt-20">
+         
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-2xl font-bold text-gray-700">Book Appointment</h1>
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded-md"
-            >
-              Logout
-            </button>
+            <h1 className="text-2xl font-bold  text-gray-700">Trusted Appointments, Tailored for You</h1>
+            
           </div>
 
           <SearchBar />
