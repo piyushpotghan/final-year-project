@@ -57,7 +57,7 @@ const BookAppointment = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded shadow">
+    <div className="max-w-xl mx-auto p-6 bg-white rounded shadow pt-28">
       {doctor ? (
         <div className="mb-6 border-b pb-4">
           <h2 className="text-xl font-semibold">Booking Appointment with:</h2>
