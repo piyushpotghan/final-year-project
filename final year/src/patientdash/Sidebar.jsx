@@ -33,7 +33,7 @@ const Sidebar = () => {
         </div>
 
         {/* Navigation Icons */}
-        <div className="flex flex-col items-center space-y-6 mt-8 text-xl">
+        <div className="flex flex-col items-center space-y-6 mt-8 text-xl pt-36">
           <FaHome
             className= {`cursor-pointer hover:text-cyan-500 ${isActive("/patient/dashboard")}`}
             onClick={() => navigate("/patient/dashboard")}
@@ -46,14 +46,7 @@ const Sidebar = () => {
             className={`cursor-pointer hover:text-cyan-500 ${isActive("/doctors")}`}
             onClick={() => navigate("/doctors")}
           />
-          <FaCommentDots
-            className={`cursor-pointer hover:text-cyan-500 ${isActive("/reviews")}`}
-            onClick={() => navigate("/reviews")}
-          />
-          <FaCog
-            className={`cursor-pointer hover:text-cyan-500 ${isActive("/settings")}`}
-            onClick={() => navigate("/settings")}
-          />
+          
         </div>
       </div>
 
