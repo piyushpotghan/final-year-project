@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { Link } from 'react-router-dom'
-// import { login } from "../utils/Auth"; // Make sure this file exists and is imported
-
+import { Link } from 'react-router-dom';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -13,37 +11,38 @@ export default function LoginPage() {
   const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
-  e.preventDefault();
-  setError(""); // clear previous error
+    e.preventDefault();
+    setError(""); // clear previous error
 
-  try {
-    const res = await axios.post("http://localhost:5000/api/login", {
-      email,
-      password,
-    });
+    try {
+      const res = await axios.post("http://localhost:5000/api/login", {
+        email,
+        password,
+      });
 
-    const user = res.data.user;
-    const token = res.data.token;
+      const user = res.data.user;
+      const token = res.data.token;
 
-    // Save token and user to localStorage
-    localStorage.setItem("token", token);
-    localStorage.setItem("user", JSON.stringify(user));
+      // ✅ Save token and user to localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("userEmail", user.email); // ✅ Store user's email
 
-    // Navigate based on role ✅✅✅
-    if (user.role === "admin") {
-      navigate("/admin/dashboard");
-    } else if (user.role === "doctor") {
-      navigate("/doctor/dashboard");
-    } else {
-      navigate("/patient/dashboard");
+      // ✅ Navigate based on role
+      if (user.role === "admin") {
+        navigate("/admin/dashboard");
+      } else if (user.role === "doctor") {
+        navigate("/doctor/dashboard");
+      } else {
+        navigate("/patient/dashboard");
+      }
+
+    } catch (err) {
+      const errorMsg =
+        err.response?.data?.msg || "Login failed. Please check your credentials.";
+      setError(errorMsg);
     }
-  } catch (err) {
-    const errorMsg =
-      err.response?.data?.msg || "Login failed. Please check your credentials.";
-    setError(errorMsg);
-  }
-};
-
+  };
 
   return (
     <section className="min-h-screen  flex">
@@ -107,10 +106,17 @@ export default function LoginPage() {
               <a href="#" className="hover:underline">Forgot?</a>
               <Link to="/SignUp" className="hover:underline">Sign Up</Link>      
             </div>
+
+            <div className="doctor-login-link" style={{ marginTop: "20px" }}>
+          <p>Are you a doctor?</p>
+          <Link to="/logindoctor">
+            <button style={{ padding: "8px 16px", cursor: "pointer" }}>Login as Doctor</button>
+          </Link>
+        </div>
+
           </form>
         </div>
       </div>
     </section>
   );
 }
-

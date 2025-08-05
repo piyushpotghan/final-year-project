@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Login from './components/Login';
+import LoginDoctor from './doctordash/LoginDoctor';
 import SignUp from './components/SignUp';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -19,6 +20,11 @@ import PatientDashboard from './Pages/PatientDashboard';
 import DoctorDashboard from './Pages/DoctorDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
 import BookAppointment from './patientdash/BookAppoinment';
+import { AppointmentProvider } from './data/AppointmentContext';
+import DoctorsList from './admindash/Doctorlist';
+import { DoctorProvider } from './data/DoctorContext';
+import AddDoctor from './admindash/AddDoctor';
+import DoctorProfile from './doctordash/DoctorProfile';
 
 const LayoutWrapper = () => {
   const location = useLocation();
@@ -27,17 +33,16 @@ const LayoutWrapper = () => {
     "/admin/dashboard",
     "/doctor/dashboard",
     "/patient/dashboard",
-    '/Login',
-    '/SignUp',
+    "/login",
+    "/signup",
   ];
 
   const shouldHideLayout = hideNavbarFooterRoutes.some(path =>
-  location.pathname.toLowerCase().startsWith(path.toLowerCase())
+    location.pathname.toLowerCase().startsWith(path.toLowerCase())
   );
 
   return (
     <>
-      {/* Show Navbar only if not in dashboard */}
       {!shouldHideLayout && <Navbar />}
 
       <Routes>
@@ -56,12 +61,13 @@ const LayoutWrapper = () => {
             </>
           }
         />
-        <Route path='/Login' element={<Login />} />
-        <Route path='/SignUp' element={<SignUp />} />
-        <Route path='/About' element={<About />} />
-        <Route path='/Contact' element={<Contact />} />
+        <Route path='/login' element={<Login />} />
+        <Route path="/logindoctor" element={ <LoginDoctor/> }/>
+        <Route path='/signup' element={<SignUp />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
 
-        <Route path="/admin/dashboard" element={
+        <Route path="/admin/dashboard/*" element={
           <ProtectedRoute role="admin">
             <AdminDashboard />
           </ProtectedRoute>
@@ -77,9 +83,13 @@ const LayoutWrapper = () => {
           </ProtectedRoute>
         } />
         <Route path="/book-appointment" element={<BookAppointment />} />
+        <Route path="/my-appointments" element={<PatientDashboard />} />
+        <Route path="/admin/dashboard/doctors-list" element={<DoctorsList />} />
+        <Route path="/admin/dashboard/add-doctor" element={<AddDoctor />} />
+        <Route path="/doctordashboard/*" element={ <DoctorDashboard/> } />
+       
       </Routes>
 
-      {/* Show Footer only if not in dashboard */}
       {!shouldHideLayout && <Footer />}
     </>
   );
@@ -87,9 +97,13 @@ const LayoutWrapper = () => {
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <LayoutWrapper />
-    </BrowserRouter>
+    <AppointmentProvider>
+      <DoctorProvider> {/* ✅ Wrap karla DoctorContext */}
+        <BrowserRouter>
+          <LayoutWrapper />
+        </BrowserRouter>
+      </DoctorProvider>
+    </AppointmentProvider>
   );
 };
 
