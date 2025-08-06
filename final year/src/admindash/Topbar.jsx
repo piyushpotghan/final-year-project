@@ -17,13 +17,6 @@ const Topbar = () => {
           AD
         </div>
 
-        {/* Logout Button */}
-        <button
-          className="flex items-center gap-2 bg-red-500 text-white px-4 py-2 rounded-lg shadow hover:bg-red-600 hover:shadow-md transition-all duration-300"
-        >
-          <LogOut size={18} />
-          <span className="text-sm font-medium">Logout</span>
-        </button>
       </div>
     </div>
   );
