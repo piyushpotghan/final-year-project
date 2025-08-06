@@ -1,14 +1,15 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
-import { DoctorContext } from "../data/DoctorContext";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const AddDoctor = () => {
-  const { addDoctor } = useContext(DoctorContext);
   const navigate = useNavigate();
 
   const [doctor, setDoctor] = useState({
     name: "",
+    email: "",
+    password: "", // Optional: Or hardcode "123456"
     specialty: "",
     experience: "",
     fee: "",
@@ -24,32 +25,50 @@ const AddDoctor = () => {
     setDoctor({ ...doctor, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const newDoctor = {
-      ...doctor,
-      id: Date.now(),
-      available: doctor.available.split(",").map(p => p.trim()),
-      reviews: []
-    };
+    try {
+      const payload = {
+        ...doctor,
+        available: doctor.available.split(",").map((item) => item.trim())
+      };
 
-    addDoctor(newDoctor);
-    alert("Doctor added successfully!");
-    navigate("/admin/dashboard/doctors-list");
+      const token = localStorage.getItem("token"); // Or use your auth context
+      
+      const res = await axios.post("http://localhost:5000/api/admin/add-doctor", payload, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      console.log(res.data); // Use it like this
+      alert(res.data.message);
+
+      alert("Doctor added successfully!");
+      navigate("/admin/dashboard/doctors-list");
+    } catch (err) {
+  if (err.response) {
+    console.error("Server response error:", err.response.data);
+    alert(err.response.data.error || "Failed to add doctor.");
+  } else {
+    console.error("Network/client error:", err.message);
+    alert("Something went wrong.");
+  }
+}
   };
 
   return (
     <div className="flex min-h-screen bg-gray-100">
       <Sidebar />
-
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-2xl bg-white rounded-lg shadow-lg p-8">
           <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">Add New Doctor</h2>
-
           <form onSubmit={handleSubmit} className="space-y-5">
             {[
               { label: "Name", name: "name" },
+              { label: "Email", name: "email" },
+              { label: "Password", name: "password" },
               { label: "Specialty", name: "specialty" },
               { label: "Experience (years)", name: "experience" },
               { label: "Fee (e.g. ₹800)", name: "fee" },
