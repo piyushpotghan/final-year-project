@@ -51,8 +51,18 @@
 const express = require("express");
 const router = express.Router();
 const { registerUser, loginUser } = require("../controllers/AuthController");
+const verifyToken = require("../middleware/AuthMiddleware");
+
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
+
+// ✅ Protected Route
+router.get("/profile", verifyToken, async (req, res) => {
+  res.status(200).json({
+    msg: "Welcome to your profile!",
+    user: req.user, // from JWT decoded payload
+  });
+});
 
 module.exports = router;
