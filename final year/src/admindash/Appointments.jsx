@@ -1,19 +1,20 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { FaTrashAlt } from "react-icons/fa";
 
 const AdminAppointments = () => {
   const [appointments, setAppointments] = useState([]);
 
-  useEffect(() => {
-    const fetchAppointments = async () => {
-      try {
-        const res = await axios.get("http://localhost:5000/api/appointments/all");
-        setAppointments(res.data);
-      } catch (err) {
-        console.error("Failed to fetch appointments", err);
-      }
-    };
+  const fetchAppointments = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/appointments/all");
+      setAppointments(res.data);
+    } catch (err) {
+      console.error("Failed to fetch appointments", err);
+    }
+  };
 
+  useEffect(() => {
     fetchAppointments();
   }, []);
 
@@ -33,73 +34,75 @@ const AdminAppointments = () => {
     }
   };
 
-  const statusBadge = (status) => {
-    const base = "px-3 py-1 rounded-full text-sm font-semibold ";
-    if (status === "Approved") return base + "bg-green-100 text-green-700";
-    if (status === "Pending") return base + "bg-yellow-100 text-yellow-700";
-    if (status === "Cancelled") return base + "bg-red-100 text-red-700";
-    return base + "bg-gray-100 text-gray-700";
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/appointments/delete/${id}`);
+      alert("Appointment deleted");
+      fetchAppointments();
+    } catch (error) {
+      console.error("Error deleting appointment", error);
+      alert("Failed to delete");
+    }
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-10">
-        All Appointments
-      </h2>
+    <div className="p-6">
+      <h2 className="text-2xl font-bold text-blue-700 mb-6 text-center uppercase">Appointments</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {appointments.length > 0 ? (
-          appointments
-            .slice()
-            .reverse()
-            .map((appt) => (
-              <div
-                key={appt._id}
-                className="bg-white shadow-md border border-gray-200 rounded-xl p-5 transition-all hover:shadow-xl"
-              >
-                {/* 👇 Patient name on a separate bold line */}
-                <h3 className="text-xl font-bold text-blue-700 mb-1">
-                  {appt.patientName}
-                </h3>
-
-                {/* 👇 Doctor name below patient */}
-                <p className="text-xl font-medium text-gray-600 mb-1">
-                  with  {appt.doctorName}
-                </p>
-
-                <div className="text-gray-700 text-sm font-medium space-y-1">
-                  <p><span className="font-semibold">Date:</span> {appt.date}</p>
-                  <p><span className="font-semibold">Time:</span> {appt.time}</p>
-                  <p><span className="font-semibold">Reason:</span> {appt.reason}</p>
-                  <p>
-                    <span className="font-semibold">Status:</span>{" "}
-                    <span className={statusBadge(appt.status)}>{appt.status}</span>
-                  </p>
-                </div>
-
-                <div className="mt-4">
-                  <label className="text-sm font-semibold mr-2">Change Status:</label>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse rounded-lg overflow-hidden shadow-sm">
+          <thead className="bg-blue-600 text-white text-sm">
+            <tr>
+              <th className="px-4 py-2 text-left">Patient</th>
+              <th className="px-4 py-2 text-left">Doctor</th>
+              <th className="px-4 py-2 text-left">Date</th>
+              <th className="px-4 py-2 text-left">Time</th>
+              <th className="px-4 py-2 text-left">Email</th>
+              <th className="px-4 py-2 text-left">Reason</th>
+              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="text-sm">
+            {appointments.slice().reverse().map((appt) => (
+              <tr key={appt._id} className="border-b hover:bg-gray-50 transition">
+                <td className="px-4 py-2 font-semibold">{appt.patientName}</td>
+                <td className="px-4 py-2">{appt.doctorName}</td>
+                <td className="px-4 py-2">{appt.date}</td>
+                <td className="px-4 py-2">{appt.time}</td>
+                <td className="px-4 py-2">{appt.patientEmail}</td>
+                <td className="px-4 py-2 italic">{appt.reason}</td>
+                <td className="px-4 py-2">
                   <select
                     value={appt.status}
                     onChange={(e) => handleStatusChange(appt._id, e.target.value)}
-                    className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="text-xs border rounded px-2 py-1 bg-white"
                   >
                     <option value="Pending">Pending</option>
                     <option value="Approved">Approved</option>
                     <option value="Cancelled">Cancelled</option>
                   </select>
-                </div>
-              </div>
-            ))
-        ) : (
-          <p className="text-center col-span-full text-gray-500 text-lg italic">
-            No appointments found.
-          </p>
-        )}
+                </td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => handleDelete(appt._id)}
+                    className="text-red-600 hover:text-red-800 flex items-center gap-1 text-sm"
+                  >
+                    <FaTrashAlt className="text-xs" /> Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
 };
 
 export default AdminAppointments;
+
 

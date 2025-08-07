@@ -82,5 +82,22 @@ router.put("/:id/status", async (req, res) => {
   }
 });
 
+// ✅ DELETE single appointment by _id
+router.delete("/delete/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await Appointment.findByIdAndDelete(id);
+
+    if (!result) {
+      return res.status(404).json({ message: "Appointment not found" });
+    }
+
+    res.status(200).json({ message: "Appointment deleted successfully" });
+  } catch (err) {
+    console.error("Delete error:", err);
+    res.status(500).json({ message: "Failed to delete appointment" });
+  }
+});
 
 module.exports = router;

@@ -25,6 +25,7 @@ const BookAppointment = () => {
 
     const appointmentData = {
       patientName: form.name,
+      patientEmail: userData.email,
       doctorName: doctor.name,
       doctorEmail: doctor.email,
       email: userData.email,
@@ -35,7 +36,7 @@ const BookAppointment = () => {
     };
 
     try {
-      await axios.post("http://localhost:5000/api/appointments/create", appointmentData); // ✅ use full data
+      await axios.post("http://localhost:5000/api/appointments/create", appointmentData);
       navigate("/my-appointments");
     } catch (error) {
       console.error("Booking failed:", error);
@@ -43,51 +44,58 @@ const BookAppointment = () => {
   };
 
   return (
-    <div className="p-6 max-w-xl mx-auto">
-      <h2 className="text-lg font-semibold">
-        Booking Appointment with: <br />
-        <strong>{doctor.name}</strong> — {doctor.specialization}
-      </h2>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
+          Book Appointment
+        </h2>
+        <p className="text-center text-gray-600 text-sm mb-4">
+          with <span className="font-semibold text-blue-600">{doctor.name}</span> ({doctor.specialization})
+        </p>
 
-      <form onSubmit={handleSubmit} className="mt-4 space-y-4">
-        <input
-          type="text"
-          name="name"
-          value={form.name}
-          onChange={handleChange}
-          placeholder="Your Name"
-          className="border p-2 w-full"
-          required
-        />
-        <input
-          type="date"
-          name="date"
-          value={form.date}
-          onChange={handleChange}
-          className="border p-2 w-full"
-          required
-        />
-        <input
-          type="time"
-          name="time"
-          value={form.time}
-          onChange={handleChange}
-          className="border p-2 w-full"
-          required
-        />
-        <input
-          type="text"
-          name="reason"
-          value={form.reason}
-          onChange={handleChange}
-          placeholder="Reason for Appointment"
-          className="border p-2 w-full"
-          required
-        />
-        <button type="submit" className="bg-blue-500 text-white px-4 py-2">
-          Confirm Appointment
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Your Name"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="date"
+            name="date"
+            value={form.date}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="time"
+            name="time"
+            value={form.time}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <textarea
+            name="reason"
+            value={form.reason}
+            onChange={handleChange}
+            placeholder="Reason for Appointment"
+            rows="3"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-300"
+          >
+            Confirm Appointment
+          </button>
+        </form>
+      </div>
     </div>
   );
 };
