@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import doctorsData from "../data/doctorsData";
+import doctorsData from "../data/doctorsdata";
 import { DoctorContext } from "../data/DoctorContext";
 
 const LoginDoctor = () => {

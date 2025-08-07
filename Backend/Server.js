@@ -10,6 +10,13 @@ app.use(express.json());
 const authRoutes = require("./routes/Auth");
 app.use("/api", authRoutes);
 
+const adminRoutes = require("./routes/adminRoutes"); // ✅ this must match filename
+app.use("/api", adminRoutes); // ✅ must be this line
+
+const doctorRoutes = require("./routes/DoctorRoutes");
+app.use("/api", doctorRoutes);
+
+
 // MongoDB connection
 mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,

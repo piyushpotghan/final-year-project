@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import { DoctorContext } from "../data/DoctorContext";
-import doctorsData from "../data/doctorsData";
+import doctorsData from "../data/doctorsdata";
 
 const DoctorProfile = () => {
   const { loggedInDoctorEmail } = useContext(DoctorContext);
-
   const doctor = doctorsData.find(d => d.email === loggedInDoctorEmail);
 
   if (!doctor) {
@@ -16,13 +15,29 @@ const DoctorProfile = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-2xl p-6 border border-gray-200">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">{doctor.name}</h2>
-      <div className="space-y-2 text-gray-700">
-        <p><span className="font-semibold">Speciality:</span> {doctor.speciality}</p>
-        <p><span className="font-semibold">Experience:</span> {doctor.experience}</p>
-        <p><span className="font-semibold">Email:</span> {doctor.email}</p>
-        <p><span className="font-semibold">Phone:</span> {doctor.phone}</p>
+    <div className="flex justify-center mt-10 px-4">
+      <div className="w-full max-w-md bg-white shadow-xl rounded-2xl border border-gray-200 overflow-hidden hover:shadow-2xl transition duration-300">
+        <div className="bg-blue-600 py-5 px-6">
+          <h2 className="text-3xl font-bold text-white text-center">{doctor.name}</h2>
+          <p className="text-blue-100 text-center text-sm mt-1">{doctor.speciality}</p>
+        </div>
+
+        <div className="p-6 space-y-4 text-gray-700 text-base">
+          <div className="flex justify-between">
+            <span className="font-medium">Experience:</span>
+            <span>{doctor.experience}</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="font-medium">Email:</span>
+            <span className="text-blue-600">{doctor.email}</span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="font-medium">Phone:</span>
+            <span>{doctor.phone}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
