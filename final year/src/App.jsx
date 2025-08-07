@@ -87,6 +87,7 @@ const LayoutWrapper = () => {
         <Route path="/admin/dashboard/doctors-list" element={<DoctorsList />} />
         <Route path="/admin/dashboard/add-doctor" element={<AddDoctor />} />
         <Route path="/doctordashboard/*" element={ <DoctorDashboard/> } />
+        
        
       </Routes>
 

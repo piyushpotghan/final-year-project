@@ -1,5 +1,4 @@
-// src/data/DoctorContext.js
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import doctorsData from "./doctorsdata"; // Import your static data
 
 export const DoctorContext = createContext();
@@ -7,6 +6,14 @@ export const DoctorContext = createContext();
 export const DoctorProvider = ({ children }) => {
   const [loggedInDoctorEmail, setLoggedInDoctorEmail] = useState(null);
   const [doctors, setDoctors] = useState(doctorsData);
+
+  // ✅ Auto set doctor email from localStorage on app load
+  useEffect(() => {
+    const storedDoctor = JSON.parse(localStorage.getItem("doctor"));
+    if (storedDoctor?.email) {
+      setLoggedInDoctorEmail(storedDoctor.email);
+    }
+  }, []);
 
   // ✅ Add Doctor function
   const addDoctor = (newDoctor) => {
@@ -19,7 +26,7 @@ export const DoctorProvider = ({ children }) => {
       value={{
         doctors,
         setDoctors,
-        addDoctor, // ✅ EXPOSE this
+        addDoctor,
         loggedInDoctorEmail,
         setLoggedInDoctorEmail
       }}
