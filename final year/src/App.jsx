@@ -89,7 +89,6 @@ const LayoutWrapper = () => {
         <Route path="/admin/dashboard/doctors-list" element={<DoctorsList />} />
         <Route path="/admin/dashboard/add-doctor" element={<AddDoctor />} />
         <Route path="/doctordashboard/*" element={ <DoctorDashboard/> } />
-        {/* ...existing code... */}
       </Routes>
 
       {/* Show Chatbot on all pages except dashboard/login/signup routes */}

@@ -1,104 +1,115 @@
 import React, { useEffect, useState, useContext } from "react";
 import { DoctorContext } from "../data/DoctorContext";
+import axios from "axios";
 
 const DoctorAppointments = () => {
   const [appointments, setAppointments] = useState([]);
-  const { loggedInDoctorEmail } = useContext(DoctorContext); // ✅ Get email only
+  const { loggedInDoctorEmail } = useContext(DoctorContext);
 
   useEffect(() => {
-    loadAppointments();
+    const fetchAppointments = async () => {
+      if (!loggedInDoctorEmail) return;
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/api/appointments/doctor?email=${loggedInDoctorEmail}`
+        );
+        setAppointments(res.data);
+      } catch (error) {
+        console.error("Error fetching doctor appointments:", error);
+      }
+    };
+
+    fetchAppointments();
   }, [loggedInDoctorEmail]);
 
-  const loadAppointments = () => {
-    const data = JSON.parse(localStorage.getItem("appointments") || "[]");
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await axios.put(`http://localhost:5000/api/appointments/${id}/status`, {
+        status: newStatus,
+      });
 
-    if (!loggedInDoctorEmail) return;
-
-    const filtered = data.filter(
-      (appt) => appt.doctorEmail === loggedInDoctorEmail
-    );
-    setAppointments(filtered.reverse());
+      setAppointments((prev) =>
+        prev.map((appt) =>
+          appt._id === id ? { ...appt, status: newStatus } : appt
+        )
+      );
+    } catch (err) {
+      console.error("Error updating status:", err);
+    }
   };
 
-  const handleStatusChange = (index, newStatus) => {
-    const allAppointments = JSON.parse(localStorage.getItem("appointments") || "[]");
-    const current = appointments[index];
-
-    const updated = allAppointments.map((appt) =>
-      appt.name === current.name &&
-      appt.dateTime === current.dateTime &&
-      appt.doctorEmail === loggedInDoctorEmail
-        ? { ...appt, status: newStatus }
-        : appt
-    );
-
-    localStorage.setItem("appointments", JSON.stringify(updated));
-    loadAppointments(); // reload
+  const getStatusClass = (status) => {
+    switch (status) {
+      case "Approved":
+        return "bg-green-100 text-green-800 border-green-300";
+      case "Cancelled":
+        return "bg-red-100 text-red-800 border-red-300";
+      case "Pending":
+      default:
+        return "bg-yellow-100 text-yellow-800 border-yellow-300";
+    }
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h2 className="text-3xl font-bold text-blue-700 mb-6 text-center">
-        Your Appointments
+    <div className="px-6 py-10 bg-gradient-to-b from-blue-50 to-white min-h-screen">
+      <h2 className="text-4xl font-extrabold text-blue-700 mb-10 text-center tracking-tight">
+        🩺 Your Appointments
       </h2>
 
       {appointments.length === 0 ? (
-        <p className="text-center text-gray-600">No appointments found.</p>
+        <p className="text-center text-gray-600 text-lg">No appointments found.</p>
       ) : (
-        <div className="space-y-5 max-h-[70vh] overflow-y-auto scrollbar-thin scrollbar-thumb-blue-400 pr-2">
-          {appointments.map((appt, index) => (
-            <div
-              key={index}
-              className="bg-white p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-200"
-            >
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-lg font-semibold text-gray-800">
-                    👤 Patient:{" "}
-                    <span className="font-normal text-gray-700">{appt.name}</span>
-                  </p>
-                  <p className="text-gray-700 mt-1">
-                    🩺 Specialty: <span className="font-medium">{appt.speciality}</span>
-                  </p>
-                </div>
-
-                <div>
-                  <p className="text-gray-700">
-                    📅 Date & Time: <span className="font-medium">{appt.dateTime}</span>
-                  </p>
-                  <p className="text-gray-700 mt-1">
-                    📌 Status:{" "}
-                    <span
-                      className={`font-semibold px-2 py-1 rounded text-white ${
-                        appt.status === "Approved"
-                          ? "bg-green-500"
-                          : appt.status === "Cancelled"
-                          ? "bg-red-500"
-                          : "bg-yellow-500"
-                      }`}
-                    >
-                      {appt.status}
-                    </span>
-                  </p>
+        <div className="space-y-6 max-h-[70vh] overflow-y-auto pr-2">
+          {appointments
+            .slice()
+            .reverse()
+            .map((appt) => (
+              <div
+                key={appt._id}
+                className="bg-white shadow-lg rounded-2xl p-6 border border-gray-200 hover:shadow-2xl transition duration-300"
+              >
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-1">
+                      👤 {appt.patientName}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-1">
+                      📧 {appt.email}
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      📅 {appt.date} at 🕒 {appt.time}
+                    </p>
+                  </div>
+                  <div className="flex flex-col justify-between">
+                    <div>
+                      <span
+                        className={`inline-block px-4 py-1 rounded-full text-sm font-semibold border ${getStatusClass(
+                          appt.status
+                        )}`}
+                      >
+                        {appt.status}
+                      </span>
+                    </div>
+                    <div className="mt-4">
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">
+                        Update Status:
+                      </label>
+                      <select
+                        className="w-full px-4 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        value={appt.status}
+                        onChange={(e) =>
+                          handleStatusChange(appt._id, e.target.value)
+                        }
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Cancelled">Cancelled</option>
+                      </select>
+                    </div>
+                  </div>
                 </div>
               </div>
-
-              <div className="mt-4 flex flex-wrap items-center gap-3">
-                <label className="text-sm font-medium text-gray-600">
-                  Update Status:
-                </label>
-                <select
-                  className="border border-gray-300 rounded-md px-3 py-1 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                  value={appt.status}
-                  onChange={(e) => handleStatusChange(index, e.target.value)}
-                >
-                  <option value="Pending">Pending</option>
-                  <option value="Approved">Approved</option>
-                  <option value="Cancelled">Cancelled</option>
-                </select>
-              </div>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>

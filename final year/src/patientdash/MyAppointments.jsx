@@ -1,80 +1,87 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { AppointmentContext } from '../data/AppointmentContext';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 
 const MyAppointments = () => {
-  const { appointments } = useContext(AppointmentContext);
-  const [userAppointments, setUserAppointments] = useState([]);
+  const [appointments, setAppointments] = useState([]);
 
   useEffect(() => {
-    const userData = localStorage.getItem('user');
-    let userEmail = '';
+    const fetchAppointments = async () => {
+      const userData = JSON.parse(localStorage.getItem("user") || "{}");
+      const email = userData.email;
 
-    if (userData) {
-      const parsedUser = JSON.parse(userData);
-      userEmail = parsedUser.email;
-    }
+      try {
+        const res = await axios.get(`http://localhost:5000/api/appointments?email=${email}`);
+        setAppointments(Array.isArray(res.data) ? res.data : []);
+      } catch (err) {
+        console.error("Failed to fetch appointments", err);
+        setAppointments([]);
+      }
+    };
 
-    if (userEmail) {
-      const filtered = appointments.filter((apt) => apt.email === userEmail);
-      setUserAppointments(filtered);
-    }
-  }, [appointments]);
+    fetchAppointments();
+  }, []);
+
+  const statusBadge = (status) => {
+    const base = "px-3 py-1 rounded-full text-sm font-bold";
+    if (status === "Approved") return `${base} bg-green-100 text-green-700`;
+    if (status === "Pending") return `${base} bg-yellow-100 text-yellow-800`;
+    if (status === "Cancelled") return `${base} bg-red-100 text-red-700`;
+    return `${base} bg-gray-100 text-gray-700`;
+  };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h2 className="text-xl md:text-2xl font-bold text-blue-700 mb-4">My Appointments</h2>
+    <div className="max-w-6xl mx-auto px-6 py-10">
+      <h2 className="text-3xl font-extrabold text-blue-800 text-center mb-8 tracking-wide uppercase">
+        My Appointments
+      </h2>
 
-      {userAppointments.length === 0 ? (
-        <p className="text-gray-600">No appointments found for your account.</p>
-      ) : (
-        <div className="overflow-x-auto shadow rounded-lg border border-gray-200">
-          <table className="min-w-full bg-white text-sm md:text-base">
-            <thead className="bg-gray-100 text-gray-700 font-semibold">
-              <tr>
-                <th className="text-left p-3 border-b">Doctor</th>
-                <th className="text-left p-3 border-b">Date</th>
-                <th className="text-left p-3 border-b">Time</th>
-                <th className="text-left p-3 border-b">Reason</th>
-                <th className="text-left p-3 border-b">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {userAppointments.map((apt, index) => {
-                const [date, time] = apt.dateTime
-                  ? apt.dateTime.split(' ')
-                  : [apt.date, apt.time];
-
-                const statusClass = {
-                  Confirmed: 'bg-green-500',
-                  Cancelled: 'bg-red-500',
-                  Pending: 'bg-yellow-500',
-                };
-
-                return (
+      <div className="overflow-x-auto shadow-lg rounded-lg">
+        <table className="min-w-full table-auto bg-white border ">
+          <thead className="bg-blue-600 text-white uppercase text-sm leading-normal">
+            <tr>
+              <th className="py-3 px-6 text-left font-bold">Doctor</th>
+              <th className="py-3 px-6 text-left font-bold">Date</th>
+              <th className="py-3 px-6 text-left font-bold">Time</th>
+              <th className="py-3 px-6 text-left font-bold">Reason</th>
+              <th className="py-3 px-6 text-left font-bold">Status</th>
+            </tr>
+          </thead>
+          <tbody className="text-gray-800 text-sm font-medium divide-y divide-gray-200">
+            {appointments.length > 0 ? (
+              appointments
+                .slice()
+                .reverse()
+                .map((appt, index) => (
                   <tr
                     key={index}
-                    className="hover:bg-gray-50 transition duration-200 ease-in-out"
+                    className="hover:bg-blue-50 transition duration-150"
                   >
-                    <td className="p-3 border-b">{apt.doctorName}</td>
-                    <td className="p-3 border-b">{date}</td>
-                    <td className="p-3 border-b">{time}</td>
-                    <td className="p-3 border-b">{apt.reason}</td>
-                    <td className="p-3 border-b">
-                      <span
-                        className={`px-3 py-1 rounded-full text-white text-xs font-medium ${statusClass[apt.status] || 'bg-gray-400'}`}
-                      >
-                        {apt.status}
-                      </span>
+                    <td className="py-4 px-6">{appt.doctorName}</td>
+                    <td className="py-4 px-6">{appt.date}</td>
+                    <td className="py-4 px-6">{appt.time}</td>
+                    <td className="py-4 px-6">{appt.reason}</td>
+                    <td className="py-4 px-6">
+                      <span className={statusBadge(appt.status)}>{appt.status}</span>
                     </td>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
-      )}
+                ))
+            ) : (
+              <tr>
+                <td
+                  colSpan="5"
+                  className="text-center py-6 text-gray-500 italic"
+                >
+                  No appointments found.
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
 export default MyAppointments;
+
+

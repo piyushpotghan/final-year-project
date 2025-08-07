@@ -1,13 +1,17 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
-
 
 function Chatbot() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
   const messagesEndRef = useRef(null);
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages, open]);
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -24,13 +28,6 @@ function Chatbot() {
       console.error(err);
     }
   };
-
-  // Auto-scroll to bottom when messages change and chat is open
-  useEffect(() => {
-    if (open && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages, open]);
 
   return (
     <>
