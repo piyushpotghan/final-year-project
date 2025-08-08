@@ -1,79 +1,108 @@
-import React, { useContext } from 'react';
-import { AppointmentContext } from '../data/AppointmentContext';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { FaTrashAlt } from "react-icons/fa";
 
-const Appointments = () => {
-  const { appointments, setAppointments } = useContext(AppointmentContext);
+const AdminAppointments = () => {
+  const [appointments, setAppointments] = useState([]);
 
-  const handleStatusChange = (index, newStatus) => {
-    const updated = [...appointments];
-    updated[index].status = newStatus;
-    localStorage.setItem("appointments", JSON.stringify(updated));
-    setAppointments(updated);
+  const fetchAppointments = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/appointments/all");
+      setAppointments(res.data);
+    } catch (err) {
+      console.error("Failed to fetch appointments", err);
+    }
   };
 
-  const getStatusBadge = (status) => {
-    let baseStyle = "px-2 py-1 rounded text-xs font-semibold text-white";
-    let color = "bg-yellow-500"; // Default
-    if (status === "Confirmed") color = "bg-green-500";
-    if (status === "Cancelled") color = "bg-red-500";
-    return <span className={`${baseStyle} ${color}`}>{status}</span>;
+  useEffect(() => {
+    fetchAppointments();
+  }, []);
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await axios.put(`http://localhost:5000/api/appointments/${id}/status`, {
+        status: newStatus,
+      });
+
+      setAppointments(prev =>
+        prev.map(appt =>
+          appt._id === id ? { ...appt, status: newStatus } : appt
+        )
+      );
+    } catch (err) {
+      console.error("Failed to update status", err);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const confirmDelete = window.confirm("Are you sure you want to delete this appointment?");
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`http://localhost:5000/api/appointments/delete/${id}`);
+      alert("Appointment deleted");
+      fetchAppointments();
+    } catch (error) {
+      console.error("Error deleting appointment", error);
+      alert("Failed to delete");
+    }
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <h2 className="text-3xl font-bold text-gray-800 mb-6">All Appointments</h2>
+    <div className="p-6">
+      <h2 className="text-2xl font-bold text-blue-700 mb-6 text-center uppercase">Appointments</h2>
 
-      {appointments.length === 0 ? (
-        <div className="text-gray-500 text-center text-lg mt-10">
-          🚫 No appointments found.
-        </div>
-      ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full table-auto bg-white shadow-md rounded-lg overflow-hidden">
-            <thead className="bg-blue-100 text-blue-800 text-sm font-semibold">
-              <tr>
-                <th className="px-4 py-3 text-left">Name</th>
-                <th className="px-4 py-3 text-left">Email</th>
-                <th className="px-4 py-3 text-left">Date</th>
-                <th className="px-4 py-3 text-left">Time</th>
-                <th className="px-4 py-3 text-left">Doctor</th>
-                <th className="px-4 py-3 text-left">Reason</th>
-                <th className="px-4 py-3 text-left">Status</th>
-                <th className="px-4 py-3 text-left">Change Status</th>
+      <div className="overflow-x-auto">
+        <table className="min-w-full border-collapse rounded-lg overflow-hidden shadow-sm">
+          <thead className="bg-blue-600 text-white text-sm">
+            <tr>
+              <th className="px-4 py-2 text-left">Patient</th>
+              <th className="px-4 py-2 text-left">Doctor</th>
+              <th className="px-4 py-2 text-left">Date</th>
+              <th className="px-4 py-2 text-left">Time</th>
+              <th className="px-4 py-2 text-left">Email</th>
+              <th className="px-4 py-2 text-left">Reason</th>
+              <th className="px-4 py-2 text-left">Status</th>
+              <th className="px-4 py-2 text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody className="text-sm">
+            {appointments.slice().reverse().map((appt) => (
+              <tr key={appt._id} className="border-b hover:bg-gray-50 transition">
+                <td className="px-4 py-2 font-semibold">{appt.patientName}</td>
+                <td className="px-4 py-2">{appt.doctorName}</td>
+                <td className="px-4 py-2">{appt.date}</td>
+                <td className="px-4 py-2">{appt.time}</td>
+                <td className="px-4 py-2">{appt.patientEmail}</td>
+                <td className="px-4 py-2 italic">{appt.reason}</td>
+                <td className="px-4 py-2">
+                  <select
+                    value={appt.status}
+                    onChange={(e) => handleStatusChange(appt._id, e.target.value)}
+                    className="text-xs border rounded px-2 py-1 bg-white"
+                  >
+                    <option value="Pending">Pending</option>
+                    <option value="Approved">Approved</option>
+                    <option value="Cancelled">Cancelled</option>
+                  </select>
+                </td>
+                <td className="px-4 py-2">
+                  <button
+                    onClick={() => handleDelete(appt._id)}
+                    className="text-red-600 hover:text-red-800 flex items-center gap-1 text-sm"
+                  >
+                    <FaTrashAlt className="text-xs" /> Delete
+                  </button>
+                </td>
               </tr>
-            </thead>
-            <tbody className="text-sm text-gray-700 divide-y divide-gray-200">
-              {appointments.map((apt, index) => (
-                <tr
-                  key={index}
-                  className="hover:bg-gray-50 transition duration-200"
-                >
-                  <td className="px-4 py-3">{apt.name}</td>
-                  <td className="px-4 py-3">{apt.email}</td>
-                  <td className="px-4 py-3">{apt.date}</td>
-                  <td className="px-4 py-3">{apt.time}</td>
-                  <td className="px-4 py-3">{apt.doctorName}</td>
-                  <td className="px-4 py-3">{apt.reason}</td>
-                  <td className="px-4 py-3">{getStatusBadge(apt.status)}</td>
-                  <td className="px-4 py-3">
-                    <select
-                      value={apt.status}
-                      onChange={(e) => handleStatusChange(index, e.target.value)}
-                      className="bg-gray-100 border border-gray-300 text-gray-800 text-sm px-2 py-1 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Confirmed">Confirmed</option>
-                      <option value="Cancelled">Cancelled</option>
-                    </select>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
-export default Appointments;
+export default AdminAppointments;
+
+

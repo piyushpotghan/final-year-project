@@ -1,20 +1,13 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { AppointmentContext } from "../data/AppointmentContext";
+import axios from "axios";
 
 const BookAppointment = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const doctor = location.state?.doctor;
-  const { setAppointments } = useContext(AppointmentContext);
 
-  // ✅ Get email from stored user object
-  const userData = localStorage.getItem("user");
-  let userEmail = "";
-  if (userData) {
-    const parsed = JSON.parse(userData);
-    userEmail = parsed.email;
-  }
+  const userData = JSON.parse(localStorage.getItem("user") || "{}");
 
   const [form, setForm] = useState({
     name: "",
@@ -27,85 +20,82 @@ const BookAppointment = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!doctor || !userEmail) {
-      alert("Missing doctor or user information.");
-      return;
-    }
-
-    const appointment = {
-      name: form.name,
-      email: userEmail, // ✅ actual logged-in user's email
-      reason: form.reason,
+    const appointmentData = {
+      patientName: form.name,
+      patientEmail: userData.email,
       doctorName: doctor.name,
-      doctorEmail:doctor.email,
-      specialty: doctor.specialty,
-      dateTime: `${form.date} ${form.time}`,
+      doctorEmail: doctor.email,
+      email: userData.email,
+      date: form.date,
+      time: form.time,
+      reason: form.reason,
       status: "Pending",
-      createdAt: new Date().toISOString(),
     };
 
-    const existing = JSON.parse(localStorage.getItem("appointments") || "[]");
-    existing.push(appointment);
-    localStorage.setItem("appointments", JSON.stringify(existing));
-    setAppointments(existing);
-
-    alert("Appointment booked successfully");
-    navigate("/my-appointments");
+    try {
+      await axios.post("http://localhost:5000/api/appointments/create", appointmentData);
+      navigate("/my-appointments");
+    } catch (error) {
+      console.error("Booking failed:", error);
+    }
   };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded shadow pt-28">
-      {doctor ? (
-        <div className="mb-6 border-b pb-4">
-          <h2 className="text-xl font-semibold">Booking Appointment with:</h2>
-          <p className="text-md text-gray-700 mt-1">
-            <strong>Dr. {doctor.name}</strong> — {doctor.specialty}
-          </p>
-          <p className="text-sm text-gray-500">{doctor.availability}</p>
-        </div>
-      ) : (
-        <p className="text-red-600">No doctor data found.</p>
-      )}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
+      <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
+        <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
+          Book Appointment
+        </h2>
+        <p className="text-center text-gray-600 text-sm mb-4">
+          with <span className="font-semibold text-blue-600">{doctor.name}</span> ({doctor.specialization})
+        </p>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          name="name"
-          placeholder="Your Name"
-          required
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        {/* Removed email input – it comes from login */}
-        <input
-          name="date"
-          type="date"
-          required
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        <input
-          name="time"
-          type="time"
-          required
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        <textarea
-          name="reason"
-          placeholder="Reason for Appointment"
-          onChange={handleChange}
-          className="w-full border p-2 rounded"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-        >
-          Confirm Appointment
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            type="text"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            placeholder="Your Name"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="date"
+            name="date"
+            value={form.date}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <input
+            type="time"
+            name="time"
+            value={form.time}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <textarea
+            name="reason"
+            value={form.reason}
+            onChange={handleChange}
+            placeholder="Reason for Appointment"
+            rows="3"
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition duration-300"
+          >
+            Confirm Appointment
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -2,8 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 require("dotenv").config();
+const connectDB = require("./config/db");
+const Appointment = require("./models/Appointments");
+
 
 const app = express();
+connectDB;
 app.use(cors());
 app.use(express.json());
 
@@ -15,6 +19,10 @@ app.use("/api", adminRoutes); // ✅ must be this line
 
 const doctorRoutes = require("./routes/DoctorRoutes");
 app.use("/api", doctorRoutes);
+ 
+const appointmentRoutes = require("./routes/AppointmentRoutes");
+app.use("/api/appointments", appointmentRoutes);
+app.use("/api/Appointment", Appointment);
 
 
 // MongoDB connection
@@ -25,8 +33,10 @@ mongoose.connect(process.env.MONGO_URI, {
 .then(() => console.log("MongoDB connected"))
 .catch((err) => console.log(err));
 
+
 // Routes
 app.use("/api/contact", require("./routes/contactRoutes"));
+app.use("/api", require("./routes/chatbotRoutes"));
 
 
 app.listen(process.env.PORT, () => {
