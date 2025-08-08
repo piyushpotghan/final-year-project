@@ -40,7 +40,12 @@ const faq = [
   { q: /mental health|stress|anxiety|depression/i, a: "Mental health is important. If you feel stressed, anxious, or depressed, talk to a mental health professional or counselor." },
 ];
 
-router.post('/chat', (req, res) => {
+
+const axios = require('axios');
+// Make sure to set GEMINI_API_KEY in your environment variables or .env file
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
+
+router.post('/chat', async (req, res) => {
   const { message } = req.body;
   if (!message) return res.status(400).json({ response: "Please ask a health or website-related question." });
 
@@ -48,7 +53,33 @@ router.post('/chat', (req, res) => {
   if (found) {
     return res.json({ response: found.a });
   }
-  return res.json({ response: "Sorry, I can only answer basic health and website-related questions. Please consult a doctor for more information." });
+
+  // If not found in FAQ, use Gemini 2.0 Flash
+  try {
+    const geminiRes = await axios.post(
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent',
+      {
+        contents: [{ role: 'user', parts: [{ text: message }] }],
+        generationConfig: {
+          temperature: 0.85, // More human-like
+          topP: 1,
+          topK: 1,
+          maxOutputTokens: 256
+        }
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          'x-goog-api-key': GEMINI_API_KEY
+        }
+      }
+    );
+    const geminiText = geminiRes.data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I could not generate a response.';
+    res.json({ response: geminiText });
+  } catch (err) {
+    console.error('Gemini API error:', err.response?.data || err.message);
+    res.status(500).json({ response: 'Sorry, there was an error talking to Gemini.' });
+  }
 });
 
 module.exports = router;
