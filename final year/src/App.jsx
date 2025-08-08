@@ -5,7 +5,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Login from './components/Login';
-import LoginDoctor from './doctordash/LoginDoctor';
+// import LoginDoctor from './doctordash/LoginDoctor';
 import SignUp from './components/SignUp';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -64,7 +64,7 @@ const LayoutWrapper = () => {
           }
         />
         <Route path='/login' element={<Login />} />
-        <Route path="/logindoctor" element={ <LoginDoctor/> }/>
+        {/* <Route path="/logindoctor" element={ <LoginDoctor/> }/> */}
         <Route path='/signup' element={<SignUp />} />
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />

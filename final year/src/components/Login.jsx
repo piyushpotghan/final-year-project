@@ -106,17 +106,6 @@ export default function LoginPage() {
               <a href="#" className="hover:underline">Forgot?</a>
               <Link to="/SignUp" className="hover:underline">Sign Up</Link>      
             </div>
-
-            <div className="doctor-login-link mt-5 text-center">
-  <p className="text-lg font-semibold text-gray-800 mb-3">Are you a doctor?</p>
-  <Link to="/logindoctor">
-    <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg shadow-md transition duration-300">
-      Login as Doctor
-    </button>
-  </Link>
-</div>
-
-
           </form>
         </div>
       </div>
