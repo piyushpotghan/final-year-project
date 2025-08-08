@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import Sidebar from '../patientdash/Sidebar';
 import SearchBar from '../patientdash/SearchBar';
@@ -6,26 +6,36 @@ import CategoryFilter from '../patientdash/CategoryFilter';
 import DoctorList from '../patientdash/DoctorList';
 import DoctorDetail from '../patientdash/DoctorDetail';
 import MyAppointments from '../patientdash/MyAppointments';
-import { DoctorContext } from '../data/DoctorContext'; // 👈 import context
 import Navbar from '../Navbar';
+import axios from 'axios';
 
 export default function PatientDashboard() {
-  const { doctors } = useContext(DoctorContext); // 👈 get doctors from context
+  const [doctors, setDoctors] = useState([]);
   const [selectedDoctor, setSelectedDoctor] = useState(null);
   const [category, setCategory] = useState("All");
   const navigate = useNavigate();
   const location = useLocation();
 
+  // ✅ Fetch doctors from backend
   useEffect(() => {
-    if (doctors && doctors.length > 0) {
-      setSelectedDoctor(doctors[0]); // set initial doctor when context loads
-    }
-  }, [doctors]);
+    const fetchDoctors = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/doctors");
+        setDoctors(res.data);
+        if (res.data.length > 0) {
+          setSelectedDoctor(res.data[0]);
+        }
+      } catch (err) {
+        console.error("Error fetching doctors:", err);
+      }
+    };
+    fetchDoctors();
+  }, []);
 
   const filteredDoctors =
     category === "All"
-      ? doctors || [] // fallback to empty array
-      : (doctors || []).filter((doc) => doc.category === category);
+      ? doctors
+      : doctors.filter((doc) => doc.category === category);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -38,11 +48,9 @@ export default function PatientDashboard() {
 
   return (
     <div className="flex bg-gray-50 min-h-screen">
-      {/* Sidebar */}
-      <Navbar/>
+      <Navbar />
       <Sidebar />
 
-      {/* Main Content */}
       <div className="flex flex-col flex-1 min-h-screen pl-20">
         <div className="p-6 pt-20">
           <div className="flex justify-between items-center mb-4">
@@ -51,8 +59,12 @@ export default function PatientDashboard() {
                 ? "My Appointments"
                 : "Book Appointment"}
             </h1>
-
-           
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded-md"
+            >
+              Logout
+            </button>
           </div>
 
           {location.pathname === "/my-appointments" ? (
