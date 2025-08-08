@@ -39,7 +39,7 @@ export default function PatientDashboard() {
 
   const handleLogout = () => {
     localStorage.clear();
-    window.location.href = "/Login";
+    window.location.href = "/";
   };
 
   const handleBookAppointment = (doctor) => {

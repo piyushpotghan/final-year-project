@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login"); // Make sure /login route exists
+    navigate("/"); // Redirect to home page after logout
   };
 
   return (
