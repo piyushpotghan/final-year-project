@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
+// Register
 exports.registerUser = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
@@ -18,6 +19,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
+// Login
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -27,16 +29,16 @@ exports.loginUser = async (req, res) => {
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
-    // const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
     const token = jwt.sign(
       {
         id: user._id,
         email: user.email,
-        role: user.role  // ✅ Add role to token
+        role: user.role
       },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "7d" } // ✅ Longer expiry for persistent login
     );
+
     res.json({
       token,
       user: {
@@ -48,5 +50,21 @@ exports.loginUser = async (req, res) => {
     });
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+};
+
+// ✅ Verify token (for persistent login check)
+exports.verifyToken = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1]; // Bearer <token>
+    if (!token) return res.status(401).json({ msg: "No token provided" });
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select("-password");
+    if (!user) return res.status(404).json({ msg: "User not found" });
+
+    res.json({ user });
+  } catch (err) {
+    res.status(401).json({ msg: "Invalid or expired token" });
   }
 };

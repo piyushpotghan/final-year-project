@@ -7,6 +7,7 @@ import DoctorList from '../patientdash/DoctorList';
 import DoctorDetail from '../patientdash/DoctorDetail';
 import MyAppointments from '../patientdash/MyAppointments';
 import { DoctorContext } from '../data/DoctorContext'; // 👈 import context
+import Navbar from '../Navbar';
 
 export default function PatientDashboard() {
   const { doctors } = useContext(DoctorContext); // 👈 get doctors from context
@@ -38,6 +39,7 @@ export default function PatientDashboard() {
   return (
     <div className="flex bg-gray-50 min-h-screen">
       {/* Sidebar */}
+      <Navbar/>
       <Sidebar />
 
       {/* Main Content */}
@@ -50,12 +52,7 @@ export default function PatientDashboard() {
                 : "Book Appointment"}
             </h1>
 
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded-md"
-            >
-              Logout
-            </button>
+           
           </div>
 
           {location.pathname === "/my-appointments" ? (

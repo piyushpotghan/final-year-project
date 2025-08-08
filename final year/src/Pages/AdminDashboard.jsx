@@ -11,6 +11,7 @@ import DashboardStats from '../admindash/DashboardStats';
 import LatestBookings from '../admindash/LatestBooking';
 import doctorsData from '../data/doctorsData';
 import { AppointmentContext } from '../data/AppointmentContext';
+import Navbar from '../Navbar';
 
 const AdminDashboard = () => {
   const totalDoctors = doctorsData.length;
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await fetch('http:// 192.168.138.151/api/patients'); // 🔁 Replace with your real API
+        const response = await fetch('http://localhost5173/api/patients'); // 🔁 Replace with your real API
         const data = await response.json();
         setTotalPatients(data.length);
       } catch (error) {
@@ -36,6 +37,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex h-screen">
+      <Navbar/>
       <Sidebar />
 
       <div className="flex flex-col flex-1 bg-gray-50">

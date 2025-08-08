@@ -47,7 +47,7 @@ const LayoutWrapper = () => {
       {!shouldHideLayout && <Navbar />}
 
       <Routes>
-        {/* ...existing code... */}
+{/* ...existing code... */}
         <Route
           path='/'
           element={
@@ -99,7 +99,7 @@ const LayoutWrapper = () => {
 };
 
 const App = () => {
-  return (
+    return (
     <AppointmentProvider>
       <DoctorProvider> {/* ✅ Wrap karla DoctorContext */}
         <BrowserRouter>

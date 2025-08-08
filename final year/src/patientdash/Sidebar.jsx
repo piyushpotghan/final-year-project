@@ -42,10 +42,7 @@ const Sidebar = () => {
             className={`cursor-pointer hover:text-cyan-500 ${isActive("/my-appointments")}`}
             onClick={() => navigate("/my-appointments")}
           />
-          <FaUserMd
-            className={`cursor-pointer hover:text-cyan-500 ${isActive("/doctors")}`}
-            onClick={() => navigate("/doctors")}
-          />
+         
           
         </div>
       </div>
