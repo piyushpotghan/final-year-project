@@ -50,15 +50,19 @@
 // module.exports = router;
 const express = require("express");
 const router = express.Router();
-const { registerUser, loginUser } = require("../controllers/AuthController");
-const verifyToken = require("../middleware/AuthMiddleware");
+const { registerUser, loginUser, verifyToken } = require("../controllers/AuthController");
+const verifyTokenMiddleware = require("../middleware/AuthMiddleware");
 
-
+// ✅ Register & Login routes
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 
-// ✅ Protected Route
-router.get("/profile", verifyToken, async (req, res) => {
+// ✅ Persistent login check (frontend will call this on page load)
+// This uses the controller function directly (which verifies token and responds)
+router.get("/verify", verifyToken);
+
+// ✅ Protected profile route using middleware
+router.get("/profile", verifyTokenMiddleware, async (req, res) => {
   res.status(200).json({
     msg: "Welcome to your profile!",
     user: req.user, // from JWT decoded payload

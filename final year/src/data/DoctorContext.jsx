@@ -1,11 +1,32 @@
 import React, { createContext, useState, useEffect } from "react";
-import doctorsData from "./doctorsdata"; // Import your static data
+import axios from "axios";
 
 export const DoctorContext = createContext();
 
 export const DoctorProvider = ({ children }) => {
   const [loggedInDoctorEmail, setLoggedInDoctorEmail] = useState(null);
-  const [doctors, setDoctors] = useState(doctorsData);
+  const [doctors, setDoctors] = useState([]);
+
+  // ✅ Fetch doctors from backend
+  const fetchDoctors = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/api/doctors");
+      setDoctors(res.data);
+    } catch (error) {
+      console.error("Error fetching doctors:", error);
+    }
+  };
+
+  // ✅ Add Doctor to backend & refresh list
+  const addDoctor = async (newDoctor) => {
+    try {
+      await axios.post("http://localhost:5000/api/doctors", newDoctor);
+      await fetchDoctors(); // refresh list after adding
+      console.log("Doctor added:", newDoctor);
+    } catch (error) {
+      console.error("Error adding doctor:", error);
+    }
+  };
 
   // ✅ Auto set doctor email from localStorage on app load
   useEffect(() => {
@@ -13,13 +34,8 @@ export const DoctorProvider = ({ children }) => {
     if (storedDoctor?.email) {
       setLoggedInDoctorEmail(storedDoctor.email);
     }
+    fetchDoctors(); // get doctors when app loads
   }, []);
-
-  // ✅ Add Doctor function
-  const addDoctor = (newDoctor) => {
-    setDoctors((prevDoctors) => [...prevDoctors, newDoctor]);
-    console.log("Doctor added:", newDoctor);
-  };
 
   return (
     <DoctorContext.Provider
@@ -28,7 +44,8 @@ export const DoctorProvider = ({ children }) => {
         setDoctors,
         addDoctor,
         loggedInDoctorEmail,
-        setLoggedInDoctorEmail
+        setLoggedInDoctorEmail,
+        fetchDoctors
       }}
     >
       {children}

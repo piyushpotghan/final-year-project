@@ -18,7 +18,7 @@ const Sidebar = () => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/login"); // Make sure /login route exists
+    navigate("/"); // Redirect to home page after logout
   };
 
   return (
@@ -42,10 +42,7 @@ const Sidebar = () => {
             className={`cursor-pointer hover:text-cyan-500 ${isActive("/my-appointments")}`}
             onClick={() => navigate("/my-appointments")}
           />
-          <FaUserMd
-            className={`cursor-pointer hover:text-cyan-500 ${isActive("/doctors")}`}
-            onClick={() => navigate("/doctors")}
-          />
+         
           
         </div>
       </div>

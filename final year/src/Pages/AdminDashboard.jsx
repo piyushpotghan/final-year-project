@@ -2,28 +2,39 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../admindash/Sidebar';
 import Topbar from '../admindash/Topbar';
-
+import Navbar from '../Navbar';
 import Dashboard from '../admindash/Dashboard';
 import Appointments from '../admindash/Appointments';
 import AddDoctor from '../admindash/AddDoctor';
 import DoctorsList from '../admindash/Doctorlist';
 import DashboardStats from '../admindash/DashboardStats';
 import LatestBookings from '../admindash/LatestBooking';
-import doctorsData from '../data/doctorsData';
 import { AppointmentContext } from '../data/AppointmentContext';
 
+
 const AdminDashboard = () => {
-  const totalDoctors = doctorsData.length;
+  const [totalDoctors, setTotalDoctors] = useState(0);
+  const [totalPatients, setTotalPatients] = useState(0);
 
   const { appointments } = useContext(AppointmentContext);
   const totalAppointments = appointments.length;
 
-  const [totalPatients, setTotalPatients] = useState(0);
-
   useEffect(() => {
+    // 🩺 Doctors fetch
+    const fetchDoctors = async () => {
+      try {
+        const response = await fetch('http://192.168.138.151:5000/api/doctors'); // 🔁  backend doctors API
+        const data = await response.json();
+        setTotalDoctors(data.length);
+      } catch (error) {
+        console.error('Error fetching doctors:', error);
+      }
+    };
+
+    // 🧍 Patients fetch
     const fetchPatients = async () => {
       try {
-        const response = await fetch('http:// 192.168.138.151/api/patients'); // 🔁 Replace with your real API
+        const response = await fetch('http://192.168.138.151:5000/api/patients'); // 🔁 patients API
         const data = await response.json();
         setTotalPatients(data.length);
       } catch (error) {
@@ -31,11 +42,13 @@ const AdminDashboard = () => {
       }
     };
 
+    fetchDoctors();
     fetchPatients();
   }, []);
 
   return (
     <div className="flex h-screen">
+      <Navbar/>
       <Sidebar />
 
       <div className="flex flex-col flex-1 bg-gray-50">

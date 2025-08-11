@@ -5,6 +5,10 @@ function Chatbot() {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   const [open, setOpen] = useState(false);
+  const [isBotTyping, setIsBotTyping] = useState(false);
+  const [botTypingText, setBotTypingText] = useState("");
+  const [showWelcomeTyping, setShowWelcomeTyping] = useState(false);
+  const [welcomeTypingText, setWelcomeTypingText] = useState("");
   const messagesEndRef = useRef(null);
   // Auto-scroll to bottom when messages change
   useEffect(() => {
@@ -13,18 +17,56 @@ function Chatbot() {
     }
   }, [messages, open]);
 
+  // Show animated welcome message as a typewriter effect in the message box (no time period)
+  useEffect(() => {
+    if (open) {
+      setShowWelcomeTyping(true);
+      setWelcomeTypingText("");
+      const welcomeMsg = "Welcome! How can I help you today?";
+      let i = 0;
+      function typeWelcome() {
+        setWelcomeTypingText(welcomeMsg.slice(0, i + 1));
+        if (i < welcomeMsg.length - 1) {
+          i++;
+          setTimeout(typeWelcome, 22);
+        }
+      }
+      setTimeout(typeWelcome, 400);
+    } else {
+      setShowWelcomeTyping(false);
+      setWelcomeTypingText("");
+    }
+  }, [open]);
+
   const sendMessage = async () => {
     if (!input.trim()) return;
     const userMessage = { sender: 'user', text: input };
     setMessages(prev => [...prev, userMessage]);
     setInput('');
+    setIsBotTyping(true);
+    setBotTypingText("");
 
     try {
       const res = await axios.post('/api/chat', { message: input });
-      const botMessage = { sender: 'bot', text: res.data.response };
-      setMessages(prev => [...prev, botMessage]);
+      const fullText = res.data.response;
+      // Typewriter effect
+      let i = 0;
+      function typeWriter() {
+        setBotTypingText(fullText.slice(0, i + 1));
+        if (i < fullText.length - 1) {
+          i++;
+          setTimeout(typeWriter, 18); // speed of typing
+        } else {
+          setMessages(prev => [...prev, { sender: 'bot', text: fullText }]);
+          setIsBotTyping(false);
+          setBotTypingText("");
+        }
+      }
+      setTimeout(typeWriter, 400); // initial delay
     } catch (err) {
       setMessages(prev => [...prev, { sender: 'bot', text: 'Sorry, there was an error.' }]);
+      setIsBotTyping(false);
+      setBotTypingText("");
       console.error(err);
     }
   };
@@ -68,51 +110,114 @@ function Chatbot() {
 
       {/* Chatbot window */}
       {open && (
-        <div className="fixed bottom-24 right-6 w-80 bg-white shadow-lg rounded-xl p-4 z-50 border border-gray-200 animate-fade-in">
+        <div className="fixed bottom-28 right-8 w-[340px] bg-white shadow-2xl rounded-2xl p-4 z-50 animate-fade-in flex flex-col" style={{backdropFilter:'blur(6px)'}}>
           <div className="flex justify-between items-center mb-2">
-            <span className="font-bold text-blue-700">Health Chatbot</span>
-            <button className="text-gray-400 hover:text-gray-700" onClick={() => setOpen(false)} aria-label="Close chatbot">✕</button>
+            <span className="font-bold text-blue-700 text-lg tracking-wide flex items-center gap-2">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" fill="#38bdf8" fillOpacity="0.15"/>
+                <ellipse cx="12" cy="13.5" rx="6" ry="4.5" fill="#38bdf8" fillOpacity="0.10"/>
+                <path d="M8 10c0-2 8-2 8 0v2c0 2-8 2-8 0v-2z" fill="#38bdf8" fillOpacity="0.20"/>
+                <circle cx="9.5" cy="11.5" r="1.2" fill="#38bdf8"/>
+                <circle cx="14.5" cy="11.5" r="1.2" fill="#38bdf8"/>
+                <ellipse cx="12" cy="15.5" rx="2.5" ry="1" fill="#38bdf8" fillOpacity="0.7"/>
+              </svg>
+              Health Chatbot
+            </span>
+            <button className="text-gray-400 hover:text-gray-700 text-xl transition-transform duration-200 hover:scale-125" onClick={() => setOpen(false)} aria-label="Close chatbot">✕</button>
           </div>
-          <div className="h-64 overflow-y-scroll border p-2 mb-2 bg-gradient-to-br from-gray-50 to-blue-50 rounded space-y-2 flex flex-col">
+          <div className="h-72 overflow-y-scroll p-2 mb-2 bg-gradient-to-br from-blue-50/60 to-cyan-50/80 rounded-xl space-y-3 flex flex-col transition-all duration-300">
+            {/* Animated welcome message as first message */}
+            {showWelcomeTyping && (
+              <div className="flex w-full items-end gap-2 justify-start animate-fade-in-up">
+                <img
+                  src="https://th.bing.com/th/id/OIP.BlCqgS5tOhUcb-86KC7MDgHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                  alt="Bot"
+                  className="w-8 h-8 rounded-full border-2 border-blue-200 shadow-md animate-pulse"
+                />
+                <span
+                  className="relative px-4 py-2 rounded-2xl shadow-lg max-w-[70%] text-base font-medium bg-white/90 text-gray-800 rounded-bl-2xl rounded-tl-2xl border-2 border-cyan-100 animate-bounce-in-left"
+                  style={{fontFamily:'Cambria, Cochin, Georgia, Times, "Times New Roman", serif'}}
+                >
+                  {welcomeTypingText}
+                  <span className="inline-block w-2 h-4 bg-cyan-400 align-middle animate-pulse ml-1" style={{verticalAlign:'middle'}}></span>
+                </span>
+              </div>
+            )}
             {messages.map((msg, idx) => (
-              <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} items-end`}>
+              <div
+                key={idx}
+                className={`flex w-full items-end gap-2 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} animate-fade-in-up`}
+                style={{animationDelay: `${idx * 60}ms`}}
+              >
                 {msg.sender === 'bot' && (
                   <img
                     src="https://th.bing.com/th/id/OIP.BlCqgS5tOhUcb-86KC7MDgHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
                     alt="Bot"
-                    className="w-7 h-7 rounded-full mr-2 border border-blue-300 shadow"
+                    className="w-8 h-8 rounded-full border-2 border-blue-200 shadow-md animate-pulse"
                   />
                 )}
                 <span
-                  className={`inline-block px-4 py-2 rounded-2xl shadow-md max-w-[70%] text-sm font-medium transition-all duration-200
+                  className={`relative px-4 py-2 rounded-2xl shadow-lg max-w-[70%] text-base font-medium transition-all duration-200
                     ${msg.sender === 'user'
-                      ? 'bg-blue-500 text-white rounded-br-md'
-                      : 'bg-white text-gray-800 rounded-bl-md border border-blue-100'}
+                      ? 'bg-gradient-to-br from-blue-500 to-cyan-400 text-white rounded-br-2xl rounded-tr-2xl border-2 border-blue-200 animate-bounce-in-right'
+                      : 'bg-white/90 text-gray-800 rounded-bl-2xl rounded-tl-2xl border-2 border-cyan-100 animate-bounce-in-left'}
                   `}
+                  style={{animationDelay: `${idx * 60}ms`, fontFamily: 'Cambria, Cochin, Georgia, Times, "Times New Roman", serif'}}
                 >
                   {msg.text}
                 </span>
                 {msg.sender === 'user' && (
-                  <span className="w-7 h-7 ml-2"></span>
+                  <span className="w-8 h-8 ml-1"></span>
                 )}
               </div>
             ))}
+            {/* Typewriter effect for bot's current message */}
+            {isBotTyping && botTypingText && (
+              <div className="flex w-full items-end gap-2 justify-start animate-fade-in-up">
+                <img
+                  src="https://th.bing.com/th/id/OIP.BlCqgS5tOhUcb-86KC7MDgHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                  alt="Bot"
+                  className="w-8 h-8 rounded-full border-2 border-blue-200 shadow-md animate-pulse"
+                />
+                <span
+                  className="relative px-4 py-2 rounded-2xl shadow-lg max-w-[70%] text-base font-medium bg-white/90 text-gray-800 rounded-bl-2xl rounded-tl-2xl border-2 border-cyan-100 animate-bounce-in-left"
+                  style={{fontFamily:'Cambria, Cochin, Georgia, Times, "Times New Roman", serif'}}
+                >
+                  {botTypingText}
+                  <span className="inline-block w-2 h-4 bg-cyan-400 align-middle animate-pulse ml-1" style={{verticalAlign:'middle'}}></span>
+                </span>
+              </div>
+            )}
+            {isBotTyping && (
+              <div className="flex items-center gap-2 animate-fade-in-up">
+                <img
+                  src="https://th.bing.com/th/id/OIP.BlCqgS5tOhUcb-86KC7MDgHaHa?w=180&h=180&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3"
+                  alt="Bot"
+                  className="w-8 h-8 rounded-full border-2 border-blue-200 shadow-md animate-pulse"
+                />
+                <span className="bg-white/90 border-2 border-cyan-100 rounded-2xl px-4 py-2 flex items-center gap-1">
+                  <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay:'0ms'}}></span>
+                  <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay:'150ms'}}></span>
+                  <span className="inline-block w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{animationDelay:'300ms'}}></span>
+                </span>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
-          <div className="flex">
+          <div className="flex mt-1 items-center gap-3">
             <input
-              className="border p-2 flex-1 rounded-l-lg"
+              className="border-2 border-cyan-200 p-2 flex-1 rounded-xl focus:outline-none focus:ring-2 focus:ring-cyan-300 bg-white/80 text-gray-800 placeholder:text-cyan-400 transition-all duration-200 shadow-sm"
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && sendMessage()}
               placeholder="Type your question..."
             />
             <button
-              className="bg-gradient-to-br from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white rounded-full flex items-center justify-center ml-2 px-6 py-2 shadow-md transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-blue-300 font-semibold text-base"
+              className="bg-gradient-to-br from-blue-500 to-cyan-400 hover:from-blue-600 hover:to-cyan-500 text-white rounded-xl flex items-center justify-center px-6 py-2 shadow-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-300 font-semibold text-base animate-fade-in-up"
               onClick={sendMessage}
               aria-label="Send message"
             >
-              Send
+              <span className="tracking-wider font-bold">Send</span>
             </button>
           </div>
         </div>

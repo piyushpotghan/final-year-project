@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
+const { getDoctors, addDoctor } = require("../controllers/doctorController");
 
 // ✅ GET: All Verified Doctors
 router.get("/doctors", async (req, res) => {
@@ -22,5 +23,10 @@ router.get("/doctors", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch doctors" });
   }
 });
+
+router.get("/doctors",getDoctors);
+
+
+router.get("/doctors",addDoctor);
 
 module.exports = router;

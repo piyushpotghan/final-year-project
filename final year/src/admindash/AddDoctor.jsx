@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -9,7 +10,7 @@ const AddDoctor = () => {
   const [doctor, setDoctor] = useState({
     name: "",
     email: "",
-    password: "", // Optional: Or hardcode "123456"
+    password: "",
     specialty: "",
     experience: "",
     fee: "",
@@ -34,28 +35,26 @@ const AddDoctor = () => {
         available: doctor.available.split(",").map((item) => item.trim())
       };
 
-      const token = localStorage.getItem("token"); // Or use your auth context
-      
-      const res = await axios.post("http://localhost:5000/api/admin/add-doctor", payload, {
-        headers: {
-          Authorization: `Bearer ${token}`
+      const token = localStorage.getItem("token");
+
+      const res = await axios.post(`http://localhost:5000/api/admin/add-doctor`,
+        payload,
+        {
+          headers: {
+            Authorization:`Bearer ${token}`
+          }
         }
-      });
+      );
 
-      console.log(res.data); // Use it like this
-      alert(res.data.message);
-
-      alert("Doctor added successfully!");
+      alert(res.data.message || "Doctor added successfully!");
       navigate("/admin/dashboard/doctors-list");
     } catch (err) {
-  if (err.response) {
-    console.error("Server response error:", err.response.data);
-    alert(err.response.data.error || "Failed to add doctor.");
-  } else {
-    console.error("Network/client error:", err.message);
-    alert("Something went wrong.");
-  }
-}
+      if (err.response) {
+        alert(err.response.data.error || "Failed to add doctor.");
+      } else {
+        alert("Something went wrong.");
+      }
+    }
   };
 
   return (
