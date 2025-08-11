@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect } from "react";
-import axios from "axios";
+import axios from "axios"; 
+import Navbar from "../Navbar";
 
 export const DoctorContext = createContext();
 
 export const DoctorProvider = ({ children }) => {
   const [loggedInDoctorEmail, setLoggedInDoctorEmail] = useState(null);
   const [doctors, setDoctors] = useState([]);
+  <Navbar/>
 
   // ✅ Fetch doctors from backend
   const fetchDoctors = async () => {

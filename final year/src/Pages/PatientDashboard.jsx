@@ -48,8 +48,8 @@ export default function PatientDashboard() {
 
   return (
     <div className="flex bg-gray-50 min-h-screen">
-      <Navbar />
       <Sidebar />
+      <Navbar />
 
       <div className="flex flex-col flex-1 min-h-screen pl-20">
         <div className="p-6 pt-20">
