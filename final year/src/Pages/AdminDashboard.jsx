@@ -8,7 +8,6 @@ import Appointments from '../admindash/Appointments';
 import AddDoctor from '../admindash/AddDoctor';
 import DoctorsList from '../admindash/Doctorlist';
 import DashboardStats from '../admindash/DashboardStats';
-import LatestBookings from '../admindash/LatestBooking';
 import AdminAppointments from '../admindash/Appointments';
 
 const AdminDashboard = () => {
@@ -81,9 +80,7 @@ const AdminDashboard = () => {
                     totalPatients={totalPatients}
                     totalAppointments={totalAppointments}
                   />
-
-                  <LatestBookings />
-
+                  
                   {/* ✅ Show all appointments table */}
                   <div className="mt-8">
                     <AdminAppointments />
