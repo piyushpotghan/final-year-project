@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Sidebar from '../admindash/Sidebar';
 import Topbar from '../admindash/Topbar';
@@ -9,21 +9,19 @@ import AddDoctor from '../admindash/AddDoctor';
 import DoctorsList from '../admindash/Doctorlist';
 import DashboardStats from '../admindash/DashboardStats';
 import LatestBookings from '../admindash/LatestBooking';
-import { AppointmentContext } from '../data/AppointmentContext';
-
+import AdminAppointments from '../admindash/Appointments';
 
 const AdminDashboard = () => {
   const [totalDoctors, setTotalDoctors] = useState(0);
   const [totalPatients, setTotalPatients] = useState(0);
-
-  const { appointments } = useContext(AppointmentContext);
-  const totalAppointments = appointments.length;
+  const [totalAppointments, setTotalAppointments] = useState(0);
 
   useEffect(() => {
-    // 🩺 Doctors fetch
+    // 🩺 Fetch Doctors count
     const fetchDoctors = async () => {
       try {
-        const response = await fetch('http://192.168.138.151:5000/api/doctors'); // 🔁  backend doctors API
+        const response = await fetch('http://localhost:5000/api/doctors');
+        if (!response.ok) throw new Error("Failed to fetch doctors");
         const data = await response.json();
         setTotalDoctors(data.length);
       } catch (error) {
@@ -31,10 +29,11 @@ const AdminDashboard = () => {
       }
     };
 
-    // 🧍 Patients fetch
+    // 🧍 Fetch Patients count
     const fetchPatients = async () => {
       try {
-        const response = await fetch('http://192.168.138.151:5000/api/patients'); // 🔁 patients API
+        const response = await fetch('http://localhost:5000/api/patients');
+        if (!response.ok) throw new Error("Failed to fetch patients");
         const data = await response.json();
         setTotalPatients(data.length);
       } catch (error) {
@@ -42,13 +41,26 @@ const AdminDashboard = () => {
       }
     };
 
+    // 📅 Fetch Appointments count
+    const fetchAppointments = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/appointments/all');
+        if (!response.ok) throw new Error("Failed to fetch appointments");
+        const data = await response.json();
+        setTotalAppointments(data.length);
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+      }
+    };
+
     fetchDoctors();
     fetchPatients();
+    fetchAppointments();
   }, []);
 
   return (
     <div className="flex h-screen">
-      <Navbar/>
+      <Navbar />
       <Sidebar />
 
       <div className="flex flex-col flex-1 bg-gray-50">
@@ -63,7 +75,7 @@ const AdminDashboard = () => {
                     Welcome to Admin Dashboard
                   </h2>
 
-                  {/* ✅ Pass updated stats */}
+                  {/* ✅ Updated stats with real counts */}
                   <DashboardStats
                     totalDoctors={totalDoctors}
                     totalPatients={totalPatients}
@@ -71,10 +83,14 @@ const AdminDashboard = () => {
                   />
 
                   <LatestBookings />
+
+                  {/* ✅ Show all appointments table */}
+                  <div className="mt-8">
+                    <AdminAppointments />
+                  </div>
                 </div>
               }
             />
-            <Route index element={<Dashboard />} />
             <Route path="appointments" element={<Appointments />} />
             <Route path="add-doctor" element={<AddDoctor />} />
             <Route path="doctors-list" element={<DoctorsList />} />
