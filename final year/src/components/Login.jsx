@@ -45,7 +45,7 @@ export default function LoginPage() {
   };
 
   return (
-    <section className="min-h-screen flex">
+    <section className="min-h-screen  flex">
       {/* Left: Image Section */}
       <div className="w-[60%] hidden md:flex items-center justify-center bg-blue-100">
         <img
