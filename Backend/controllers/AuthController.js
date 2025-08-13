@@ -68,3 +68,13 @@ exports.verifyToken = async (req, res) => {
     res.status(401).json({ msg: "Invalid or expired token" });
   }
 };
+
+// Get all patients
+exports.getAllPatients = async (req, res) => {
+  try {
+    const patients = await User.find({ role: "patient" }).select("-password");
+    res.json(patients);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
