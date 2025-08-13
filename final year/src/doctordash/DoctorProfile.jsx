@@ -25,14 +25,14 @@ const DoctorProfile = () => {
             {doctor.name}
           </h2>
           <p className="text-blue-100 text-center text-sm mt-1">
-            {doctor.speciality}
+            {doctor.specialty || doctor.speciality}
           </p>
         </div>
 
         <div className="p-6 space-y-4 text-gray-700 text-base">
           <div className="flex justify-between">
             <span className="font-medium">Experience:</span>
-            <span>{doctor.experience} years</span>
+            <span>{doctor.experience && typeof doctor.experience === 'string' ? doctor.experience : `${doctor.experience} years`}</span>
           </div>
 
           <div className="flex justify-between">

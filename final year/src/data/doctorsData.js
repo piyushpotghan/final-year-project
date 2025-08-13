@@ -261,7 +261,7 @@ const doctorsData = [
     email: "piyush.dhumal@gmail.com",
     password: "piyush123",
     specialty: "Anesthesiologist",
-    experience: 20 ,
+    experience: 20,
     fee: " ₹1000 -₹1500 ",
     available: ["Online Consultation", "Office at Doctor Hospitals, India , Pune "],
     rating: 5,
