@@ -80,14 +80,14 @@ const DoctorsList = () => {
               <p className="text-gray-700"><span className="font-semibold">Certificate:</span> {doctor.certificate}</p>
 
               <div className="mt-4">
-                <p className="font-semibold text-gray-800">Top Reviews:</p>
+                {/* <p className="font-semibold text-gray-800">Top Reviews:</p>
                 <ul className="text-gray-700 space-y-1 text-sm">
                   {doctor.reviews?.slice(0, 2).map((review, idx) => (
                     <li key={idx} className="border-l-4 border-blue-400 pl-2 italic">
                       <strong>{review.name}</strong>: ⭐{review.rating} — {review.comment}
                     </li>
                   ))}
-                </ul>
+                </ul> */}
               </div>
 
               {!doctor.isVerified && (

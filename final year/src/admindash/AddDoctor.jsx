@@ -101,6 +101,7 @@ const AddDoctor = () => {
         </div>
       </div>
     </div>
+    
   );
 };
 
