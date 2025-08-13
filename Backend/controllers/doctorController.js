@@ -1,3 +1,20 @@
+// Doctor Login
+const doctorLogin = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const doctor = await require("../models/User").findOne({ email, role: "doctor" });
+    if (!doctor) {
+      return res.status(401).json({ error: "Doctor not found." });
+    }
+    if (doctor.password !== password) {
+      return res.status(401).json({ error: "Incorrect password." });
+    }
+    // You can add JWT token logic here for production
+    res.json({ message: "Login successful", doctor: { id: doctor._id, name: doctor.username, email: doctor.email } });
+  } catch (err) {
+    res.status(500).json({ error: "Login failed" });
+  }
+};
 const Doctor = require("../models/Doctor");
 
 // Get all doctors
@@ -21,4 +38,4 @@ const addDoctor = async (req, res) => {
   }
 };
 
-module.exports = { getDoctors, addDoctor };
+module.exports = { getDoctors, addDoctor, doctorLogin };
