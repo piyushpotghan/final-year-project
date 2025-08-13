@@ -5,21 +5,20 @@ import Header from "../doctordash/Header";
 import DoctorAppointments from "../doctordash/DoctorAppointments";
 import DoctorProfile from "../doctordash/DoctorProfile";
 import { DoctorContext } from "../data/DoctorContext";
-import { AppointmentContext } from "../data/AppointmentContext";
 
 import { FaMoneyBillWave, FaUserInjured, FaCalendarCheck } from "react-icons/fa";
 import Navbar from "../Navbar";
+import axios from "axios";
 
 const DoctorDashboard = () => {
   const { loggedInDoctorEmail } = useContext(DoctorContext);
-  const { appointments } = useContext(AppointmentContext);
   const navigate = useNavigate();
 
   const [doctor, setDoctor] = useState(null);
   const [doctorAppointments, setDoctorAppointments] = useState([]);
   const [uniquePatients, setUniquePatients] = useState(0);
 
-  // ✅ Fetch doctor details from backend
+  // ✅ Fetch doctor details
   useEffect(() => {
     const fetchDoctor = async () => {
       try {
@@ -37,22 +36,34 @@ const DoctorDashboard = () => {
     }
   }, [loggedInDoctorEmail]);
 
-  // ✅ Filter appointments for this doctor
+  // ✅ Fetch appointments for this doctor
   useEffect(() => {
-    if (appointments && loggedInDoctorEmail) {
-      const filtered = appointments.filter(
-        (appt) => appt.doctorEmail === loggedInDoctorEmail
-      );
-      setDoctorAppointments(filtered);
+    const fetchAppointments = async () => {
+      if (!loggedInDoctorEmail) return;
+      try {
+        const res = await axios.get(
+          `http://localhost:5000/api/appointments/doctor?email=${loggedInDoctorEmail}`
+        );
+        setDoctorAppointments(res.data);
 
-      const uniqueEmails = new Set(filtered.map((appt) => appt.patientEmail));
-      setUniquePatients(uniqueEmails.size);
-    }
-  }, [appointments, loggedInDoctorEmail]);
+        const uniqueEmails = new Set(res.data.map((appt) => appt.patientEmail));
+        setUniquePatients(uniqueEmails.size);
+      } catch (error) {
+        console.error("Error fetching doctor appointments:", error);
+      }
+    };
+
+    fetchAppointments();
+  }, [loggedInDoctorEmail]);
+
+  // ✅ Count only approved appointments
+  const approvedAppointmentsCount = doctorAppointments.filter(
+    (appt) => appt.status === "Approved"
+  ).length;
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Navbar/>
+      <Navbar />
       <Sidebar />
 
       <div className="flex-1 flex flex-col overflow-hidden">
@@ -86,7 +97,7 @@ const DoctorDashboard = () => {
                       <div>
                         <p className="text-gray-500 text-sm">Appointments</p>
                         <h2 className="text-2xl font-semibold text-gray-800">
-                          {doctorAppointments.length}
+                          {approvedAppointmentsCount}
                         </h2>
                       </div>
                     </div>
@@ -136,5 +147,3 @@ const DoctorDashboard = () => {
 };
 
 export default DoctorDashboard;
-
-
