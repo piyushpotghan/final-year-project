@@ -15,6 +15,8 @@ const LoginDoctor = () => {
     );
     if (doctor) {
       setLoggedInDoctorEmail(doctor.email);
+      // Set user info for navbar
+      localStorage.setItem("user", JSON.stringify({ role: "doctor", email: doctor.email, name: doctor.name }));
       navigate("/doctordashboard");
     } else {
       alert("Doctor not found or incorrect email/password.");

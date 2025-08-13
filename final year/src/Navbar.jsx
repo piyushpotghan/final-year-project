@@ -47,12 +47,12 @@ const Navbar = () => {
           <Link to="/Contact" className="hover:text-white font-bold">
             Contact
           </Link>
-
-          {user && dashboardPath ? (
+          {user && dashboardPath && (
             <Link to={dashboardPath} className="hover:text-white font-bold">
               Dashboard
             </Link>
-          ) : (
+          )}
+          {!user && (
             <>
               <Link to="/Login" className="hover:text-white font-bold">
                 Login
@@ -73,11 +73,23 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden px-4 pb-4 space-y-3">
-          <a href="#home" className="block text-gray-700 font-medium">Home</a>
-          <a href="#doctors" className="block text-gray-700 font-medium">Doctors</a>
-          <a href="#appointments" className="block text-gray-700 font-medium">Appointments</a>
-          <a href="#about" className="block text-gray-700 font-medium">About</a>
-          <a href="#contact" className="block text-gray-700 font-medium">Contact</a>
+          <Link to="/" className="block text-gray-700 font-medium">Home</Link>
+          <Link to="/" className="block text-gray-700 font-medium" onClick={() => {
+            setTimeout(() => {
+              const el = document.getElementById("whyus");
+              el?.scrollIntoView({ behavior: "smooth" });
+            }, 100);
+          }}>About</Link>
+          <Link to="/Contact" className="block text-gray-700 font-medium">Contact</Link>
+          {user && dashboardPath && (
+            <Link to={dashboardPath} className="block text-gray-700 font-medium">Dashboard</Link>
+          )}
+          {!user && (
+            <>
+              <Link to="/Login" className="block text-gray-700 font-medium">Login</Link>
+              <Link to="/SignUp" className="block text-gray-700 font-medium">Sign Up</Link>
+            </>
+          )}
         </div>
       )}
     </nav>

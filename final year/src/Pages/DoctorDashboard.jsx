@@ -120,8 +120,8 @@ const DoctorDashboard = () => {
                     {doctor ? (
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
                         <p><strong>Name:</strong> {doctor.name}</p>
-                        <p><strong>Speciality:</strong> {doctor.speciality}</p>
-                        <p><strong>Experience:</strong> {doctor.experience} years</p>
+                        <p><strong>Specialty:</strong> {doctor.specialty || doctor.speciality}</p>
+                        <p><strong>Experience:</strong> {doctor.experience && typeof doctor.experience === 'string' ? doctor.experience : `${doctor.experience} years`}</p>
                         <p><strong>Email:</strong> {doctor.email}</p>
                       </div>
                     ) : (
