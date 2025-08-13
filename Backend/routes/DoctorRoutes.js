@@ -1,7 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
-const { getDoctors, addDoctor } = require("../controllers/doctorController");
+const { getDoctors, addDoctor, doctorLogin } = require("../controllers/doctorController");
+// Doctor Login Route
+router.post("/doctor/login", doctorLogin);
 
 // ✅ GET: All Verified Doctors
 router.get("/doctors", async (req, res) => {
