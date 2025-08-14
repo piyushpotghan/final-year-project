@@ -113,27 +113,50 @@ const DoctorDashboard = () => {
                   </div>
 
                   {/* Profile Overview */}
-                  <div className="bg-white rounded-xl shadow p-6 border">
-                    <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                      Profile Overview
-                    </h2>
-                    {doctor ? (
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-gray-700">
-                        <p><strong>Name:</strong> {doctor.name}</p>
-                        <p><strong>Specialty:</strong> {doctor.specialty || doctor.speciality}</p>
-                        <p><strong>Experience:</strong> {doctor.experience && typeof doctor.experience === 'string' ? doctor.experience : `${doctor.experience} years`}</p>
-                        <p><strong>Email:</strong> {doctor.email}</p>
-                      </div>
-                    ) : (
-                      <p className="text-gray-500">Loading doctor details...</p>
-                    )}
-                    <button
-                      onClick={() => navigate("profile")}
-                      className="mt-6 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
-                    >
-                      View Full Profile
-                    </button>
-                  </div>
+<div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition duration-300">
+  <div className="flex justify-between items-center mb-5 border-b pb-3">
+    <h2 className="text-xl font-bold text-gray-800 flex items-center gap-2">
+      <span className="bg-blue-100 text-blue-600 p-2 rounded-full">
+        🩺
+      </span>
+      Profile Overview
+    </h2>
+    <button
+      onClick={() => navigate("profile")}
+      className="px-4 py-1.5 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition text-sm"
+    >
+      View Full Profile
+    </button>
+  </div>
+
+  {doctor ? (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 text-gray-700 text-sm">
+      <div>
+        <p className="text-gray-500">Name</p>
+        <p className="font-semibold">{doctor.name}</p>
+      </div>
+      <div>
+        <p className="text-gray-500">Specialty</p>
+        <p className="font-semibold">{doctor.specialty || doctor.speciality}</p>
+      </div>
+      <div>
+        <p className="text-gray-500">Experience</p>
+        <p className="font-semibold">
+          {doctor.experience && typeof doctor.experience === "string"
+            ? doctor.experience
+            : `${doctor.experience} years`}
+        </p>
+      </div>
+      <div>
+        <p className="text-gray-500">Email</p>
+        <p className="font-semibold">{doctor.email}</p>
+      </div>
+    </div>
+  ) : (
+    <p className="text-gray-500 text-sm">Loading doctor details...</p>
+  )}
+</div>
+
                 </div>
               }
             />
