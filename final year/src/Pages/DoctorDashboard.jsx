@@ -84,33 +84,43 @@ const DoctorDashboard = () => {
                   </div>
 
                   {/* Stats */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div className="bg-white rounded-xl shadow p-6 flex items-center gap-4 border">
-                      <FaMoneyBillWave className="text-3xl text-green-500" />
-                      <div>
-                        <p className="text-gray-500 text-sm">Earnings</p>
-                        <h2 className="text-2xl font-semibold text-gray-800">1300</h2>
-                      </div>
-                    </div>
-                    <div className="bg-white rounded-xl shadow p-6 flex items-center gap-4 border">
-                      <FaCalendarCheck className="text-3xl text-blue-500" />
-                      <div>
-                        <p className="text-gray-500 text-sm">Appointments</p>
-                        <h2 className="text-2xl font-semibold text-gray-800">
-                          {approvedAppointmentsCount}
-                        </h2>
-                      </div>
-                    </div>
-                    <div className="bg-white rounded-xl shadow p-6 flex items-center gap-4 border">
-                      <FaUserInjured className="text-3xl text-purple-500" />
-                      <div>
-                        <p className="text-gray-500 text-sm">Patients</p>
-                        <h2 className="text-2xl font-semibold text-gray-800">
-                          {uniquePatients}
-                        </h2>
-                      </div>
-                    </div>
-                  </div>
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  
+  {/* Earnings */}
+  <div className="bg-white rounded-2xl shadow-lg p-6 flex items-center gap-5 border border-gray-100 hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
+    <div className="bg-green-100 p-4 rounded-full">
+      <FaMoneyBillWave className="text-3xl text-green-600" />
+    </div>
+    <div>
+      <p className="text-gray-500 text-sm font-medium">Earnings</p>
+      <h2 className="text-2xl font-bold text-gray-800">₹1300</h2>
+    </div>
+  </div>
+
+  {/* Appointments */}
+  <div className="bg-white rounded-2xl shadow-lg p-6 flex items-center gap-5 border border-gray-100 hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
+    <div className="bg-blue-100 p-4 rounded-full">
+      <FaCalendarCheck className="text-3xl text-blue-600" />
+    </div>
+    <div>
+      <p className="text-gray-500 text-sm font-medium">Appointments</p>
+      <h2 className="text-2xl font-bold text-gray-800">{approvedAppointmentsCount}</h2>
+    </div>
+  </div>
+
+  {/* Patients */}
+  <div className="bg-white rounded-2xl shadow-lg p-6 flex items-center gap-5 border border-gray-100 hover:shadow-2xl hover:scale-[1.02] transition-transform duration-300">
+    <div className="bg-purple-100 p-4 rounded-full">
+      <FaUserInjured className="text-3xl text-purple-600" />
+    </div>
+    <div>
+      <p className="text-gray-500 text-sm font-medium">Patients</p>
+      <h2 className="text-2xl font-bold text-gray-800">{uniquePatients}</h2>
+    </div>
+  </div>
+
+</div>
+
 
                   {/* Profile Overview */}
 <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 hover:shadow-xl transition duration-300">
