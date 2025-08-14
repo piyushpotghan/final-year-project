@@ -26,6 +26,8 @@ import { DoctorProvider } from './data/DoctorContext';
 import AddDoctor from './admindash/AddDoctor';
 import DoctorProfile from './doctordash/DoctorProfile';
 import Chatbot from './Chatbot';
+import ContactMessages from "./admindash/ContactMessages";
+
 
 const LayoutWrapper = () => {
   const location = useLocation();
@@ -89,6 +91,8 @@ const LayoutWrapper = () => {
         <Route path="/admin/dashboard/doctors-list" element={<DoctorsList />} />
         <Route path="/admin/dashboard/add-doctor" element={<AddDoctor />} />
         <Route path="/doctordashboard/*" element={ <DoctorDashboard/> } />
+        <Route path="/admin/dashboard/contact-messages" element={<ContactMessages />} />
+
       </Routes>
 
       {/* Show Chatbot on all pages except dashboard/login/signup routes */}
