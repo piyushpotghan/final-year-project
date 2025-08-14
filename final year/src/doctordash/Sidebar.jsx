@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { FaSignOutAlt } from "react-icons/fa"; // ✅ Import logout icon
 
 const Sidebar = () => {
   const location = useLocation();
@@ -39,11 +40,13 @@ const Sidebar = () => {
         </div>
       </div>
 
+      {/* Logout Button with Icon */}
       <div className="p-6">
         <button
           onClick={handleLogout}
-          className="w-full px-5 py-3 text-left rounded-xl text-sm font-semibold text-red-600 hover:bg-red-50 transition duration-200"
+          className="w-full flex items-center gap-3 px-5 py-3 text-left rounded-xl text-sm font-semibold text-red-600 hover:bg-red-50 transition duration-200"
         >
+          <FaSignOutAlt className="text-lg" /> {/* Icon */}
           Logout
         </button>
       </div>
