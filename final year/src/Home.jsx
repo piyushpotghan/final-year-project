@@ -7,7 +7,7 @@ export default function Home() {
   const user = JSON.parse(localStorage.getItem("user")); // check login
 
   return (
-    <div>
+    <div id="home">
       <Hero />
 
       {user && (
