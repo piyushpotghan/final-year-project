@@ -57,7 +57,6 @@ const Navbar = () => {
               if (location.pathname !== "/") {
                 navigate("/");
               } else {
-                // Always scroll even if already on home route
                 setTimeout(() => {
                   const el = document.getElementById("home");
                   if (el) {
@@ -86,6 +85,9 @@ const Navbar = () => {
           </Link>
           <Link to="/Contact" className="hover:text-white font-bold">
             Contact
+          </Link>
+          <Link to="/donate" className="hover:text-white font-bold">
+            Donate
           </Link>
           {user && dashboardPath && (
             <Link to={dashboardPath} className="hover:text-white font-bold">
@@ -150,6 +152,9 @@ const Navbar = () => {
           </Link>
           <Link to="/Contact" className="block text-gray-700 font-medium">
             Contact
+          </Link>
+          <Link to="/donate" className="block text-gray-700 font-medium">
+            Donate
           </Link>
           {user && dashboardPath && (
             <Link to={dashboardPath} className="block text-gray-700 font-medium">

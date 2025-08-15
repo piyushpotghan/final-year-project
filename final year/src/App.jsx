@@ -11,6 +11,7 @@ import About from './components/About';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import HealthConcern from './Pages/healthConcerns';
+import Donate from './donate/Donate';
 import WhyUs from './Pages/whyUs';
 import UserTestimonials from './Pages/testimonials';
 import Map from './Pages/Map';
@@ -33,11 +34,11 @@ const LayoutWrapper = () => {
   const location = useLocation();
 
   const hideNavbarFooterRoutes = [
-    "/admin/dashboard",
-    "/doctor/dashboard",
-    "/patient/dashboard",
-    "/login",
-    "/signup",
+  "/admin/dashboard",
+  "/doctor/dashboard",
+  "/patient/dashboard",
+  "/login",
+  "/signup",
   ];
 
   const shouldHideLayout = hideNavbarFooterRoutes.some(path =>
@@ -71,6 +72,7 @@ const LayoutWrapper = () => {
         <Route path='/about' element={<About />} />
         <Route path='/contact' element={<Contact />} />
 
+    <Route path="/donate" element={<Donate />} />
         <Route path="/admin/dashboard/*" element={
           <ProtectedRoute role="admin">
             <AdminDashboard />
