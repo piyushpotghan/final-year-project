@@ -10,7 +10,7 @@ const MyAppointments = () => {
       const email = userData.email;
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/appointments?email=${email}`);
+  const res = await axios.get(`http://localhost:5000/api/appointments?email=${email}`);
         setAppointments(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Failed to fetch appointments", err);
@@ -23,10 +23,17 @@ const MyAppointments = () => {
 
   const statusBadge = (status) => {
     const base = "px-3 py-1 rounded-full text-sm font-bold";
-    if (status === "Approved") return `${base} bg-green-100 text-green-700`;
-    if (status === "Pending") return `${base} bg-yellow-100 text-yellow-800`;
-    if (status === "Cancelled") return `${base} bg-red-100 text-red-700`;
-    return `${base} bg-gray-100 text-gray-700`;
+  if (status === "Approved") return `${base} bg-green-100 text-green-700`;
+  if (status === "Pending") return `${base} bg-yellow-100 text-yellow-800`;
+  if (status === "Cancelled") return `${base} bg-red-100 text-red-700`;
+  return `${base} bg-gray-100 text-gray-700`;
+  };
+
+  const paymentBadge = (paymentStatus) => {
+    const base = "px-3 py-1 rounded-full text-sm font-bold";
+  if (paymentStatus === "Paid") return `${base} bg-green-100 text-green-700`;
+  if (paymentStatus === "Pending") return `${base} bg-orange-100 text-orange-700`;
+  return `${base} bg-gray-100 text-gray-700`;
   };
 
   return (
@@ -44,6 +51,7 @@ const MyAppointments = () => {
               <th className="py-3 px-6 text-left font-bold">Time</th>
               <th className="py-3 px-6 text-left font-bold">Reason</th>
               <th className="py-3 px-6 text-left font-bold">Status</th>
+              <th className="py-3 px-6 text-left font-bold">Payment</th> {/* ✅ New Column */}
             </tr>
           </thead>
           <tbody className="text-gray-800 text-sm font-medium divide-y divide-gray-200">
@@ -63,12 +71,17 @@ const MyAppointments = () => {
                     <td className="py-4 px-6">
                       <span className={statusBadge(appt.status)}>{appt.status}</span>
                     </td>
+                    <td className="py-4 px-6">
+                      <span className={paymentBadge(appt.paymentStatus)}>
+                        {appt.paymentStatus || "Pending"}
+                      </span>
+                    </td>
                   </tr>
                 ))
             ) : (
               <tr>
                 <td
-                  colSpan="5"
+                  colSpan="6"
                   className="text-center py-6 text-gray-500 italic"
                 >
                   No appointments found.
@@ -83,5 +96,3 @@ const MyAppointments = () => {
 };
 
 export default MyAppointments;
-
-
