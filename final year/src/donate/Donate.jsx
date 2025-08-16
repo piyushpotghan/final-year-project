@@ -48,7 +48,7 @@ export default function Donate() {
               <div className="text-gray-800 mt-2 font-cursive text-lg"><svg width="100" height="30"><text x="0" y="20" fontFamily="cursive" fontSize="20" fill="#2563eb">MediCare</text></svg></div>
             </div>
           </div>
-          <div className="w-full border-t-2 border-blue-400 mt-6 pt-2 text-center text-xs text-gray-500 tracking-widest">MediCare Hospital &bull; Your Health, Our Priority</div>
+          <div className="w-full border-t-2 border-blue-400 mt-6 pt-2 text-center text-xs text-gray-500 tracking-widest">MediCare Hospital &bull; Your Health, Our Commitment</div>
         </div>
       </div>
     );
@@ -62,7 +62,7 @@ export default function Donate() {
             {/* Branding */}
             <div className="mb-2 mt-10 flex flex-col items-center justify-center">
               <span className="text-3xl font-bold text-blue-700 tracking-wide">MediCare Hospital</span>
-              <span className="text-xs text-gray-500 font-semibold">Your Health, Our Priority</span>
+              <span className="text-xs text-gray-500 font-semibold">Your Health, Our Commitment</span>
             </div>
             {/* Motivational Heading & Emoji */}
             <h1 className="text-4xl font-extrabold mb-2 text-red-700 text-center tracking-tight drop-shadow flex items-center justify-center gap-2">
