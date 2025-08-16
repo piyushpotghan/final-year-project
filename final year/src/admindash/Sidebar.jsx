@@ -1,6 +1,7 @@
+// src/admindash/Sidebar.jsx
 import React from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { Home, Calendar, UserPlus, Users, LogOut } from 'lucide-react';
+import { Home, Calendar, UserPlus, Users, LogOut, Mail } from 'lucide-react';
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Sidebar = () => {
     { name: "Appointments", path: "/admin/dashboard/appointments", icon: <Calendar size={20} /> },
     { name: "Add Doctor", path: "/admin/dashboard/add-doctor", icon: <UserPlus size={20} /> },
     { name: "Doctors List", path: "/admin/dashboard/doctors-list", icon: <Users size={20} /> },
+    { name: "Contact Messages", path: "/admin/dashboard/contact-messages", icon: <Mail size={20} /> }, // ✅ new
   ];
 
   return (
@@ -41,7 +43,6 @@ const Sidebar = () => {
         </nav>
       </div>
 
-      {/* Logout button at the bottom */}
       <div className="mt-10">
         <button
           onClick={handleLogout}

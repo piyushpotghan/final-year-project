@@ -7,19 +7,30 @@ export default function Home() {
   const user = JSON.parse(localStorage.getItem("user")); // check login
 
   return (
-    <div>
+    <div id="home">
       <Hero />
-
-      {user && (
-        <div className="text-center mt-6">
+      <div className="text-center mt-6 flex justify-center gap-4">
+        {user && (
           <button
             onClick={() => navigate("/dashboard")}
             className="bg-blue-600 text-white px-6 py-3 rounded-full shadow hover:bg-blue-700 transition"
           >
             Go to Dashboard
           </button>
-        </div>
-      )}
+        )}
+        <button
+          onClick={() => navigate("/contact")}
+          className="bg-green-600 text-white px-6 py-3 rounded-full shadow hover:bg-green-700 transition"
+        >
+          Contact
+        </button>
+        <button
+          onClick={() => navigate("/donate")}
+          className="bg-red-600 text-white px-6 py-3 rounded-full shadow hover:bg-red-700 transition"
+        >
+          Donate
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,26 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrollToHome, setScrollToHome] = useState(false);
   const toggleMenu = () => setIsOpen(!isOpen);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (scrollToHome && location.pathname === "/") {
+      setTimeout(() => {
+        const el = document.getElementById("home");
+        if (el) {
+          el.scrollIntoView({ behavior: "smooth" });
+        } else {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+        setScrollToHome(false);
+      }, 400); // increased delay for DOM readiness
+    }
+  }, [location, scrollToHome]);
 
   const user = JSON.parse(localStorage.getItem("user")); // { role: "admin" | "doctor" | "patient", ... }
 
@@ -31,7 +48,29 @@ const Navbar = () => {
 
         {/* Desktop Menu */}
         <div className="flex items-center justify-center space-x-12">
-          <Link to="/" className="hover:text-white font-bold">Home</Link>
+          <Link
+            to="/"
+            className="hover:text-white font-bold"
+            onClick={e => {
+              e.preventDefault();
+              setScrollToHome(true);
+              if (location.pathname !== "/") {
+                navigate("/");
+              } else {
+                setTimeout(() => {
+                  const el = document.getElementById("home");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                  setScrollToHome(false);
+                }, 100);
+              }
+            }}
+          >
+            Home
+          </Link>
           <Link
             to="/"
             className="hover:text-white font-bold"
@@ -46,6 +85,9 @@ const Navbar = () => {
           </Link>
           <Link to="/Contact" className="hover:text-white font-bold">
             Contact
+          </Link>
+          <Link to="/donate" className="hover:text-white font-bold">
+            Donate
           </Link>
           {user && dashboardPath && (
             <Link to={dashboardPath} className="hover:text-white font-bold">
@@ -73,21 +115,60 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden px-4 pb-4 space-y-3">
-          <Link to="/" className="block text-gray-700 font-medium">Home</Link>
-          <Link to="/" className="block text-gray-700 font-medium" onClick={() => {
-            setTimeout(() => {
-              const el = document.getElementById("whyus");
-              el?.scrollIntoView({ behavior: "smooth" });
-            }, 100);
-          }}>About</Link>
-          <Link to="/Contact" className="block text-gray-700 font-medium">Contact</Link>
+          <Link
+            to="/"
+            className="block text-gray-700 font-medium"
+            onClick={e => {
+              e.preventDefault();
+              setScrollToHome(true);
+              if (location.pathname !== "/") {
+                navigate("/");
+              } else {
+                setTimeout(() => {
+                  const el = document.getElementById("home");
+                  if (el) {
+                    el.scrollIntoView({ behavior: "smooth" });
+                  } else {
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                  setScrollToHome(false);
+                }, 100);
+              }
+            }}
+          >
+            Home
+          </Link>
+          <Link
+            to="/"
+            className="block text-gray-700 font-medium"
+            onClick={() => {
+              setTimeout(() => {
+                const el = document.getElementById("whyus");
+                el?.scrollIntoView({ behavior: "smooth" });
+              }, 100);
+            }}
+          >
+            About
+          </Link>
+          <Link to="/Contact" className="block text-gray-700 font-medium">
+            Contact
+          </Link>
+          <Link to="/donate" className="block text-gray-700 font-medium">
+            Donate
+          </Link>
           {user && dashboardPath && (
-            <Link to={dashboardPath} className="block text-gray-700 font-medium">Dashboard</Link>
+            <Link to={dashboardPath} className="block text-gray-700 font-medium">
+              Dashboard
+            </Link>
           )}
           {!user && (
             <>
-              <Link to="/Login" className="block text-gray-700 font-medium">Login</Link>
-              <Link to="/SignUp" className="block text-gray-700 font-medium">Sign Up</Link>
+              <Link to="/Login" className="block text-gray-700 font-medium">
+                Login
+              </Link>
+              <Link to="/SignUp" className="block text-gray-700 font-medium">
+                Sign Up
+              </Link>
             </>
           )}
         </div>

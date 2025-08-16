@@ -276,25 +276,25 @@ const doctorsData = [
     availability: "Monday - Saturday, 10:00 - 12:00 & 14:00 - 20:00",
   },
   {
-    id: 6,
-    name: "Dr.Anushka Ingole",
-    email: "anushka.ingole@gmail.com",
-    password: "anushka123",
+    id: 15,
+    name: "Dr.Ankush Patil",
+    email: "ankush.Patil@gmail.com",
+    password: "ankush123",
     specialty: "General Physician",
-    experience: 7,
+    experience: 5,
     fee: "₹900 -₹1000 ",
     available: ["Online Consultation", "Office at Doctor Hospitals, California"],
     rating: 4.9,
     category: "General Physician",
     reviews: [
-      { name: "Anuj Kumar", rating: 4.9, comment: "Highly recommended!" },
+      { name: "Tejas Walke", rating: 4.9, comment: "Highly recommended!" },
       { name: "Ethen Park", rating: 5.0, comment: "Truly transformative help." },
-      { name: "Sofia Arena", rating: 4.8, comment: "Empowering therapy." },
+      { name: "Priya Gokhle", rating: 4.8, comment: "Empowering therapy." },
     ],
     education: "PhD in Clinical Psychology, UCLA",
     certificate: "Certified CBT Therapist, APA",
     availability: "Monday - Saturday, 10:00 - 12:00 & 14:00 - 20:00",
-  }
+  },
 
 ];
 
