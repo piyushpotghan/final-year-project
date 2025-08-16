@@ -4,6 +4,8 @@ const cors = require("cors");
 require("dotenv").config();
 const connectDB = require("./config/db");
 const Appointment = require("./models/Appointments");
+const donorRoutes = require("./routes/donorRoutes");
+
 
 
 const app = express();
@@ -23,6 +25,7 @@ app.use("/api", doctorRoutes);
 const appointmentRoutes = require("./routes/AppointmentRoutes");
 app.use("/api/appointments", appointmentRoutes);
 app.use("/api/Appointment", Appointment);
+app.use("/api/donors", donorRoutes);
 
 
 // MongoDB connection
