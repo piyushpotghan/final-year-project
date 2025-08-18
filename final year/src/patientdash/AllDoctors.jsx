@@ -50,7 +50,7 @@ const AllDoctors = () => {
       <Sidebar />
 
       {/* Main Content */}
-      <div className="flex-1 p-6">
+      <div className="flex-1 p-17">
         <h2 className="text-3xl font-bold mb-8 text-blue-800 text-center">
           All Available Doctors
         </h2>
