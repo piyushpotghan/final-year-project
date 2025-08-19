@@ -7,7 +7,7 @@ const AdminAppointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const res = await axios.get("https://final-year-project-6fln.onrender.com/appointments/all");
+      const res = await axios.get("https://final-year-project-6fln.onrender.com/api/appointments/all");
       setAppointments(res.data);
     } catch (err) {
       console.error("Failed to fetch appointments", err);
