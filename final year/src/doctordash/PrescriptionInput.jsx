@@ -67,7 +67,7 @@ const PrescriptionInput = ({ appointment, onPrescriptionSaved }) => {
     setMedicineInputs([{ id: 1, medicine: "", dose: "", frequency: "", note: "" }]);
     
     try {
-      await axios.put("http://localhost:5000/api/appointments/prescription", {
+      await axios.put("https://final-year-project-6fln.onrender.com/api/appointments/prescription", {
         appointmentId: appointment._id,
         prescription: finalList,
       });
@@ -222,7 +222,7 @@ const PrescriptionInput = ({ appointment, onPrescriptionSaved }) => {
             setError("");
             setSuccess("");
             try {
-              await axios.put("http://localhost:5000/api/appointments/prescription", {
+              await axios.put("https://final-year-project-6fln.onrender.com/api/appointments/prescription", {
                 appointmentId: appointment._id,
                 prescription: [],
               });

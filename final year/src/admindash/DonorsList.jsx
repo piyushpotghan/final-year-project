@@ -11,7 +11,7 @@ const DonorsList = () => {
   const fetchDonors = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/donors");
+      const res = await axios.get("https://final-year-project-6fln.onrender.com/api/donors");
       setDonors(res.data);
     } catch (error) {
       console.error("Failed to fetch donors", error);
@@ -29,7 +29,7 @@ const DonorsList = () => {
     if (!window.confirm("Are you sure you want to delete this donor?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/donors/delete/${id}`);
+      await axios.delete(`https://final-year-project-6fln.onrender.com/api/donors/delete/${id}`);
       alert("Donor deleted successfully");
       fetchDonors();
     } catch (error) {

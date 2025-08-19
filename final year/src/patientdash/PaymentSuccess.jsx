@@ -12,7 +12,7 @@ const PaymentSuccess = () => {
       if (appointmentData) {
         try {
           await axios.post(
-            "http://localhost:5000/api/payment/confirm-online-appointment",
+            "https://final-year-project-6fln.onrender.com/api/payment/confirm-online-appointment",
             appointmentData
           );
           localStorage.removeItem("pendingAppointment");

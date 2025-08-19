@@ -7,7 +7,7 @@ const AdminAppointments = () => {
 
   const fetchAppointments = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/appointments/all");
+      const res = await axios.get("https://final-year-project-6fln.onrender.com/appointments/all");
       setAppointments(res.data);
     } catch (err) {
       console.error("Failed to fetch appointments", err);
@@ -20,7 +20,7 @@ const AdminAppointments = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`http://localhost:5000/api/appointments/${id}/status`, {
+      await axios.put(`https://final-year-project-6fln.onrender.com/api/appointments/${id}/status`, {
         status: newStatus,
       });
 
@@ -38,7 +38,7 @@ const AdminAppointments = () => {
     if (!window.confirm("Are you sure you want to delete this appointment?")) return;
 
     try {
-      await axios.delete(`http://localhost:5000/api/appointments/delete/${id}`);
+      await axios.delete(`https://final-year-project-6fln.onrender.com/api/appointments/delete/${id}`);
       alert("Appointment deleted");
       fetchAppointments();
     } catch (error) {

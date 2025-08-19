@@ -13,7 +13,7 @@ const LoginDoctor = () => {
   const handleLogin = async () => {
     try {
       // 1️⃣ Check with backend DB
-      const res = await axios.post("http://localhost:5000/api/doctor/login", {
+      const res = await axios.post("https://final-year-project-6fln.onrender.com/api/doctor/login", {
         email,
         password,
       });
