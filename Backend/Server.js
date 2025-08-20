@@ -71,7 +71,9 @@ mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/appointment
 });
 
 const authRoutes = require("./routes/Auth");
-app.use("/api", authRoutes);
+app.use("/api/auth", authRoutes);
+
+
 
 const adminRoutes = require("./routes/adminRoutes"); // ✅ this must match filename
 app.use("/api", adminRoutes); // ✅ must be this line
@@ -136,9 +138,4 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
-});
-
-
-app.listen(process.env.PORT, () => {
-  console.log("Server running on port", process.env.PORT);
 });

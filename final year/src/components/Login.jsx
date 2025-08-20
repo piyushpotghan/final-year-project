@@ -103,7 +103,7 @@ export default function LoginPage() {
 
             {/* Links */}
             <div className="flex justify-between mt-3 text-[15px] text-gray-600">
-              <a href="#" className="hover:underline">Forgot?</a>
+              <a href="/forgot-password" className="hover:underline">Forgot?</a>
               <Link to="/SignUp" className="hover:underline">Sign Up</Link>      
             </div>
 

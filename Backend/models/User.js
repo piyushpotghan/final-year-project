@@ -23,7 +23,11 @@ const UserSchema = new mongoose.Schema({
     availability: String,
     education: String,
     certificate: String
-  }
+  },
+
+  // 🔹 Added for Forgot Password Flow
+  resetOTP: { type: String },
+  resetOTPExpiry: { type: Date }
 });
 
 module.exports = mongoose.model("User", UserSchema);
