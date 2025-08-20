@@ -12,7 +12,7 @@ export default function ResetPassword() {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000/api/auth/reset-password", {
+      await axios.post("https://final-year-project-6fln.onrender.com/api/auth/reset-password", {
         email: state.email,
         password,
       });

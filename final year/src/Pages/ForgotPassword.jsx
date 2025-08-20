@@ -8,7 +8,7 @@ export default function ForgotPassword() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await axios.post("http://localhost:5000/api/auth/forgot-password", { email });
+    await axios.post("https://final-year-project-6fln.onrender.com/api/auth/forgot-password", { email });
     navigate("/verify-otp", { state: { email } });
   };
 
