@@ -82,6 +82,8 @@ app.use("/api", doctorRoutes);
 const appointmentRoutes = require("./routes/AppointmentRoutes");
 app.use("/api/appointments", appointmentRoutes);
 
+app.use("/api/email", require ("./routes/ForgotpassRoutes"));
+
 // Debug middleware
 app.use((req, res, next) => {
   console.log(`📝 ${req.method} ${req.path}`);

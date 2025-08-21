@@ -12,7 +12,7 @@ export default function ResetPassword() {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.post("http://localhost:5000m/api/auth/reset-password", {
+      await axios.post("http://localhost:5000/api/email/reset-password", {
         email: state.email,
         password,
       });
