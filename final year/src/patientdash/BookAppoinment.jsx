@@ -41,7 +41,7 @@ const BookAppointment = () => {
 
     if (paymentMethod === "offline") {
       try {
-        await axios.post("https://final-year-project-6fln.onrender.com/api/appointments/create", {
+        await axios.post("http://localhost:5000/api/appointments/create", {
           ...appointmentData,
           paymentStatus: "Unpaid",
         });
