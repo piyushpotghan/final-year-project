@@ -82,10 +82,14 @@ const DoctorAppointments = () => {
                   <h3 className="text-xl font-bold text-gray-800 mb-1">
                     👤 {appt.patientName}
                   </h3>
-                  <p className="text-sm text-gray-600 mb-1">📧 {appt.email}</p>
+                  <p className="text-sm text-gray-600 mb-1">📧 {appt.patientEmail}</p>
                   <p className="text-sm text-gray-600">
                     📅 {appt.date} at 🕒 {appt.time}
+
                   </p>
+                  {appt.reason && (
+    <p className="text-sm text-gray-600">📝 Reason: {appt.reason}</p>
+  )}
                 </div>
                 <div className="flex flex-col justify-between">
                   <div className="flex gap-2 items-center">

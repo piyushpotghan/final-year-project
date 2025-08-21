@@ -7,7 +7,7 @@ const AppointmentSchema = new mongoose.Schema({
   doctorEmail: { type: String, required: true },
   date: { type: String, required: true },
   time: { type: String, required: true },
-  reason: String,
+  reason: { type: String, required: true },
   status: { type: String, default: "Pending" }, // Appointment status
   paymentStatus: { type: String, default: "Unpaid" }, // Unpaid | Pending | Paid
   prescription: [
