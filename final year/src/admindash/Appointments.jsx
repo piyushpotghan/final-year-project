@@ -69,7 +69,7 @@ const AdminAppointments = () => {
             </tr>
           </thead>
           <tbody className="text-sm">
-            {appointments.slice().reverse().map((appt) => (
+            {[...appointments].reverse().map((appt) => (
               <tr key={appt._id} className="border-b hover:bg-gray-50 transition">
                 <td className="px-4 py-2 font-semibold">
                   {appt.patientName?.trim() !== "" ? appt.patientName : "Not Provided"}
