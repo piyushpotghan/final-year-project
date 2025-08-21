@@ -12,7 +12,7 @@ export const DoctorProvider = ({ children }) => {
   // ✅ Fetch doctors from backend
   const fetchDoctors = async () => {
     try {
-      const res = await axios.get("https://final-year-project-6fln.onrender.com/api/doctors");
+      const res = await axios.get("http://localhost:5000/api/doctors");
       setDoctors(res.data);
     } catch (error) {
       console.error("Error fetching doctors:", error);
@@ -22,7 +22,7 @@ export const DoctorProvider = ({ children }) => {
   // ✅ Add Doctor to backend & refresh list
   const addDoctor = async (newDoctor) => {
     try {
-      await axios.post("https://final-year-project-6fln.onrender.com/api/doctors", newDoctor);
+      await axios.post("http://localhost:5000/api/doctors", newDoctor);
       await fetchDoctors(); // refresh list after adding
       console.log("Doctor added:", newDoctor);
     } catch (error) {

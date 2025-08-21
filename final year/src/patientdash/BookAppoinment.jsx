@@ -65,7 +65,7 @@ const BookAppointment = () => {
         );
 
         const res = await axios.post(
-          "https://final-year-project-6fln.onrender.com/api/payment/create-checkout-session",
+          "http://localhost:5000/api/payment/create-checkout-session",
           {
             doctorName: doctor.name,
             amount: 1500,

@@ -12,7 +12,7 @@ export default function ContactMessages() {
 
   useEffect(() => {
     axios
-      .get("https://final-year-project-6fln.onrender.com/api/contact")
+      .get("http://localhost:5000/api/contact")
       .then((res) => {
         const sorted = [...res.data].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)

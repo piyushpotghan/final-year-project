@@ -18,7 +18,7 @@ export default function SignUp() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("https://final-year-project-6fln.onrender.com/api/register", formData);
+      await axios.post("http://localhost:5000/api/register", formData);
       setMessage("Registration successful 🎉");
       setFormData({ username: "", email: "", password: "", role: "patient" });
     } catch (err) {

@@ -13,7 +13,7 @@ const DoctorAppointments = () => {
       if (!loggedInDoctorEmail) return;
       try {
         const res = await axios.get(
-          `https://final-year-project-6fln.onrender.com/api/appointments/doctor?email=${loggedInDoctorEmail}`
+          `http://localhost:5000/api/appointments/doctor?email=${loggedInDoctorEmail}`
         );
         setAppointments(res.data);
       } catch (error) {
@@ -26,7 +26,7 @@ const DoctorAppointments = () => {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      await axios.put(`https://final-year-project-6fln.onrender.com/api/appointments/${id}/status`, {
+      await axios.put(`http://localhost:5000/api/appointments/${id}/status`, {
         status: newStatus,
       });
 

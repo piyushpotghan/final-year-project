@@ -13,7 +13,7 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://final-year-project-6fln.onrender.com/api/contact', form);
+      await axios.post('http://localhost:5000/api/contact', form);
       alert('Message sent successfully!');
       setForm({ fullName: '', email: '', message: '' }); // Clear form
     } catch (error) {

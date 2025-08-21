@@ -28,7 +28,7 @@ const DoctorProfile = () => {
   const handleSave = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.put(`https://final-year-project-6fln.onrender.com/api/doctor/update-profile/${doctor._id}`, doctor, {
+      const res = await axios.put(`http://localhost:5000api/doctor/update-profile/${doctor._id}`, doctor, {
         headers: { Authorization: `Bearer ${token}` }
       });
       alert(res.data.message || "Profile updated successfully!");

@@ -117,7 +117,7 @@ export default function Donate() {
       console.log('Submitting data:', formattedData);
 
       // Submit the form
-      const response = await fetch("https://final-year-project-6fln.onrender.com/api/donors/create", {
+      const response = await fetch("http://localhost:5000/api/donors/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

@@ -12,7 +12,7 @@ export default function VerifyOTP() {
     e.preventDefault();
     try {
       setLoading(true);
-      await axios.post("https://final-year-project-6fln.onrender.com/api/auth/verify-otp", {
+      await axios.post("http://localhost:5000/api/auth/verify-otp", {
         email: state.email,
         otp,
       });

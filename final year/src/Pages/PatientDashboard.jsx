@@ -21,7 +21,7 @@ export default function PatientDashboard() {
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const res = await axios.get("https://final-year-project-6fln.onrender.com/api/doctors");
+        const res = await axios.get("http://localhost:5000/api/doctors");
         setDoctors(res.data);
         if (res.data.length > 0) {
           setSelectedDoctor(res.data[0]);

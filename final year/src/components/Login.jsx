@@ -15,7 +15,7 @@ export default function LoginPage() {
     setError(""); // clear previous error
 
     try {
-      const res = await axios.post("https://final-year-project-6fln.onrender.com/api/login", {
+      const res = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
       });
@@ -103,7 +103,7 @@ export default function LoginPage() {
 
             {/* Links */}
             <div className="flex justify-between mt-3 text-[15px] text-gray-600">
-              <a href="/forgot-password" className="hover:underline">Forgot?</a>
+              <a href="#" className="hover:underline">Forgot?</a>
               <Link to="/SignUp" className="hover:underline">Sign Up</Link>      
             </div>
 
