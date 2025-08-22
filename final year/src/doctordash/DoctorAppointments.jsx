@@ -46,6 +46,8 @@ const DoctorAppointments = () => {
         return "bg-green-100 text-green-800 border-green-300";
       case "Cancelled":
         return "bg-red-100 text-red-800 border-red-300";
+         case "Completed":
+        return "bg-red-100 text-red-800 border-red-300";
       case "Pending":
       default:
         return "bg-yellow-100 text-yellow-800 border-yellow-300";
@@ -125,6 +127,7 @@ const DoctorAppointments = () => {
                       <option value="Pending">Pending</option>
                       <option value="Approved">Approved</option>
                       <option value="Cancelled">Cancelled</option>
+                      <option value="Completed">Completed</option>
                     </select>
                     
                     {/* Add Prescription Button */}

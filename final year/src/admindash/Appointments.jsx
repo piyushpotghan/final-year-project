@@ -93,6 +93,7 @@ const AdminAppointments = () => {
                     <option value="Pending">Pending</option>
                     <option value="Approved">Approved</option>
                     <option value="Cancelled">Cancelled</option>
+                      <option value="Completed">Completed</option>
                   </select>
                 </td>
                 <td className="px-4 py-2">

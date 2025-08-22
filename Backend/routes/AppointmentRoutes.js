@@ -91,17 +91,28 @@ router.put("/:id/status", async (req, res) => {
         .json({ error: "Cancelled appointment cannot be updated" });
     }
 
-    // 🚫 Allow update only if Pending
-    if (appointment.status !== "Pending") {
+    // 🚫 Prevent update if already Completed
+    if (appointment.status === "Completed") {
       return res
         .status(400)
-        .json({ error: "Only pending appointments can be updated" });
+        .json({ error: "Completed appointment cannot be updated further" });
     }
 
-    appointment.status = status;
-    await appointment.save();
+    // ✅ Allowed transitions:
+    // Pending → Approved/Cancelled
+    // Approved → Completed
+    if (
+      (appointment.status === "Pending" &&
+        (status === "Approved" || status === "Cancelled")) ||
+      (appointment.status === "Approved" && status === "Completed")
+    ) {
+      appointment.status = status;
+      await appointment.save();
+      return res.status(200).json(appointment);
+    }
 
-    res.status(200).json(appointment);
+    // 🚫 Any other transition not allowed
+    return res.status(400).json({ error: "Invalid status update" });
   } catch (err) {
     res.status(500).json({ error: "Failed to update status" });
   }

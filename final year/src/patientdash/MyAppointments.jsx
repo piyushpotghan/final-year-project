@@ -31,6 +31,7 @@ const MyAppointments = () => {
     if (status === "Approved") return `${base} bg-green-100 text-green-700`;
     if (status === "Pending") return `${base} bg-yellow-100 text-yellow-800`;
     if (status === "Cancelled") return `${base} bg-red-100 text-red-700`;
+     if (status === "Completed") return `${base} bg-red-100 text-red-700`;
     return `${base} bg-gray-100 text-gray-700`;
   };
 

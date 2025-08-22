@@ -49,7 +49,9 @@ const BookAppointment = () => {
           type: "success",
           text: "✅ Appointment Confirmed (Offline Payment)!",
         });
-        setTimeout(() => navigate("/my-appointments"), 1500);
+       navigate("/payment-success",
+        { state: { type: "offline" } }
+       );
       } catch (error) {
         console.error(error);
         setStatusMessage({
