@@ -34,6 +34,10 @@ import AllDoctors from './patientdash/AllDoctors';
 import ForgotPassword from './Pages/ForgotPassword';
 import VerifyOTP from './Pages/VerifyOTP';
 import ResetPassword from './Pages/ResetPassword';
+import AmbulanceBooking from './patientdash/AmbulanceBooking';
+import AmbulanceHistory from './patientdash/AmbulanceHistory';
+import AdminAmbulanceDetails from './admindash/AdminAmbulanceDetails';
+
 
 const LayoutWrapper = () => {
   const location = useLocation();
@@ -106,6 +110,9 @@ const LayoutWrapper = () => {
         <Route path="/forgot-password" element={<ForgotPassword/>}/>
         <Route path="/verify-otp" element={<VerifyOTP/>}/>
         <Route path="/reset-password" element={<ResetPassword/>}/>
+        <Route path="/ambulance-booking" element={<AmbulanceBooking/>}/>
+        <Route path="/ambulance-history" element={<AmbulanceHistory/>}/>
+        <Route path="/admin/ambulance" element={<AdminAmbulanceDetails/>}/>
       </Routes>
 
       {/* Show Chatbot on all pages except dashboard/login/signup routes */}

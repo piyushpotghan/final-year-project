@@ -84,6 +84,9 @@ app.use("/api/appointments", appointmentRoutes);
 
 app.use("/api/email", require ("./routes/ForgotpassRoutes"));
 
+const ambulanceRoutes = require("./routes/ambulanceRoutes");
+app.use("/api/ambulance",ambulanceRoutes);
+
 // Debug middleware
 app.use((req, res, next) => {
   console.log(`📝 ${req.method} ${req.path}`);

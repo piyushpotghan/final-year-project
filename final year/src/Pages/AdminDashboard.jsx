@@ -5,13 +5,12 @@ import Navbar from '../Navbar';
 import Sidebar from '../admindash/Sidebar';
 import Topbar from '../admindash/Topbar';
 import DashboardStats from '../admindash/DashboardStats';
-import Dashboard from '../admindash/Dashboard';
-import Appointments from '../admindash/Appointments';
 import AdminAppointments from '../admindash/Appointments';
 import AddDoctor from '../admindash/AddDoctor';
 import DoctorsList from '../admindash/Doctorlist';
 import ContactMessages from '../admindash/ContactMessages';
 import DonorsList from '../admindash/DonorsList';
+import AdminAmbulanceDetails from '../admindash/AdminAmbulanceDetails';
 
 const AdminDashboard = () => {
   const [totalDoctors, setTotalDoctors] = useState(0);
@@ -59,13 +58,16 @@ const AdminDashboard = () => {
 
   return (
     <div className="flex h-screen">
+      {/* Sidebar and Navbar */}
       <Navbar />
       <Sidebar />
 
+      {/* Main content */}
       <div className="flex flex-col flex-1 bg-gray-50">
         <Topbar />
         <div className="p-4 flex-1 overflow-y-auto">
           <Routes>
+            {/* Dashboard home */}
             <Route
               index
               element={
@@ -86,11 +88,16 @@ const AdminDashboard = () => {
                 </div>
               }
             />
-            <Route path="appointments" element={<Appointments />} />
+
+            {/* Other admin pages */}
+            <Route path="appointments" element={<AdminAppointments />} />
             <Route path="add-doctor" element={<AddDoctor />} />
             <Route path="doctors-list" element={<DoctorsList />} />
-            <Route path="contact-messages" element={<ContactMessages />} /> {/* ✅ New Route */}
+            <Route path="contact-messages" element={<ContactMessages />} />
             <Route path="donors-list" element={<DonorsList />} />
+
+            {/* ✅ Ambulance page nested inside AdminDashboard */}
+                <Route path="/admin/ambulance" element={<AdminAmbulanceDetails/>}/>
           </Routes>
         </div>
       </div>

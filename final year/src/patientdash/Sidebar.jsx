@@ -4,6 +4,7 @@ import {
   FaUserMd,
   FaCalendarCheck,
   FaCog,
+  FaAmbulance,
 } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -53,6 +54,13 @@ const Sidebar = () => {
             onClick={() => navigate("/all-doctors")}
             title="All Doctors"
           />
+
+          {/* 🚑 Ambulance History */}
+<FaAmbulance
+  className={`cursor-pointer hover:text-cyan-500 ${isActive("/ambulance-history")}`}
+  onClick={() => navigate("/ambulance-history")}
+  title="Ambulance History"
+/>
         </div>
       </div>
 
