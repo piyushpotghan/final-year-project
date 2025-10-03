@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const AmbulanceBooking = require("../models/AmbulanceBooking");
 
-// ✅ Create booking
+// ✅ Create booking (offline or unpaid by default)
 router.post("/", async (req, res) => {
   try {
     const newBooking = new AmbulanceBooking(req.body);
@@ -23,7 +23,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// Update status (approve / cancel)
+// ✅ Update status (approve / cancel)
 router.put("/:id/status", async (req, res) => {
   try {
     const { status } = req.body;
@@ -37,6 +37,21 @@ router.put("/:id/status", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+// ✅ Update payment status (after stripe success)
+router.put("/:id/payment", async (req, res) => {
+  try {
+    const booking = await AmbulanceBooking.findByIdAndUpdate(
+      req.params.id,
+      { paymentStatus: "Paid" },
+      { new: true }
+    );
+    res.json(booking);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // ✅ Delete booking
 router.delete("/:id", async (req, res) => {
   try {
@@ -49,4 +64,5 @@ router.delete("/:id", async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
 module.exports = router;

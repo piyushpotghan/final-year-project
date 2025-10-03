@@ -37,6 +37,7 @@ import ResetPassword from './Pages/ResetPassword';
 import AmbulanceBooking from './patientdash/AmbulanceBooking';
 import AmbulanceHistory from './patientdash/AmbulanceHistory';
 import AdminAmbulanceDetails from './admindash/AdminAmbulanceDetails';
+import AmbulanceSuccess from './patientdash/AmbulanceSuccess';
 
 
 const LayoutWrapper = () => {
@@ -113,6 +114,7 @@ const LayoutWrapper = () => {
         <Route path="/ambulance-booking" element={<AmbulanceBooking/>}/>
         <Route path="/ambulance-history" element={<AmbulanceHistory/>}/>
         <Route path="/admin/ambulance" element={<AdminAmbulanceDetails/>}/>
+         <Route path="/ambulance-success" element={<AmbulanceSuccess/>}/>
       </Routes>
 
       {/* Show Chatbot on all pages except dashboard/login/signup routes */}

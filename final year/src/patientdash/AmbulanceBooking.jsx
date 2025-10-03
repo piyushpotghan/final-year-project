@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -10,6 +9,7 @@ export default function AmbulanceBooking() {
     address: "",
     pickup: "",
     hospital: "",
+    paymentMethod: "offline",
   });
   const navigate = useNavigate();
 
@@ -20,9 +20,21 @@ export default function AmbulanceBooking() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/api/ambulance", formData);
-      alert("🚑 Ambulance booked successfully!");
-      navigate("/ambulance-history");
+      // 1️⃣ Save booking first
+      const res = await axios.post("http://localhost:5000/api/ambulance", formData);
+      const booking = res.data.booking;
+
+      if (formData.paymentMethod === "online") {
+        // 2️⃣ Call Stripe session
+        const stripeRes = await axios.post("http://localhost:5000/api/payment/create-ambulance-session", {
+          bookingId: booking._id,
+          amount: 500, // fixed ambulance charge
+        });
+        window.location.href = stripeRes.data.url; // redirect to stripe
+      } else {
+        alert("🚑 Ambulance booked with Offline Payment (Unpaid)!");
+        navigate("/ambulance-history");
+      }
     } catch (error) {
       console.error(error);
       alert("Error booking ambulance!");
@@ -51,6 +63,17 @@ export default function AmbulanceBooking() {
           <input type="text" name="hospital" placeholder="Hospital/Clinic Name"
             value={formData.hospital} onChange={handleChange}
             className="w-full p-2 border rounded" required />
+
+          {/* Payment Method */}
+          <select
+            name="paymentMethod"
+            value={formData.paymentMethod}
+            onChange={handleChange}
+            className="w-full p-2 border rounded"
+          >
+            <option value="offline">Offline (Cash)</option>
+            <option value="online">Online (Stripe)</option>
+          </select>
 
           <button type="submit" className="w-full bg-red-600 text-white py-2 rounded-lg">
             Confirm Ambulance Booking

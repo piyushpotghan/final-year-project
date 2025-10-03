@@ -72,4 +72,39 @@ router.post("/confirm-online-appointment", async (req, res) => {
   }
 });
 
+
+// ✅ Ambulance Stripe Checkout Session
+router.post("/create-ambulance-session", async (req, res) => {
+  try {
+    const { bookingId, amount } = req.body;
+
+    if (!amount || isNaN(amount)) {
+      return res.status(400).json({ message: "Invalid amount" });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      mode: "payment",
+      line_items: [
+        {
+          price_data: {
+            currency: "inr",
+            product_data: { name: `Ambulance Booking `},
+            unit_amount: amount * 100, // rupees → paise
+          },
+          quantity: 1,
+        },
+      ],
+      success_url: `${process.env.FRONTEND_URL}/ambulance-success?bookingId=${bookingId}`,
+      cancel_url: `${process.env.FRONTEND_URL}/ambulance-failed?bookingId=${bookingId}`,
+    });
+
+    res.json({ url: session.url });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Stripe session error" });
+  }
+});
+
+
 module.exports = router;

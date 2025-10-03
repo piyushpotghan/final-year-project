@@ -39,6 +39,7 @@ export default function AmbulanceHistory() {
                   <th className="border p-2">Address</th>
                   <th className="border p-2">Date</th>
                   <th className="border p-2">Status</th>
+                  <th className="border p-2">Payment Status</th> {/* Added */}
                 </tr>
               </thead>
               <tbody>
@@ -53,6 +54,13 @@ export default function AmbulanceHistory() {
                       {new Date(b.createdAt).toLocaleString()}
                     </td>
                     <td className="border p-2 font-semibold">{b.status}</td>
+                    <td
+                      className={`border p-2 font-semibold ${
+                        b.paymentStatus === "Paid" ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {b.paymentStatus}
+                    </td>
                   </tr>
                 ))}
               </tbody>

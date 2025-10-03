@@ -67,6 +67,7 @@ export default function AdminAmbulanceDetails() {
                 <th className="px-4 py-2 border">Hospital</th>
                 <th className="px-4 py-2 border">Date</th>
                 <th className="px-4 py-2 border">Status</th>
+                <th className="px-4 py-2 border">Payment Status</th> {/* Added */}
                 <th className="px-4 py-2 border">Actions</th>
               </tr>
             </thead>
@@ -95,6 +96,16 @@ export default function AdminAmbulanceDetails() {
                         <option value="Completed">Completed</option>
                       </select>
                     </td>
+
+                    {/* ✅ Payment Status */}
+                    <td
+                      className={`px-4 py-2 border font-semibold ${
+                        b.paymentStatus === "Paid" ? "text-green-600" : "text-red-600"
+                      }`}
+                    >
+                      {b.paymentStatus}
+                    </td>
+
                     <td className="px-4 py-2 border">
                       <button
                         onClick={() => handleDelete(b._id)}
@@ -107,7 +118,7 @@ export default function AdminAmbulanceDetails() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" className="px-4 py-6 text-gray-500">
+                  <td colSpan="8" className="px-4 py-6 text-gray-500">
                     No ambulance bookings found
                   </td>
                 </tr>
