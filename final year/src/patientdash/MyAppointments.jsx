@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import CornerLogo from "./CornerLogo";
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);
@@ -66,6 +67,7 @@ const MyAppointments = () => {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10">
+      <CornerLogo topClass="top-24" />
       <h2 className="text-3xl font-extrabold text-blue-800 text-center mb-8 tracking-wide uppercase">
         My Appointments
       </h2>

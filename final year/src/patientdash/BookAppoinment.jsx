@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Navbar from "../Navbar";
+import CornerLogo from "./CornerLogo";
 
 const BookAppointment = () => {
   const location = useLocation();
@@ -88,7 +89,8 @@ const BookAppointment = () => {
 
   return (
     <>
-      <Navbar />
+  <Navbar />
+  <CornerLogo topClass="top-24" />
       <div className="min-h-screen pt-10 flex items-center justify-center bg-blue-50 px-4">
         <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">

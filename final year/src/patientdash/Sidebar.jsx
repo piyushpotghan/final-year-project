@@ -22,18 +22,22 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen w-20 bg-white shadow-md flex flex-col justify-between items-center py-6 fixed top-0 left-0 z-50">
+    <div className="h-screen w-20 bg-white shadow-md flex flex-col justify-between items-center py-4 fixed top-0 left-0 z-50">
       {/* Logo / Home Button */}
-      <div className="flex flex-col items-center space-y-6">
+      <div className="flex flex-col items-center">
         <div
           className="w-10 h-10 rounded-full bg-cyan-400 flex items-center justify-center font-bold text-white text-xl cursor-pointer"
           onClick={() => navigate("/patient/dashboard")}
+          title="Home"
         >
           H
         </div>
 
+        {/* Divider */}
+        <div className="w-10 h-px bg-gray-200 my-4" />
+
         {/* Navigation Icons */}
-        <div className="flex flex-col items-center space-y-6 mt-8 text-xl pt-36">
+        <div className="flex flex-col items-center gap-6 mt-2 text-xl overflow-y-auto">
           {/* Dashboard */}
           <FaHome
             className={`cursor-pointer hover:text-cyan-500 ${isActive("/patient/dashboard")}`}
@@ -65,12 +69,14 @@ const Sidebar = () => {
       </div>
 
       {/* Logout Button */}
-      <div
-        className="text-red-500 text-2xl cursor-pointer"
-        onClick={handleLogout}
-        title="Logout"
-      >
-        <MdLogout />
+      <div className="pb-2">
+        <div
+          className="text-red-500 text-2xl cursor-pointer hover:text-red-600"
+          onClick={handleLogout}
+          title="Logout"
+        >
+          <MdLogout />
+        </div>
       </div>
     </div>
   );

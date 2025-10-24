@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { addPrescription } = require("../controllers/AppointmentController");
 const Appointment = require("../models/Appointments");
+const AmbulanceBooking = require("../models/AmbulanceBooking");
 
 // ✅ Create new appointment (Prevent duplicates)
 router.post("/create", async (req, res) => {
@@ -108,6 +109,20 @@ router.put("/:id/status", async (req, res) => {
     ) {
       appointment.status = status;
       await appointment.save();
+
+      // 🔁 Auto-approve related ambulance booking when appointment is approved
+      if (status === "Approved") {
+        try {
+          await AmbulanceBooking.findOneAndUpdate(
+            { name: appointment.patientName, status: "Pending" },
+            { $set: { status: "Approved" } },
+            { sort: { createdAt: -1 } }
+          );
+        } catch (ambErr) {
+          console.warn("Ambulance auto-approve skipped:", ambErr?.message || ambErr);
+        }
+      }
+
       return res.status(200).json(appointment);
     }
 
