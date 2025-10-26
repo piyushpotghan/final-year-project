@@ -7,6 +7,8 @@ export default function AdminAmbulanceDetails() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  // (Popup notifications removed as requested)
+
   // ✅ Fetch all bookings
   const fetchBookings = async () => {
     try {
@@ -23,16 +25,29 @@ export default function AdminAmbulanceDetails() {
     }
   };
 
-  // (Status update select removed from UI per request)
+  // ✅ Update Status (Admin control)
+  const handleStatusChange = async (id, nextStatus) => {
+    try {
+      await axios.put(`http://localhost:5000/api/ambulance/${id}/status`, { status: nextStatus });
+      // Update local state optimistically
+      setBookings((prev) => prev.map((b) => (b._id === id ? { ...b, status: nextStatus } : b)));
+    } catch (err) {
+      console.error("Error updating status:", err);
+      alert("Failed to update status. Please try again.");
+    }
+  };
 
-  // ✅ Delete Booking
+  // ✅ Cancel (Delete) Booking
   const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this booking?")) return;
     try {
       await axios.delete(`http://localhost:5000/api/ambulance/${id}`);
-      setBookings(bookings.filter((b) => b._id !== id));
+      // Refresh from server to ensure consistency
+      await fetchBookings();
     } catch (err) {
       console.error("Error deleting:", err);
+      // Optional: setError banner for inline message
+      const msg = err?.response?.data?.message || err?.response?.data?.error || "Failed to delete booking";
+      setError(msg);
     }
   };
 
@@ -66,6 +81,8 @@ export default function AdminAmbulanceDetails() {
 
   return (
     <div className="flex">
+      {/* Confirmation popup removed as requested */}
+      {/* Success/error popup removed as requested */}
       {/* Sidebar */}
       <div className="shrink-0">
         <Sidebar />
@@ -117,7 +134,18 @@ export default function AdminAmbulanceDetails() {
                     <td className="py-4 px-6">{new Date(b.createdAt).toLocaleDateString()}</td>
                     <td className="py-4 px-6">{new Date(b.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</td>
                     <td className="py-4 px-6">
-                      <span className={statusBadge(b.status)}>{b.status}</span>
+                      <select
+                        value={b.status}
+                        onChange={(e) => handleStatusChange(b._id, e.target.value)}
+                        className="text-sm border rounded px-2 py-1 bg-white"
+                        title={b.paymentMethod === 'online' ? 'Online payment bookings cannot be cancelled' : ''}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Cancelled" disabled={b.paymentMethod === 'online'}>
+                          Cancelled
+                        </option>
+                      </select>
                     </td>
                     <td className="py-4 px-6">
                       <span className={paymentBadge(b.paymentStatus)}>{b.paymentStatus}</span>
@@ -125,9 +153,10 @@ export default function AdminAmbulanceDetails() {
                     <td className="py-4 px-6">
                       <button
                         onClick={() => handleDelete(b._id)}
-                        className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                        className="px-3 py-1 rounded text-white bg-red-500 hover:bg-red-600"
+                        title="Cancel this booking"
                       >
-                        Delete
+                        Cancel
                       </button>
                     </td>
                   </tr>

@@ -107,6 +107,28 @@ router.put("/:id/status", async (req, res) => {
         (status === "Approved" || status === "Cancelled")) ||
       (appointment.status === "Approved" && status === "Completed")
     ) {
+      // 🚧 Block cancelling appointment if related ambulance is paid or online
+      if (status === "Cancelled") {
+        try {
+          const blockingAmb = await AmbulanceBooking.findOne(
+            {
+              name: appointment.patientName,
+              $or: [{ paymentMethod: "online" }, { paymentStatus: "Paid" }],
+            },
+            null,
+            { sort: { createdAt: -1 } }
+          );
+          if (blockingAmb) {
+            return res.status(400).json({
+              error:
+                "Cannot cancel appointment: related ambulance booking is paid/online",
+            });
+          }
+        } catch (ambErr) {
+          console.warn("Ambulance check failed:", ambErr?.message || ambErr);
+        }
+      }
+
       appointment.status = status;
       await appointment.save();
 
@@ -120,6 +142,31 @@ router.put("/:id/status", async (req, res) => {
           );
         } catch (ambErr) {
           console.warn("Ambulance auto-approve skipped:", ambErr?.message || ambErr);
+        }
+      }
+
+      // 🔁 Auto-cancel related ambulance booking when appointment is cancelled
+      if (status === "Cancelled") {
+        try {
+          const amb = await AmbulanceBooking.findOne(
+            { name: appointment.patientName, status: { $ne: "Cancelled" } },
+            null,
+            { sort: { createdAt: -1 } }
+          );
+          if (amb) {
+            // Respect payment rules: do not cancel if online or already paid
+            if (amb.paymentMethod === "online" || amb.paymentStatus === "Paid") {
+              console.warn(
+                "Skip auto-cancel ambulance: online/paid booking",
+                amb._id.toString()
+              );
+            } else {
+              amb.status = "Cancelled";
+              await amb.save();
+            }
+          }
+        } catch (ambErr) {
+          console.warn("Ambulance auto-cancel skipped:", ambErr?.message || ambErr);
         }
       }
 
@@ -146,8 +193,50 @@ router.put("/cancel/:id", async (req, res) => {
       return res.json(appointment);
     }
 
+    // 🚧 Block cancelling appointment if related ambulance is paid or online
+    try {
+      const blockingAmb = await AmbulanceBooking.findOne(
+        {
+          name: appointment.patientName,
+          $or: [{ paymentMethod: "online" }, { paymentStatus: "Paid" }],
+        },
+        null,
+        { sort: { createdAt: -1 } }
+      );
+      if (blockingAmb) {
+        return res.status(400).json({
+          error:
+            "Cannot cancel appointment: related ambulance booking is paid/online",
+        });
+      }
+    } catch (ambErr) {
+      console.warn("Ambulance check failed:", ambErr?.message || ambErr);
+    }
+
     appointment.status = "Cancelled";
     await appointment.save();
+
+    // 🔁 Auto-cancel related ambulance booking on patient-driven cancellation
+    try {
+      const amb = await AmbulanceBooking.findOne(
+        { name: appointment.patientName, status: { $ne: "Cancelled" } },
+        null,
+        { sort: { createdAt: -1 } }
+      );
+      if (amb) {
+        if (amb.paymentMethod === "online" || amb.paymentStatus === "Paid") {
+          console.warn(
+            "Skip auto-cancel ambulance: online/paid booking",
+            amb._id.toString()
+          );
+        } else {
+          amb.status = "Cancelled";
+          await amb.save();
+        }
+      }
+    } catch (ambErr) {
+      console.warn("Ambulance auto-cancel skipped:", ambErr?.message || ambErr);
+    }
 
     res.json({ message: "Appointment cancelled permanently", appointment });
   } catch (err) {
