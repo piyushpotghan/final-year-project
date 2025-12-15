@@ -50,9 +50,7 @@ const BookAppointment = () => {
           type: "success",
           text: "✅ Appointment Confirmed (Offline Payment)!",
         });
-       navigate("/payment-success",
-        { state: { type: "offline" } }
-       );
+        navigate("/payment-success", { state: { type: "offline" } });
       } catch (error) {
         console.error(error);
         setStatusMessage({
@@ -89,8 +87,9 @@ const BookAppointment = () => {
 
   return (
     <>
-  <Navbar />
-  <CornerLogo topClass="top-24" />
+      <Navbar />
+      <CornerLogo topClass="top-24" />
+
       <div className="min-h-screen pt-10 flex items-center justify-center bg-blue-50 px-4">
         <div className="bg-white rounded-2xl shadow-lg p-8 w-full max-w-md">
           <h2 className="text-2xl font-bold text-gray-800 mb-2 text-center">
@@ -124,14 +123,18 @@ const BookAppointment = () => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+
+            {/* ⛔ Prevent selecting past dates */}
             <input
               type="date"
               name="date"
               value={form.date}
               onChange={handleChange}
+              min={new Date().toISOString().split("T")[0]}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+
             <input
               type="time"
               name="time"
@@ -140,6 +143,7 @@ const BookAppointment = () => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
               required
             />
+
             <textarea
               name="reason"
               value={form.reason}
@@ -150,9 +154,8 @@ const BookAppointment = () => {
               required
             />
 
-            {/* Glowing Card Payment Options */}
+            {/* Payment Options */}
             <div className="flex gap-4">
-              {/* Offline Card */}
               <label
                 className={`flex-1 cursor-pointer rounded-2xl p-5 flex flex-col items-center justify-center relative transition-all duration-300 transform hover:scale-105 ${
                   paymentMethod === "offline"
@@ -180,7 +183,6 @@ const BookAppointment = () => {
                 )}
               </label>
 
-              {/* Online Card */}
               <label
                 className={`flex-1 cursor-pointer rounded-2xl p-5 flex flex-col items-center justify-center relative transition-all duration-300 transform hover:scale-105 ${
                   paymentMethod === "online"
@@ -223,4 +225,3 @@ const BookAppointment = () => {
 };
 
 export default BookAppointment;
-

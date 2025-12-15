@@ -5,6 +5,7 @@ import CornerLogo from "./CornerLogo";
 
 const MyAppointments = () => {
   const [appointments, setAppointments] = useState([]);
+  const [activeCallRoom, setActiveCallRoom] = useState(""); // NEW: for video call
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const MyAppointments = () => {
     if (status === "Approved") return `${base} bg-green-100 text-green-700`;
     if (status === "Pending") return `${base} bg-yellow-100 text-yellow-800`;
     if (status === "Cancelled") return `${base} bg-red-100 text-red-700`;
-     if (status === "Completed") return `${base} bg-red-100 text-red-700`;
+    if (status === "Completed") return `${base} bg-red-100 text-red-700`;
     return `${base} bg-gray-100 text-gray-700`;
   };
 
@@ -43,7 +44,6 @@ const MyAppointments = () => {
     return `${base} bg-gray-100 text-gray-700`;
   };
 
-  // ✅ Cancel appointment function
   const handleCancel = async (id, paymentStatus) => {
     if (paymentStatus === "Paid") {
       alert("⚠️ This appointment cannot be cancelled because payment is already done online.");
@@ -63,6 +63,11 @@ const MyAppointments = () => {
       console.error("Failed to cancel appointment", err);
       alert("Failed to cancel appointment. Please try again.");
     }
+  };
+
+  // NEW: Join Video Call
+  const joinVideoCall = (appointmentId) => {
+    setActiveCallRoom(`appointment-${appointmentId}`);
   };
 
   return (
@@ -92,71 +97,92 @@ const MyAppointments = () => {
                 .slice()
                 .reverse()
                 .map((appt, index) => (
-                  <tr
-                    key={index}
-                    className="hover:bg-blue-50 transition duration-150"
-                  >
-                    <td className="py-4 px-6">{appt.doctorName}</td>
-                    <td className="py-4 px-6">{appt.date}</td>
-                    <td className="py-4 px-6">{appt.time}</td>
-                    <td className="py-4 px-6">{appt.reason}</td>
-                    <td className="py-4 px-6">
-                      <span className={statusBadge(appt.status)}>
-                        {appt.status}
-                      </span>
-                    </td>
-                    <td className="py-4 px-6">
-                      <span className={paymentBadge(appt.paymentStatus)}>
-                        {appt.paymentStatus || "Pending"}
-                      </span>
-                    </td>
-                    <td className="py-4 px-6">
-                      {Array.isArray(appt.prescription) &&
-                      appt.prescription.length > 0 ? (
-                        <button
-                          className="px-3 py-1 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-700"
-                          onClick={() => {
-                            const userData = JSON.parse(
-                              localStorage.getItem("user") || "{}"
-                            );
+                  <React.Fragment key={index}>
+                    <tr className="hover:bg-blue-50 transition duration-150">
+                      <td className="py-4 px-6">{appt.doctorName}</td>
+                      <td className="py-4 px-6">{appt.date}</td>
+                      <td className="py-4 px-6">{appt.time}</td>
+                      <td className="py-4 px-6">{appt.reason}</td>
+                      <td className="py-4 px-6">
+                        <span className={statusBadge(appt.status)}>
+                          {appt.status}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6">
+                        <span className={paymentBadge(appt.paymentStatus)}>
+                          {appt.paymentStatus || "Pending"}
+                        </span>
+                      </td>
+                      <td className="py-4 px-6">
+                        {Array.isArray(appt.prescription) &&
+                        appt.prescription.length > 0 ? (
+                          <button
+                            className="px-3 py-1 bg-blue-600 text-white rounded text-xs font-semibold hover:bg-blue-700"
+                            onClick={() => {
+                              const userData = JSON.parse(
+                                localStorage.getItem("user") || "{}"
+                              );
+                              navigate("/prescription-view", {
+                                state: {
+                                  prescription: appt.prescription,
+                                  doctorName: appt.doctorName,
+                                  date: appt.date,
+                                  time: appt.time,
+                                  patientEmail: appt.patientEmail || userData.email,
+                                },
+                              });
+                            }}
+                          >
+                            View
+                          </button>
+                        ) : (
+                          <span className="text-gray-400 italic">
+                            No prescription
+                          </span>
+                        )}
+                      </td>
+                      <td className="py-4 px-6 space-y-1">
+                        {appt.status !== "Cancelled" ? (
+                          <>
+                            <button
+                              className="px-3 py-1 bg-red-600 text-white rounded text-xs font-semibold hover:bg-red-700"
+                              onClick={() =>
+                                handleCancel(appt._id, appt.paymentStatus)
+                              }
+                            >
+                              Cancel
+                            </button>
 
-                            navigate("/prescription-view", {
-                              state: {
-                                prescription: appt.prescription,
-                                doctorName: appt.doctorName,
-                                date: appt.date,
-                                time: appt.time,
-                                patientEmail:
-                                  appt.patientEmail || userData.email,
-                              },
-                            });
-                          }}
-                        >
-                          View
-                        </button>
-                      ) : (
-                        <span className="text-gray-400 italic">
-                          No prescription
-                        </span>
-                      )}
-                    </td>
-                    <td className="py-4 px-6">
-                      {appt.status !== "Cancelled" ? (
-                        <button
-                          className="px-3 py-1 bg-red-600 text-white rounded text-xs font-semibold hover:bg-red-700"
-                          onClick={() =>
-                            handleCancel(appt._id, appt.paymentStatus)
-                          }
-                        >
-                          Cancel
-                        </button>
-                      ) : (
-                        <span className="text-gray-400 italic">
-                           Cancelled
-                        </span>
-                      )}
-                    </td>
-                  </tr>
+                            {/* NEW: Join Video Call */}
+                            <button
+                              className="px-3 py-1 bg-green-600 text-white rounded text-xs font-semibold hover:bg-green-700 mt-1"
+                              onClick={() => joinVideoCall(appt._id)}
+                            >
+                              Join Video Call
+                            </button>
+                          </>
+                        ) : (
+                          <span className="text-gray-400 italic">Cancelled</span>
+                        )}
+                      </td>
+                    </tr>
+
+                    {/* NEW: Video Call iFrame row */}
+                    {activeCallRoom === `appointment-${appt._id}` && (
+                      <tr>
+                        <td colSpan="8" className="py-4 px-6">
+                          <div className="w-full h-[500px]">
+                            <iframe
+                              src={`https://meet.jit.si/appointment-${appt._id}`}
+                              className="w-full h-full rounded-xl border"
+                              allow="camera; microphone; fullscreen; display-capture"
+                              title="Video Call"
+                            ></iframe>
+                          </div>
+                        </td>
+                      </tr>
+                    )}
+                  </React.Fragment>
                 ))
             ) : (
               <tr>

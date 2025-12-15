@@ -7,6 +7,7 @@ const DoctorAppointments = () => {
   const [appointments, setAppointments] = useState([]);
   const { loggedInDoctorEmail } = useContext(DoctorContext);
   const [showPrescriptionFor, setShowPrescriptionFor] = useState(null);
+  const [activeCallRoom, setActiveCallRoom] = useState(""); // NEW: store active video call room
 
   useEffect(() => {
     const fetchAppointments = async () => {
@@ -46,7 +47,7 @@ const DoctorAppointments = () => {
         return "bg-green-100 text-green-800 border-green-300";
       case "Cancelled":
         return "bg-red-100 text-red-800 border-red-300";
-         case "Completed":
+      case "Completed":
         return "bg-red-100 text-red-800 border-red-300";
       case "Pending":
       default:
@@ -62,6 +63,10 @@ const DoctorAppointments = () => {
       default:
         return "bg-red-100 text-red-700 border-red-300";
     }
+  };
+
+  const joinVideoCall = (appointmentId) => {
+    setActiveCallRoom(`appointment-${appointmentId}`);
   };
 
   return (
@@ -87,12 +92,12 @@ const DoctorAppointments = () => {
                   <p className="text-sm text-gray-600 mb-1">📧 {appt.patientEmail}</p>
                   <p className="text-sm text-gray-600">
                     📅 {appt.date} at 🕒 {appt.time}
-
                   </p>
                   {appt.reason && (
-    <p className="text-sm text-gray-600">📝 Reason: {appt.reason}</p>
-  )}
+                    <p className="text-sm text-gray-600">📝 Reason: {appt.reason}</p>
+                  )}
                 </div>
+
                 <div className="flex flex-col justify-between">
                   <div className="flex gap-2 items-center">
                     <span
@@ -115,39 +120,55 @@ const DoctorAppointments = () => {
                       </span>
                     )}
                   </div>
-                  <div className="mt-4">
-                    <label className="text-sm font-medium text-gray-700 mb-1 block">
-                      Update Status:
-                    </label>
-                    <select
-                      className="w-full px-4 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                      value={appt.status}
-                      onChange={(e) => handleStatusChange(appt._id, e.target.value)}
-                    >
-                      <option value="Pending">Pending</option>
-                      <option value="Approved">Approved</option>
-                      <option value="Cancelled">Cancelled</option>
-                      <option value="Completed">Completed</option>
-                    </select>
-                    
+
+                  <div className="mt-4 space-y-2">
+                    {/* Status Dropdown */}
+                    <div>
+                      <label className="text-sm font-medium text-gray-700 mb-1 block">
+                        Update Status:
+                      </label>
+                      <select
+                        className="w-full px-4 py-2 text-sm border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        value={appt.status}
+                        onChange={(e) => handleStatusChange(appt._id, e.target.value)}
+                      >
+                        <option value="Pending">Pending</option>
+                        <option value="Approved">Approved</option>
+                        <option value="Cancelled">Cancelled</option>
+                        <option value="Completed">Completed</option>
+                      </select>
+                    </div>
+
                     {/* Add Prescription Button */}
                     {appt.status === "Approved" && (
-                      <div className="mt-3">
-                        <button
-                          type="button"
-                          className="w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                          onClick={() => setShowPrescriptionFor(showPrescriptionFor === appt._id ? null : appt._id)}
-                        >
-                          {showPrescriptionFor === appt._id ? "Hide Prescription Form" : "Add Prescription"}
-                        </button>
-                      </div>
+                      <button
+                        type="button"
+                        className="w-full px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-blue-700"
+                        onClick={() =>
+                          setShowPrescriptionFor(
+                            showPrescriptionFor === appt._id ? null : appt._id
+                          )
+                        }
+                      >
+                        {showPrescriptionFor === appt._id
+                          ? "Hide Prescription Form"
+                          : "Add Prescription"}
+                      </button>
                     )}
-                    
+
+                    {/* NEW: Join Video Call Button */}
+                    <button
+                      type="button"
+                      className="w-full px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-md shadow-sm hover:bg-green-700"
+                      onClick={() => joinVideoCall(appt._id)}
+                    >
+                      Join Video Call
+                    </button>
                   </div>
                 </div>
               </div>
-              
-              {/* Prescription input area - full width */}
+
+              {/* Prescription Form */}
               {appt.status === "Approved" && showPrescriptionFor === appt._id && (
                 <div className="mt-4 border-t border-gray-200 pt-4">
                   <PrescriptionInput
@@ -158,10 +179,21 @@ const DoctorAppointments = () => {
                           a._id === appt._id ? { ...a, prescription } : a
                         )
                       );
-                      // Hide the prescription form after saving
                       setShowPrescriptionFor(null);
                     }}
                   />
+                </div>
+              )}
+
+              {/* Video Call iFrame */}
+              {activeCallRoom === `appointment-${appt._id}` && (
+                <div className="mt-4 w-full h-[500px]">
+                  <iframe
+                    src={`https://meet.jit.si/appointment-${appt._id}`}
+                    className="w-full h-full rounded-xl border"
+                    allow="camera; microphone; fullscreen; display-capture"
+                    title="Video Call"
+                  ></iframe>
                 </div>
               )}
             </div>
